@@ -1,4 +1,4 @@
-bin_PROGRAMS += qt/DeepOnion-qt
+bin_PROGRAMS += qt/Armr-qt
 noinst_LIBRARIES += qt/libbitcoinqt.a
 
 # bitcoin qt core #
@@ -332,7 +332,7 @@ CLEANFILES += $(CLEAN_QT)
 bitcoin_qt_clean: FORCE
 	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_DeepOnion_qt_OBJECTS) qt/bitcoin-qt$(EXEEXT) $(LIBBITCOINQT)
 
-bitcoin_qt: qt/DeepOnion-qt$(EXEEXT)
+bitcoin_qt: qt/Armr-qt$(EXEEXT)
 
 ui_%.h: %.ui
 	@test -f $(UIC)

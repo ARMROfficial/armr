@@ -27,7 +27,9 @@ using namespace std;
 using namespace boost;
 namespace fs = boost::filesystem;
 
-extern "C" { int tor_main(int argc, char *argv[]); }
+extern "C" { 
+int tor_main(int argc, char *argv[]); 
+}
 
 static const int MAX_OUTBOUND_CONNECTIONS = 16;
 
@@ -47,8 +49,8 @@ void ThreadTorNet2(void* parg);
 void ThreadOnionSeed2(void* parg);
 bool OpenNetworkConnection(const CAddress& addrConnect, CSemaphoreGrant *grantOutbound = NULL, const char *strDest = NULL, bool fOneShot = false);
 
-
-struct LocalServiceInfo {
+struct LocalServiceInfo 
+{
     int nScore;
     int nPort;
 };

@@ -25,7 +25,7 @@ fi
 DISTDIR=deeponion-1.6.1
 
 # Cross-compile for windows first (breaking the mingw/windows build is most common)
-cd /root/armrControl
+cd /armr
 make distdir
 mkdir -p win32-build
 rsync -av $DISTDIR/ win32-build/
@@ -40,7 +40,7 @@ fi
 make -j$JOBS
 
 # And compile for Linux:
-cd /root/armrControl
+cd /armr
 make distdir
 mkdir -p linux-build
 rsync -av $DISTDIR/ linux-build/
@@ -58,41 +58,41 @@ make -j$JOBS
 if [ -d "$OUT_DIR" -a -w "$OUT_DIR" ]; then
   set +e
   # Windows:
-  cp /root/armrControl/win32-build/src/bitcoind.exe $OUT_DIR/bitcoind.exe
-  cp /root/armrControl/win32-build/src/test/test_bitcoin.exe $OUT_DIR/test_bitcoin.exe
-  cp /root/armrControl/win32-build/src/qt/bitcoind-qt.exe $OUT_DIR/bitcoin-qt.exe
+  cp /armr/win32-build/src/bitcoind.exe $OUT_DIR/bitcoind.exe
+  cp /armr/win32-build/src/test/test_bitcoin.exe $OUT_DIR/test_bitcoin.exe
+  cp /armr/win32-build/src/qt/bitcoind-qt.exe $OUT_DIR/bitcoin-qt.exe
   # Linux:
-  cp /root/armrControl/linux-build/src/bitcoind $OUT_DIR/bitcoind
-  cp /root/armrControl/linux-build/src/test/test_bitcoin $OUT_DIR/test_bitcoin
-  cp /root/armrControl/linux-build/src/qt/bitcoind-qt $OUT_DIR/bitcoin-qt
+  cp /armr/linux-build/src/bitcoind $OUT_DIR/bitcoind
+  cp /armr/linux-build/src/test/test_bitcoin $OUT_DIR/test_bitcoin
+  cp /armr/linux-build/src/qt/bitcoind-qt $OUT_DIR/bitcoin-qt
   set -e
 fi
 
 # Run unit tests and blockchain-tester on Linux:
-cd /root/armrControl/linux-build
+cd /armr/linux-build
 make check
 
 # Run RPC integration test on Linux:
-/root/armrControl/qa/rpc-tests/wallet.sh /root/armrControl/linux-build/src
-/root/armrControl/qa/rpc-tests/listtransactions.py --srcdir /root/armrControl/linux-build/src
+/armr/qa/rpc-tests/wallet.sh /armr/linux-build/src
+/armr/qa/rpc-tests/listtransactions.py --srcdir /armr/linux-build/src
 # Clean up cache/ directory that the python regression tests create
 rm -rf cache
 
 if [ $RUN_EXPENSIVE_TESTS = 1 ]; then
   # Run unit tests and blockchain-tester on Windows:
-  cd /root/armrControl/win32-build
+  cd /armr/win32-build
   make check
 fi
 
 # Clean up builds (pull-tester machine doesn't have infinite disk space)
-cd /root/armrControl/linux-build
+cd /armr/linux-build
 make clean
-cd /root/armrControl/win32-build
+cd /armr/win32-build
 make clean
 
 # TODO: Fix code coverage builds on pull-tester machine
 # # Test code coverage
-# cd /root/armrControl
+# cd /armr
 # make distdir
 # mv $DISTDIR linux-coverage-build
 # cd linux-coverage-build

@@ -274,7 +274,7 @@ class CBitcoinAddress : public CBase58Data
   public:
     enum
     {
-        PUBKEY_ADDRESS = 23, //ONION Addresses starts with "A"
+        PUBKEY_ADDRESS = 23, //ARMR Addresses starts with "A"
         SCRIPT_ADDRESS = 78,
         PUBKEY_ADDRESS_TEST = 83, //Testnet identifier "a"
         SCRIPT_ADDRESS_TEST = 196,
