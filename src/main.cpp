@@ -39,15 +39,15 @@ unsigned int nTransactionsUpdated = 0;
 map<uint256, CBlockIndex*> mapBlockIndex;
 set<pair<COutPoint, unsigned int> > setStakeSeen;
 
-CBigNum bnProofOfWorkLimit(~uint256(0) >> 20); 
+CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);
 CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
-CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 20); 
+CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 20);
 CBigNum bnProofOfWorkFirstBlock(~uint256(0) >> 20);
 
 unsigned int nWorkTargetSpacing = 240;                  // 240 sec block spacing for PoW
 unsigned int nStakeTargetSpacing = 60;			        // 60 sec block spacing for PoS
-unsigned int nStakeMinAge = 60 * 60 * 24 * 1;			// minimum age for coin age: 1d
-unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	        // stake age of full weight: 30d
+unsigned int nStakeMinAge = 60 * 1 * 1 * 1;			// minimum age for coin age: 4 mins
+unsigned int nStakeMaxAge = 60 * 60 * 24 * 1;	        // stake age of full weight: 1d
 
 unsigned int nModifierInterval = 8 * 60;				// time to elapse before new modifier is computed
 
@@ -333,7 +333,7 @@ bool IsStandardTx(const CTransaction& tx)
 
     unsigned int nDataOut = 0;
     unsigned int nTxnOut = 0;
-	 
+
     BOOST_FOREACH(const CTxOut& txout, tx.vout) {
         if (!::IsStandard(txout.scriptPubKey))
             return false;
@@ -1099,7 +1099,7 @@ int GetPowHeightTable(const CBlockIndex* pindex)
 
 	if (index != -1)
 		count += checkpointPoWHeight[index][1];
-	
+
 	++count;
 
 	// printf(">> Height = %d, Count = %d\n", height, count);
@@ -1123,7 +1123,7 @@ int GetPosHeight(const CBlockIndex* pindex)
 // miner's coin base reward
 int64_t GetProofOfWorkReward(int nHeight, int64_t nFees, const CBlockIndex* pindex)
 {
-	int64_t nSubsidy = 0 * COIN;
+	int64_t nSubsidy = 5000 * COIN;
 
 	if (nHeight == 1)
 	{
@@ -1136,7 +1136,7 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees, const CBlockIndex* pind
 	int mm = nPoWHeight / 131400;
 	nSubsidy >>= mm;
 
-	return nSubsidy + nFees * 0; //Rewarding 0 for Proof of Work
+	return nSubsidy + nFees * 5000; //Rewarding 0 for Proof of Work
 }
 
 
@@ -2001,7 +2001,7 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
 
     CBigNum bnBestBlockTrust = pindexBest->nHeight != 0 ? (pindexBest->bnChainTrust - pindexBest->pprev->bnChainTrust) : pindexBest->bnChainTrust;
     printf("SetBestChain: new best=%s  height=%d  trust=%s  blocktrust=%" PRId64 " \n",
-      hashBestChain.ToString().c_str(), 
+      hashBestChain.ToString().c_str(),
       nBestHeight,
       bnBestChainTrust.ToString().c_str(),
       bnBestBlockTrust.ToString().c_str());
@@ -2038,7 +2038,7 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
 // Armr: total coin age spent in transaction, in the unit of coin-days.
 // Only those coins meeting minimum age requirement counts. As those
 // transactions not in main chain are not currently indexed so we
-// might not find out about their coin age. Older transactions are 
+// might not find out about their coin age. Older transactions are
 // guaranteed to be in main chain by sync-checkpoint. This rule is
 // introduced to help nodes establish a consistent view of the coin
 // age (trust score) of competing branches.
@@ -2633,11 +2633,11 @@ bool LoadBlockIndex(bool fAllowNew)
 		pchMessageStart[1] = 0xa1;
 		pchMessageStart[2] = 0xa3;
 		pchMessageStart[3] = 0xa4;
-		
+
 		bnTrustedModulus.SetHex("a8852ebf7c49f01cd196e35394f3b74dd86283a07f57e0a262928e7493d4a3961d93d93c90ea3369719641d626d28b9cddc6d9307b9aabdbffc40b6d6da2e329d079b4187ff784b2893d9f53e9ab913a04ff02668114695b07d8ce877c4c8cac1b12b9beff3c51294ebe349eca41c24cd32a6d09dd1579d3947e5c4dcc30b2090b0454edb98c6336e7571db09e0fdafbd68d8f0470223836e90666a5b143b73b9cd71547c917bf24c0efc86af2eba046ed781d9acb05c80f007ef5a0a5dfca23236f37e698e8728def12554bc80f294f71c040a88eff144d130b24211016a97ce0f5fe520f477e555c9997683d762aff8bd1402ae6938dd5c994780b1bf6aa7239e9d8101630ecfeaa730d2bbc97d39beb057f016db2e28bf12fab4989c0170c2593383fd04660b5229adcd8486ba78f6cc1b558bcd92f344100dff239a8c00dbc4c2825277f241691dbe4a7d9bd503abb9");//
-        bnProofOfWorkLimit = bnProofOfWorkLimitTestNet; 
-		nStakeMinAge = 20 * 60; // test net min age is 20 min
-		nCoinbaseMaturity = 10; // test maturity is 10 blocks
+        bnProofOfWorkLimit = bnProofOfWorkLimitTestNet;
+		nStakeMinAge = 5 * 60; // test net min age is 20 min
+		nCoinbaseMaturity = 1; // test maturity is 1 block
 		nModifierInterval = 60;
     }
     else
@@ -2971,7 +2971,7 @@ bool static AlreadyHave(CTxDB& txdb, const CInv& inv)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { 0xd3, 0xf3, 0xdd, 0xf5 }; 
+unsigned char pchMessageStart[4] = { 0xd3, 0xf3, 0xdd, 0xf5 };
 
 bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 {
@@ -2999,7 +2999,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64_t nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PROTO_VERSION || 
+        if (pfrom->nVersion < MIN_PROTO_VERSION ||
         		(pfrom->nVersion < MIN_PROTO_VERSION_AFTER_SWITCH && pindexBest->nHeight >= SWITCH_BLOCK_STEALTH_ADDRESS && !fTestNet))
         {
             printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
@@ -3274,7 +3274,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                     if (inv.hash == pfrom->hashContinue)
                     {
                         // Armr: send latest proof-of-work block to allow the
-                        // download node to accept as orphan (proof-of-stake 
+                        // download node to accept as orphan (proof-of-stake
                         // block might be rejected by stake connection check)
                         vector<CInv> vInv;
                         vInv.push_back(CInv(MSG_BLOCK, GetLastBlockIndex(pindexBest, false)->GetBlockHash()));
@@ -3619,7 +3619,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
     {
         if (fSecMsgEnabled)
             SecureMsgReceiveData(pfrom, strCommand, vRecv);
-        
+
         // Ignore unknown commands for extensibility
     }
 
@@ -3910,7 +3910,7 @@ bool SendMessages(CNode* pto, bool fSendTrickle)
         }
         if (!vGetData.empty())
             pto->PushMessage("getdata", vGetData);
-			
+
 		if (fSecMsgEnabled)
             SecureMsgSendData(pto, fSendTrickle);
 
