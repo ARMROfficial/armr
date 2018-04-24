@@ -81,29 +81,10 @@ int64_t nTransactionFee = MIN_TX_FEE;
 int64_t nReserveBalance = 0;
 int64_t nMinimumInputValue = 0;
 
-static const int NUM_OF_POW_CHECKPOINT = 20;
+static const int NUM_OF_POW_CHECKPOINT = 0;
 static const int checkpointPoWHeight[NUM_OF_POW_CHECKPOINT][2] =
 {
-		{  9601,  4611},
-		{ 19767,  6631},
-		{ 41366, 10850},
-		{ 60229, 15420},
-		{ 78842, 19751},
-		{102776, 25000},
-		{124376, 29266},
-		{150006, 31600},
-		{178922, 40208},
-		{200830, 44597},
-		{213786, 47226},
-		{230013, 50556},
-		{250008, 54582},
-		{272190, 59059},
-		{300836, 64774},
-		{321784, 68878},
-		{350003, 74350},
-		{375453, 79257},
-		{400494, 84066},
-		{434205, 90499},
+		
 };
 
 extern enum Checkpoints::CPMode CheckpointsMode;
@@ -2636,8 +2617,8 @@ bool LoadBlockIndex(bool fAllowNew)
 
 		bnTrustedModulus.SetHex("a8852ebf7c49f01cd196e35394f3b74dd86283a07f57e0a262928e7493d4a3961d93d93c90ea3369719641d626d28b9cddc6d9307b9aabdbffc40b6d6da2e329d079b4187ff784b2893d9f53e9ab913a04ff02668114695b07d8ce877c4c8cac1b12b9beff3c51294ebe349eca41c24cd32a6d09dd1579d3947e5c4dcc30b2090b0454edb98c6336e7571db09e0fdafbd68d8f0470223836e90666a5b143b73b9cd71547c917bf24c0efc86af2eba046ed781d9acb05c80f007ef5a0a5dfca23236f37e698e8728def12554bc80f294f71c040a88eff144d130b24211016a97ce0f5fe520f477e555c9997683d762aff8bd1402ae6938dd5c994780b1bf6aa7239e9d8101630ecfeaa730d2bbc97d39beb057f016db2e28bf12fab4989c0170c2593383fd04660b5229adcd8486ba78f6cc1b558bcd92f344100dff239a8c00dbc4c2825277f241691dbe4a7d9bd503abb9");//
         bnProofOfWorkLimit = bnProofOfWorkLimitTestNet;
-		nStakeMinAge = 5 * 60; // test net min age is 20 min
-		nCoinbaseMaturity = 1; // test maturity is 1 block
+		nStakeMinAge = 20 * 60; // test net min age is 20 min
+		nCoinbaseMaturity = 10; // test maturity is 10 blocks
 		nModifierInterval = 60;
     }
     else
@@ -2662,9 +2643,10 @@ bool LoadBlockIndex(bool fAllowNew)
             return false;
 
 
-		const char* pszTimestamp = "ARMR: privacy at your fingertips!";
+		const char* pszTimestamp = "ARMR: secure your future!";
+printf("Creating new Gen Block\n");
         CTransaction txNew;
-        txNew.nTime = 1499843027;
+        txNew.nTime = 1524174497;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 0 << CBigNum(42) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
@@ -2674,18 +2656,17 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1521902353;
+        block.nTime    = 1524174497;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = 3832541;
+        block.nNonce   = 0;
 
         if(fTestNet)
         {
-        	block.nTime    = 1521902251;
-           	block.nNonce   = 1270519;
+            block.nTime    = 1524174497;
+            block.nNonce   = 2021;
         }
 
-//Checking if the genesis block is mineable
- 		if (false && (block.GetHash() != hashGenesisBlock)) {
+ 		if ((block.GetHash() != hashGenesisBlock)) {
 			// This will figure out a valid hash and Nonce if you're
 			// creating a different genesis block:
 			uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
@@ -2706,7 +2687,8 @@ bool LoadBlockIndex(bool fAllowNew)
 		printf("block.nNonce = %u \n", block.nNonce);
 
         //// debug print
-		assert(block.hashMerkleRoot == uint256("0x98d0d2b2708fbb1281b5cea0a89427e5802f2b5080726db52dbe4f348430d12a"));
+		assert(block.hashMerkleRoot == uint256("0xa9643c35da92a76934c9247b0b76188ef9fbd4401df4a12a374c738364359d11"));
+							  
 		block.print();
 		assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
 		assert(block.CheckBlock());
