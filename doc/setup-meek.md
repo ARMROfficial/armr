@@ -1,6 +1,6 @@
 ## Meek Obfuscation Layer Setup
 
-**Meek** is another [pluggable transport](https://trac.torproject.org/projects/tor/wiki/doc/PluggableTransports) supported by DeepOnion which relays the traffic through a third-party server, for example a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network). This technique uses a trick called [domain fronting](https://www.bamsoftware.com/papers/fronting/) to communicate with a Tor relay while appearing to communicate with another domain.
+**Meek** is another [pluggable transport](https://trac.torproject.org/projects/tor/wiki/doc/PluggableTransports) supported by ARMR which relays the traffic through a third-party server, for example a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network). This technique uses a trick called [domain fronting](https://www.bamsoftware.com/papers/fronting/) to communicate with a Tor relay while appearing to communicate with another domain.
 
 ### Prerequisites
 
@@ -22,7 +22,7 @@ The executable will be located under `/usr/bin/meek-client`. If your Linux syste
 
 ### Configuration
 
-Open your *DeepOnion.conf* and enter below parameters to activate **meek** at the Wallet UI or daemon startup.
+Open your *ARMR.conf* and enter below parameters to activate **meek** at the Wallet UI or daemon startup.
 
 ```
 torplugin=meek
@@ -58,18 +58,18 @@ Bridge meek 0.0.2.0:3 97700DFE9F483596DDA6264C4D7DF7641E1E39CE url=https://meek.
 
 Insert those lines into your *torrc* which is located under:
 
-* %APPDATA%/Roaming/DeepOnion/tor (Windows)
+* %APPDATA%/Roaming/ARMR/tor (Windows)
 
 ![appdata-torrc](https://camo.githubusercontent.com/88e2eeb4a949d4f5bbc9fe86d3c1c943de03dc9c/68747470733a2f2f696d67322e7069636c6f61642e6f72672f696d6167652f64647063616772612f746f7272635f706174682e706e67)
 
-* ~/.DeepOnion/tor (Linux)
-* ~/Library/Application Support/DeepOnion/tor (Mac)
+* ~/.ARMR/tor (Linux)
+* ~/Library/Application Support/ARMR/tor (Mac)
 
 Under Windows you must take care of **not** saving this file with default extension appended to it (usually *.txt). One good way to avoid this problem is to edit the file with a powerful text editor like [Nodepad++](https://notepad-plus-plus.org/download/v7.5.4.html) and to select *All types* option on saving.
 
 ![save-torrc](https://img3.picload.org/image/ddwaworl/save_torrc.png)
 
-### Running DeepOnion with Meek
+### Running ARMR with Meek
 
 Open your *tor.log* which is located under the same folder where your *torrc* is. After a few moments you should see an output similar to this:
 

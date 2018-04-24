@@ -150,7 +150,7 @@
          <item>
           <widget class="QPushButton" name="signMessageButton_SM">
            <property name="toolTip">
-            <string>Sign the message to prove you own this DeepOnion address</string>
+            <string>Sign the message to prove you own this ARMR address</string>
            </property>
            <property name="text">
             <string>&amp;Sign Message</string>
@@ -296,7 +296,7 @@
          <item>
           <widget class="QPushButton" name="verifyMessageButton_VM">
            <property name="toolTip">
-            <string>Verify the message to ensure it was signed with the specified DeepOnion address</string>
+            <string>Verify the message to ensure it was signed with the specified ARMR address</string>
            </property>
            <property name="text">
             <string>&amp;Verify Message</string>

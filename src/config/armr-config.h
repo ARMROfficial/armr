@@ -243,10 +243,10 @@
 #define PACKAGE_BUGREPORT "https://github.com/deeponion/deeponion-dv/issues"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "DeepOnion Core"
+#define PACKAGE_NAME "ARMR Core"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "DeepOnion Core 1.6.1"
+#define PACKAGE_STRING "ARMR Core 1.6.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "deeponion"

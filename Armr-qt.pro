@@ -1,7 +1,7 @@
 # New version, additions & code updates by Mammix2
 
 TEMPLATE = app
-TARGET = DeepOnion-qt
+TARGET = ARMR-qt
 VERSION = 1.6.1.0
 INCLUDEPATH += src src/json \
     src/qt \
@@ -546,8 +546,8 @@ macx:HEADERS += src/qt/macdockiconhandler.h src/qt/macnotificationhandler.h
 macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm src/qt/macnotificationhandler.mm
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit -framework CoreServices
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
-macx:ICON = src/qt/res/icons/DeepOnion.icns
-macx:TARGET = "DeepOnion-Qt"
+macx:ICON = src/qt/res/icons/armr.icns
+macx:TARGET = "ARMR-Qt"
 macx:QMAKE_CFLAGS_THREAD += -pthread
 macx:QMAKE_LFLAGS_THREAD += -pthread
 macx:QMAKE_CXXFLAGS_THREAD += -pthread

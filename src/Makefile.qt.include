@@ -131,9 +131,9 @@ BITCOIN_QT_H = \
 RES_ICONS = \
   qt/res/icons/add.png \
   qt/res/icons/address-book.png \
-  qt/res/icons/DeepOnion.ico \
-  qt/res/icons/DeepOnion.png \
-  qt/res/icons/DeepOnion_testnet.png \
+  qt/res/icons/armr.ico \
+  qt/res/icons/armr.png \
+  qt/res/icons/armr_testnet.png \
   qt/res/icons/clock1.png \
   qt/res/icons/clock2.png \
   qt/res/icons/clock3.png \
@@ -256,7 +256,7 @@ QT_FORMS_H=$(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:
 # Most files will depend on the forms and moc files as includes. Generate them
 # before anything else.
 $(QT_MOC): $(QT_FORMS_H)
-$(qt_libbitcoinqt_a_OBJECTS) $(qt_DeepOnion_qt_OBJECTS) : | $(QT_MOC)
+$(qt_libbitcoinqt_a_OBJECTS) $(qt_ARMR_qt_OBJECTS) : | $(QT_MOC)
 
 #Generating these with a half-written protobuf header leads to wacky results.
 #This makes sure it's done.
@@ -264,21 +264,21 @@ $(QT_MOC): $(PROTOBUF_H)
 $(QT_MOC_CPP): $(PROTOBUF_H)
 
 # bitcoin-qt binary #
-qt_DeepOnion_qt_CPPFLAGS = $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+qt_ARMR_qt_CPPFLAGS = $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
   $(QT_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS)
 
-qt_DeepOnion_qt_SOURCES = qt/bitcoin.cpp
+qt_ARMR_qt_SOURCES = qt/bitcoin.cpp
 if TARGET_DARWIN
-  qt_DeepOnion_qt_SOURCES += $(BITCOIN_MM)
+  qt_ARMR_qt_SOURCES += $(BITCOIN_MM)
 endif
 if TARGET_WINDOWS
-  qt_DeepOnion_qt_SOURCES += $(BITCOIN_RC)
+  qt_ARMR_qt_SOURCES += $(BITCOIN_RC)
 endif
-qt_DeepOnion_qt_LDADD = qt/libbitcoinqt.a $(LIBBITCOIN_SERVER)
+qt_ARMR_qt_LDADD = qt/libbitcoinqt.a $(LIBBITCOIN_SERVER)
 if ENABLE_WALLET
- qt_DeepOnion_qt_LDADD += $(LIBBITCOIN_WALLET)
+ qt_ARMR_qt_LDADD += $(LIBBITCOIN_WALLET)
 endif
-qt_DeepOnion_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_SSE2) $(LIBLEVELDB) $(LIBMEMENV) \
+qt_ARMR_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_SSE2) $(LIBLEVELDB) $(LIBMEMENV) \
   $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(BDB_LIBS) \
   ../tor/src/or/libtor.a \
 	../tor/src/common/libor.a \
@@ -296,9 +296,9 @@ qt_DeepOnion_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTI
   $(LIBSECCOMP_LIBS)
 
 if TARGET_LINUX
-  qt_DeepOnion_qt_LDADD += -lrt
+  qt_ARMR_qt_LDADD += -lrt
 endif
-qt_DeepOnion_qt_LDFLAGS = $(QT_LDFLAGS)
+qt_ARMR_qt_LDFLAGS = $(QT_LDFLAGS)
 
 #locale/foo.ts -> locale/foo.qm
 QT_QM=$(QT_TS:.ts=.qm)
@@ -330,7 +330,7 @@ CLEAN_QT = $(nodist_qt_libbitcoinqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda 
 CLEANFILES += $(CLEAN_QT)
 
 bitcoin_qt_clean: FORCE
-	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_DeepOnion_qt_OBJECTS) qt/bitcoin-qt$(EXEEXT) $(LIBBITCOINQT)
+	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_ARMR_qt_OBJECTS) qt/bitcoin-qt$(EXEEXT) $(LIBBITCOINQT)
 
 bitcoin_qt: qt/Armr-qt$(EXEEXT)
 

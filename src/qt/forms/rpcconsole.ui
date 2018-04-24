@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>DeepOnion - Debug window</string>
+   <string>ARMR - Debug window</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -403,7 +403,7 @@
        <item row="15" column="0">
         <widget class="QPushButton" name="openDebugLogfileButton">
          <property name="toolTip">
-          <string>Open the DeepOnion debug log file from the current data directory. This can take a few seconds for large log files.</string>
+          <string>Open the ARMR debug log file from the current data directory. This can take a few seconds for large log files.</string>
          </property>
          <property name="text">
           <string>&amp;Open</string>
@@ -429,7 +429,7 @@
        <item row="17" column="0">
         <widget class="QPushButton" name="showCLOptionsButton">
          <property name="toolTip">
-          <string>Show the DeepOnion-Qt help message to get a list with possible DeepOnion command-line options.</string>
+          <string>Show the ARMR-Qt help message to get a list with possible ARMR command-line options.</string>
          </property>
          <property name="text">
           <string>&amp;Show</string>
