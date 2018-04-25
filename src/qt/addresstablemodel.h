@@ -20,7 +20,7 @@ public:
 
     enum EAddressType {
         AT_Unknown = 0, /**< User specified label */
-        AT_Normal = 1,  /**< DeepOnion Public address */
+        AT_Normal = 1,  /**< ARMR Public address */
         AT_Stealth = 2,  /**< Stealth address */
         AT_BIP32 = 3, /**< BIP32 address */
         AT_Group = 4, /**< BIP32 address */
@@ -28,8 +28,8 @@ public:
 
     enum ColumnIndex {
         Label = 0,   /**< User specified label */
-        Address = 1,  /**< DeepOnion Public address */
-		Type = 2, /** < DeepOnion Stealth Address */
+        Address = 1,  /**< ARMR Public address */
+        Type = 2, /** < ARMR Stealth Address */
     };
 
     enum RoleIndex {

@@ -1001,7 +1001,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "DeepOnion";
+    const char* pszModule = "ARMR";
 #endif
     if (pex)
         return strprintf(
@@ -1050,13 +1050,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\DeepOnion
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\DeepOnion
-    // Mac: ~/Library/Application Support/DeepOnion
-    // Unix: ~/.DeepOnion
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\ARMR
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\ARMR
+    // Mac: ~/Library/Application Support/ARMR
+    // Unix: ~/.ARMR
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "DeepOnion";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "ARMR";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1068,10 +1068,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "DeepOnion";
+    return pathRet / "ARMR";
 #else
     // Unix
-    return pathRet / ".DeepOnion";
+    return pathRet / ".ARMR";
 #endif
 #endif
 }
@@ -1113,7 +1113,7 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "DeepOnion.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "ARMR.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
     return pathConfigFile;
 }
@@ -1274,10 +1274,10 @@ void AddTimeData(const CNetAddr& ip, int64_t nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong DeepOnion will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong ARMR will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
-                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("DeepOnion"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
+                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("ARMR"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
                 }
             }
         }

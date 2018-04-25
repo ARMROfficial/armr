@@ -387,11 +387,6 @@ void AddressCurrentlyConnected(const CService& addr)
 }
 
 
-
-
-
-
-
 CNode* FindNode(const CNetAddr& ip)
 {
     {
@@ -1198,11 +1193,11 @@ static const char *strDNSSeed[][2] = {
 
 // hidden service seeds
 static const char *strMainNetOnionSeed[][1] = {
-        {"dj362tqrqdcxtkew.onion"},{NULL}
+        {"zog5wubdhqfaexwp.onion"},{NULL}
 };
 
 static const char *strTestNetOnionSeed[][1] = {
-		{NULL}
+        {"4ebm6fxpv7eclzc7.onion"}, {NULL}
 };
 
 void ThreadDNSAddressSeed(void* parg)

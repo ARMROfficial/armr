@@ -1,4 +1,4 @@
-Copyright (c) 2017-2018 DeepOnion Developers
+Copyright (c) 2017-2018 ARMR Developers
 Distributed under the MIT/X11 software license, see the accompanying
 file license.txt or http://www.opensource.org/licenses/mit-license.php.
 This product includes software developed by the OpenSSL Project for use in
@@ -16,7 +16,7 @@ First get the dependencies:
 
     apt-get update
     apt-get upgrade
-    apt-get install build-essential libtool autotools-dev autoconf automake pkg-config libssl-dev libboost-all-dev bsdmainutils
+    apt-get install build-essential libtool autotools-dev autoconf automake pkg-config libssl-dev libboost-all-dev bsdmainutils
     apt-get install libqrencode-dev libminiupnpc-dev libevent-dev libcap-dev libseccomp-dev git
 
 
@@ -28,11 +28,11 @@ First get the dependencies:
 if you want to build GUI version, do this, otherwise you can skip this step:
     apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
 
-then get deeponion source from the github:
-    git clone --recursive https://github.com/deeponion/deeponion.git
+then get armr source from the github:
+    git clone --recursive https://github.com/armrofficial/armr.git
 
 build with autotools:
-    cd deeponion
+    cd armr
     ./autogen.sh
     ./configure --with-gui=qt5    (if you want to build daemon, use --without-gui)
     make
@@ -46,4 +46,4 @@ It has been reported that under Debian 9 the installation of libssl1.1-dev leads
 
 Ubuntu 14.04:
 
-If you have problems with boost libraries visit this link for a possible solution: https://github.com/deeponion/deeponion/issues/63#issuecomment-365329304
+
