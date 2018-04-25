@@ -1,7 +1,7 @@
 *.tar.gz
 
 *.exe
-ARMR-qt
+DeepOnion-qt
 Armrd
 
 # autoreconf
@@ -25,7 +25,7 @@ config.log
 config.status
 configure
 libtool
-src/config/armr-config.h
+src/config/deeponion-config.h
 src/config/stamp-h1
 share/setup.nsi
 share/qt/Info.plist
@@ -109,7 +109,7 @@ db-4.8.30.NC/
 
 Makefile.Debug
 Makefile.Release
-armr-qt_plugin_import.cpp
-object_script.armr-qt.Debug
-object_script.armr-qt.Release
+deeponion-qt_plugin_import.cpp
+object_script.DeepOnion-qt.Debug
+object_script.DeepOnion-qt.Release
 release/
