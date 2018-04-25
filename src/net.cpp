@@ -1198,11 +1198,11 @@ static const char *strDNSSeed[][2] = {
 
 // hidden service seeds
 static const char *strMainNetOnionSeed[][1] = {
-        {"zog5wubdhqfaexwp.onion"}, {NULL}
+        {"dj362tqrqdcxtkew.onion"},{NULL}
 };
 
 static const char *strTestNetOnionSeed[][1] = {
-		{"4ebm6fxpv7eclzc7.onion"}
+		{NULL}
 };
 
 void ThreadDNSAddressSeed(void* parg)
