@@ -129,11 +129,11 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert ARMR:// to Armr:
+    // Convert DeepOnion:// to Armr:
     //
     //    Cannot handle this later, because bitcoin:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("ARMR://"))
+    if(uri.startsWith("DeepOnion://"))
     {
         uri.replace(0, 12, "Armr:");
     }

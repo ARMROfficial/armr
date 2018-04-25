@@ -3,7 +3,7 @@
 
 #### Disclaimer
 
-This guide has it's a modified version of this original guide: [ARMR in Tails persistent volume](https://gist.github.com/dragononcrypto/d3df54d72b23f7c1023876cc7264707e)
+This guide has it's a modified version of this original guide: [DeepOnion in Tails persistent volume](https://gist.github.com/dragononcrypto/d3df54d72b23f7c1023876cc7264707e)
 
 
 The following are commands needed to build on Debian from scratch (use sudo if you are not root). It has been verified with Debian 9 Stretch
@@ -47,7 +47,7 @@ Install additional dependencies Berkeley 4.8++ and OpenSSL 1.0
 sudo apt install libdb4.8-dev libdb4.8++-dev libssl1.0 libssl1.0-dev
 ```
 
-#### Clone and compile ARMR
+#### Clone and compile DeepOnion
 
 Clone deeponion repository:
 
@@ -65,10 +65,10 @@ cd deeponion
 make
 ```
 
-Now the system is compiled. You can copy ARMR-qt file to the place that you want. Go to the desired folder and do:
+Now the system is compiled. You can copy DeepOnion-qt file to the place that you want. Go to the desired folder and do:
 
 ```
-cp ~/deeponion/src/qt/ARMR-qt .
+cp ~/deeponion/src/qt/DeepOnion-qt .
 ```
 
 

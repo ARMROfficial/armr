@@ -13,7 +13,7 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// ARMR Miner
+// DeepOnion Miner
 //
 
 extern unsigned int nMinerSleep;
@@ -532,7 +532,7 @@ void StakeMiner(CWallet *pwallet)
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
     // Make this thread recognisable as the mining thread
-    RenameThread("ARMR-miner");
+    RenameThread("DeepOnion-miner");
 
     bool fTryToSync = true;
 

@@ -1210,7 +1210,7 @@ static void ApproximateBestSubset(vector<pair<int64, pair<const CWalletTx*,unsig
     }
 }
 
-// ARMR: total coins staked (non-spendable until maturity)
+// DeepOnion: total coins staked (non-spendable until maturity)
 int64_t CWallet::GetStake() const
 {
     int64_t nTotal = 0;
@@ -1470,7 +1470,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, 
                     nFeeRet += nMoveToFee;
                 }
 
-                // ARMR: sub-cent change is moved to fee
+                // DeepOnion: sub-cent change is moved to fee
                 if (nChange > 0 && nChange < MIN_TXOUT_AMOUNT)
                 {
                     nFeeRet += nChange;
@@ -2382,8 +2382,8 @@ set< set<CTxDestination> > CWallet::GetAddressGroupings()
     return ret;
 }
 
-// ARMR: check 'spent' consistency between wallet and txindex
-// ARMR: fix wallet spent state according to txindex
+// DeepOnion: check 'spent' consistency between wallet and txindex
+// DeepOnion: fix wallet spent state according to txindex
 void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, bool fCheckOnly)
 {
     nMismatchFound = 0;
@@ -2432,7 +2432,7 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, bo
     }
 }
 
-// ARMR: disable transaction (only for coinstake)
+// DeepOnion: disable transaction (only for coinstake)
 void CWallet::DisableTransaction(const CTransaction &tx)
 {
     if (!tx.IsCoinStake() || !IsFromMe(tx))

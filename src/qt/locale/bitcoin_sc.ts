@@ -5,19 +5,19 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About ARMR</source>
-        <translation>关于 ARMR</translation>
+        <source>About DeepOnion</source>
+        <translation>关于 DeepOnion</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;ARMR&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;ARMR&lt;/b&gt; 版本</translation>
+        <source>&lt;b&gt;DeepOnion&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;DeepOnion&lt;/b&gt; 版本</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The ARMR developers</source>
+Copyright © 2014 The DeepOnion developers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -65,8 +65,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-46"/>
-        <source>These are your ARMR addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>这些是您用来接收付款的 ARMR 地址。 您可能需要为每个付款方提供不同地址以便记录他们。</translation>
+        <source>These are your DeepOnion addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>这些是您用来接收付款的 DeepOnion 地址。 您可能需要为每个付款方提供不同地址以便记录他们。</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -80,8 +80,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a ARMR address</source>
-        <translation>签发消息以证明您对某个 ARMR 地址的所有权</translation>
+        <source>Sign a message to prove you own a DeepOnion address</source>
+        <translation>签发消息以证明您对某个 DeepOnion 地址的所有权</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -95,8 +95,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-14"/>
-        <source>Verify a message to ensure it was signed with a specified ARMR address</source>
-        <translation>验证消息以确定其由某特定 ARMR 地址所签发</translation>
+        <source>Verify a message to ensure it was signed with a specified DeepOnion address</source>
+        <translation>验证消息以确定其由某特定 DeepOnion 地址所签发</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -263,8 +263,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-58"/>
-        <source>ARMR will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>ARMR即将关闭以完成加密过程。请记住即使加密钱包也无法彻底保护您的钱币不被计算机上感染的恶意软件所窃取。</translation>
+        <source>DeepOnion will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>DeepOnion即将关闭以完成加密过程。请记住即使加密钱包也无法彻底保护您的钱币不被计算机上感染的恶意软件所窃取。</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -377,8 +377,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+6"/>
-        <source>Show information about ARMR</source>
-        <translation>显示ARMR的相关信息</translation>
+        <source>Show information about DeepOnion</source>
+        <translation>显示DeepOnion的相关信息</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -427,13 +427,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-64"/>
-        <source>Send coins to a ARMR address</source>
-        <translation>向ARMR地址发送钱币</translation>
+        <source>Send coins to a DeepOnion address</source>
+        <translation>向DeepOnion地址发送钱币</translation>
     </message>
     <message>
         <location line="+47"/>
-        <source>Modify configuration options for ARMR</source>
-        <translation>修改ARMR的配置选项</translation>
+        <source>Modify configuration options for DeepOnion</source>
+        <translation>修改DeepOnion的配置选项</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -472,8 +472,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-202"/>
-        <source>ARMR</source>
-        <translation>ARMR</translation>
+        <source>DeepOnion</source>
+        <translation>DeepOnion</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -482,8 +482,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+180"/>
-        <source>&amp;About ARMR</source>
-        <translation>关于ARMR(&amp;A)</translation>
+        <source>&amp;About DeepOnion</source>
+        <translation>关于DeepOnion(&amp;A)</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -539,13 +539,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <location line="+60"/>
-        <source>ARMR client</source>
-        <translation>ARMR客户端</translation>
+        <source>DeepOnion client</source>
+        <translation>DeepOnion客户端</translation>
     </message>
     <message>
         <location line="+75"/>
-        <source>%n active connection(s) to ARMR network</source>
-        <translation>%n 个连通ARMR网络的活跃连接</translation>
+        <source>%n active connection(s) to DeepOnion network</source>
+        <translation>%n 个连通DeepOnion网络的活跃连接</translation>
     </message>
     <message>
         <location line="+40"/>
@@ -584,13 +584,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-312"/>
-        <source>About ARMR card</source>
-        <translation>关于ARMR卡</translation>
+        <source>About DeepOnion card</source>
+        <translation>关于DeepOnion卡</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Show information about ARMR card</source>
-        <translation>显示ARMR卡的相关信息</translation>
+        <source>Show information about DeepOnion card</source>
+        <translation>显示DeepOnion卡的相关信息</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -669,8 +669,8 @@ Address: %4
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid ARMR address or malformed URI parameters.</source>
-        <translation>URI无法解析！可能由非法的ARMR地址或异常URI参数导致。</translation>
+        <source>URI can not be parsed! This can be caused by an invalid DeepOnion address or malformed URI parameters.</source>
+        <translation>URI无法解析！可能由非法的DeepOnion地址或异常URI参数导致。</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -729,8 +729,8 @@ Address: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+109"/>
-        <source>A fatal error occurred. ARMR can no longer continue safely and will quit.</source>
-        <translation>发生严重错误。ARMR无法继续安全运行并将退出。</translation>
+        <source>A fatal error occurred. DeepOnion can no longer continue safely and will quit.</source>
+        <translation>发生严重错误。DeepOnion无法继续安全运行并将退出。</translation>
     </message>
 </context>
 <context>
@@ -1067,8 +1067,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid ARMR address.</source>
-        <translation>输入的地址 &quot;%1&quot; 不是合法的 ARMR 地址。</translation>
+        <source>The entered address &quot;%1&quot; is not a valid DeepOnion address.</source>
+        <translation>输入的地址 &quot;%1&quot; 不是合法的 DeepOnion 地址。</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1086,8 +1086,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../guiutil.cpp" line="+420"/>
         <location line="+12"/>
-        <source>ARMR-Qt</source>
-        <translation>ARMR-Qt</translation>
+        <source>DeepOnion-Qt</source>
+        <translation>DeepOnion-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1159,13 +1159,13 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start ARMR after logging in to the system.</source>
-        <translation>登入系统后自动启动ARMR。</translation>
+        <source>Automatically start DeepOnion after logging in to the system.</source>
+        <translation>登入系统后自动启动DeepOnion。</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start ARMR on system login</source>
-        <translation>系统登陆时启动ARMR(&amp;S)</translation>
+        <source>&amp;Start DeepOnion on system login</source>
+        <translation>系统登陆时启动DeepOnion(&amp;S)</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1184,8 +1184,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the ARMR client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>自动在路由上打开ARMR客户端端口。您的路由必须支持UPnP并开启，此功能才能生效。</translation>
+        <source>Automatically open the DeepOnion client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>自动在路由上打开DeepOnion客户端端口。您的路由必须支持UPnP并开启，此功能才能生效。</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1194,8 +1194,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the ARMR network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>通过SOCKS代理连接到ARMR网络(如通过Tore连接)。</translation>
+        <source>Connect to the DeepOnion network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>通过SOCKS代理连接到DeepOnion网络(如通过Tore连接)。</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1269,8 +1269,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting ARMR.</source>
-        <translation>此处可设置用户界面语言。该设置将在重启ARMR后生效。</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting DeepOnion.</source>
+        <translation>此处可设置用户界面语言。该设置将在重启DeepOnion后生效。</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1284,8 +1284,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+9"/>
-        <source>Whether to show ARMR addresses in the transaction list or not.</source>
-        <translation>是否在交易列表显示ARMR地址。</translation>
+        <source>Whether to show DeepOnion addresses in the transaction list or not.</source>
+        <translation>是否在交易列表显示DeepOnion地址。</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1331,8 +1331,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting ARMR.</source>
-        <translation>此设置将在重启ARMR后生效。</translation>
+        <source>This setting will take effect after restarting DeepOnion.</source>
+        <translation>此设置将在重启DeepOnion后生效。</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1350,8 +1350,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+33"/>
         <location line="+231"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ARMR network after a connection is established, but this process has not completed yet.</source>
-        <translation>所显示的信息可能已过时。您的钱包将在建立连接后自动与ARMR网络同步，但此过程尚未完成。</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the DeepOnion network after a connection is established, but this process has not completed yet.</source>
+        <translation>所显示的信息可能已过时。您的钱包将在建立连接后自动与DeepOnion网络同步，但此过程尚未完成。</translation>
     </message>
     <message>
         <location line="-160"/>
@@ -1566,8 +1566,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the ARMR-Qt help message to get a list with possible ARMR command-line options.</source>
-        <translation>显示ARMR-Qt帮助信息以列出所有可用的ARMR命令行选项。</translation>
+        <source>Show the DeepOnion-Qt help message to get a list with possible DeepOnion command-line options.</source>
+        <translation>显示DeepOnion-Qt帮助信息以列出所有可用的DeepOnion命令行选项。</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1586,13 +1586,13 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="-104"/>
-        <source>ARMR - Debug window</source>
-        <translation>ARMR - 调试窗口</translation>
+        <source>DeepOnion - Debug window</source>
+        <translation>DeepOnion - 调试窗口</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>ARMR Core</source>
-        <translation>ARMR 核心</translation>
+        <source>DeepOnion Core</source>
+        <translation>DeepOnion 核心</translation>
     </message>
     <message>
         <location line="+279"/>
@@ -1601,8 +1601,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the ARMR debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>从当前数据目录打开ARMR调试日志文件。大日志文件打开时间较长。</translation>
+        <source>Open the DeepOnion debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>从当前数据目录打开DeepOnion调试日志文件。大日志文件打开时间较长。</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1611,8 +1611,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-33"/>
-        <source>Welcome to the ARMR RPC console.</source>
-        <translation>欢迎来到ARMR RPC控制台.</translation>
+        <source>Welcome to the DeepOnion RPC console.</source>
+        <translation>欢迎来到DeepOnion RPC控制台.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1770,8 +1770,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a ARMR address</source>
-        <translation>输入ARMR地址</translation>
+        <source>Enter a DeepOnion address</source>
+        <translation>输入DeepOnion地址</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -1870,8 +1870,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+251"/>
-        <source>WARNING: Invalid ARMR address</source>
-        <translation>警告：错误的ARMR地址</translation>
+        <source>WARNING: Invalid DeepOnion address</source>
+        <translation>警告：错误的DeepOnion地址</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1944,8 +1944,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a ARMR address</source>
-        <translation>输入ARMR地址</translation>
+        <source>Enter a DeepOnion address</source>
+        <translation>输入DeepOnion地址</translation>
     </message>
 </context>
 <context>
@@ -2005,8 +2005,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this ARMR address</source>
-        <translation>签发消息以证明您拥有此ARMR地址</translation>
+        <source>Sign the message to prove you own this DeepOnion address</source>
+        <translation>签发消息以证明您拥有此DeepOnion地址</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2037,8 +2037,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified ARMR address</source>
-        <translation>验证消息以确保其为特定的ARMR地址所签发</translation>
+        <source>Verify the message to ensure it was signed with the specified DeepOnion address</source>
+        <translation>验证消息以确保其为特定的DeepOnion地址所签发</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2048,8 +2048,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a ARMR address </source>
-        <translation>输入ARMR地址 </translation>
+        <source>Enter a DeepOnion address </source>
+        <translation>输入DeepOnion地址 </translation>
     </message>
     <message>
         <location line="-2"/>
@@ -2058,8 +2058,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter ARMR signature</source>
-        <translation>输入ARMR签名</translation>
+        <source>Enter DeepOnion signature</source>
+        <translation>输入DeepOnion签名</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2629,8 +2629,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+33"/>
-        <source>ARMR version</source>
-        <translation>ARMR 版本</translation>
+        <source>DeepOnion version</source>
+        <translation>DeepOnion 版本</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2659,8 +2659,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: ARMR.conf)</source>
-        <translation>指定配置文件 (默认： ARMR.conf)</translation>
+        <source>Specify configuration file (default: DeepOnion.conf)</source>
+        <translation>指定配置文件 (默认： DeepOnion.conf)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2814,8 +2814,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+61"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong ARMR will not work properly.</source>
-        <translation>警告：请检查您计算机的日期和时间是否正确！如您的时钟错误ARMR将无法正常工作。</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong DeepOnion will not work properly.</source>
+        <translation>警告：请检查您计算机的日期和时间是否正确！如您的时钟错误DeepOnion将无法正常工作。</translation>
     </message>
     <message>
         <location line="-31"/>
@@ -3003,25 +3003,25 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <source>%s, you must set a rpcpassword in the configuration file:
  %s
 It is recommended you use the following random password:
-rpcuser=ARMRrpc
+rpcuser=DeepOnionrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;ARMR Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;DeepOnion Alert&quot; admin@foo.com
 </source>
         <translation>
    %s，您必须设置rpcpassword，在设置文件：
  %s
 推荐您使用如下随机密码：
-rpcuser=ARMRrpc
+rpcuser=DeepOnionrpc
 rpcpassword=%s
 (您无需记住此密码)
 用户名和密码不能相同。          
 如文件不存在，以owner-readable-only权限创建它。
 另推荐设置警告提示以便发现问题；
-例如： alertnotify=echo %%s | mail -s &quot;ARMR Alert&quot; admin@foo.com   
+例如： alertnotify=echo %%s | mail -s &quot;DeepOnion Alert&quot; admin@foo.com   
           </translation>
     </message>
     <message>
@@ -3146,13 +3146,13 @@ rpcpassword=%s
     </message>
     <message>
         <location line="+1"/>
-        <source>Cannot obtain a lock on data directory %s.  ARMR is probably already running.</source>
-        <translation>无法锁定数据目录 %s.  ARMR可能已经启动。</translation>
+        <source>Cannot obtain a lock on data directory %s.  DeepOnion is probably already running.</source>
+        <translation>无法锁定数据目录 %s.  DeepOnion可能已经启动。</translation>
     </message>
     <message>
         <location line="-98"/>
-        <source>ARMR</source>
-        <translation>ARMR</translation>
+        <source>DeepOnion</source>
+        <translation>DeepOnion</translation>
     </message>
     <message>
         <location line="+140"/>
@@ -3186,13 +3186,13 @@ rpcpassword=%s
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of ARMR</source>
-        <translation>载入 wallet.dat 错误：钱包需要新版的ARMR</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of DeepOnion</source>
+        <translation>载入 wallet.dat 错误：钱包需要新版的DeepOnion</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart ARMR to complete</source>
-        <translation>钱包需要重新写入：重启ARMR以完成</translation>
+        <source>Wallet needed to be rewritten: restart DeepOnion to complete</source>
+        <translation>钱包需要重新写入：重启DeepOnion以完成</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3261,8 +3261,8 @@ rpcpassword=%s
     </message>
     <message>
         <location line="+122"/>
-        <source>Unable to bind to %s on this computer. ARMR is probably already running.</source>
-        <translation>无法绑定这台计算机上的 %s 。 ARMR可能已经在运行。</translation>
+        <source>Unable to bind to %s on this computer. DeepOnion is probably already running.</source>
+        <translation>无法绑定这台计算机上的 %s 。 DeepOnion可能已经在运行。</translation>
     </message>
     <message>
         <location line="-97"/>
