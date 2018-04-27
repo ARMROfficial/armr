@@ -1,9 +1,9 @@
-/* src/config/deeponion-config.h.  Generated from deeponion-config.h.in by configure.  */
-/* src/config/deeponion-config.h.in.  Generated from configure.ac by autoheader.  */
+/* src/config/armr-config.h.  Generated from armr-config.h.in by configure.  */
+/* src/config/armr-config.h.in.  Generated from configure.ac by autoheader.  */
 
-#ifndef DEEPONION_CONFIG_H
+#ifndef ARMR_CONFIG_H
 
-#define DEEPONION_CONFIG_H
+#define ARMR_CONFIG_H
 
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
@@ -240,19 +240,19 @@
 #define HAVE_WORKING_BOOST_SLEEP_FOR 1
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "https://github.com/deeponion/deeponion-dv/issues"
+#define PACKAGE_BUGREPORT "https://github.com/armr/armr-dv/issues"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "DeepOnion Core"
+#define PACKAGE_NAME "ARMR Core"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "DeepOnion Core 1.6.1"
+#define PACKAGE_STRING "ARMR Core 1.6.1"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "deeponion"
+#define PACKAGE_TARNAME "armr"
 
 /* Define to the home page for this package. */
-#define PACKAGE_URL "http://deeponion.org/"
+#define PACKAGE_URL "http://armr.network/"
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "1.6.1"
@@ -303,4 +303,4 @@
 /* Define for large files, on AIX-style hosts. */
 /* #undef _LARGE_FILES */
 
-#endif //DEEPONION_CONFIG_H
+#endif //ARMR_CONFIG_H

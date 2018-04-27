@@ -5,22 +5,22 @@ SUBDIRS = tor src
 GZIP_ENV="-9n"
 
 BITCOIND_BIN=$(top_builddir)/src/Armrd$(EXEEXT)
-BITCOIN_QT_BIN=$(top_builddir)/src/qt/DeepOnion-qt$(EXEEXT)
+BITCOIN_QT_BIN=$(top_builddir)/src/qt/ARMR-qt$(EXEEXT)
 BITCOIN_WIN_INSTALLER=$(PACKAGE)-$(PACKAGE_VERSION)-win$(WINDOWS_BITS)-setup$(EXEEXT)
 
-DEEPONION_QT_APP=DeepOnion-qt
-DEEPONION_DAEMON=Armrd
-OSX_APP=DeepOnion-Qt.app
-OSX_DMG=DeepOnion-Qt.dmg
+ARMR_QT_APP=ARMR-qt
+ARMR_DAEMON=Armrd
+OSX_APP=ARMR-Qt.app
+OSX_DMG=ARMR-Qt.dmg
 OSX_DEPLOY_SCRIPT=$(top_srcdir)/contrib/macdeploy/macdeployqtplus
 OSX_FANCY_PLIST=$(top_srcdir)/contrib/macdeploy/fancy.plist
-OSX_INSTALLER_ICONS=$(top_srcdir)/src/qt/res/icons/DeepOnion.icns
+OSX_INSTALLER_ICONS=$(top_srcdir)/src/qt/res/icons/armr.icns
 OSX_PLIST=$(top_srcdir)/share/qt/Info.plist #not installed
 OSX_QT_TRANSLATIONS = da,de,es,hu,ru,uk,zh_CN,zh_TW
 
 DIST_DOCS = $(wildcard doc/*.md) $(wildcard doc/release-notes/*.md)
 
-WINDOWS_PACKAGING = $(top_srcdir)/share/pixmaps/deeponion.ico \
+WINDOWS_PACKAGING = $(top_srcdir)/share/pixmaps/armr.ico \
   $(top_srcdir)/share/pixmaps/nsis-header.bmp \
   $(top_srcdir)/share/pixmaps/nsis-wizard.bmp \
   $(top_srcdir)/doc/README_windows.txt
@@ -68,17 +68,17 @@ $(OSX_APP)/Contents/Info.plist: $(OSX_PLIST)
 	$(MKDIR_P) $(@D)
 	$(INSTALL_DATA) $< $@
 
-$(OSX_APP)/Contents/Resources/DeepOnion.icns: $(OSX_INSTALLER_ICONS)
+$(OSX_APP)/Contents/Resources/armr.icns: $(OSX_INSTALLER_ICONS)
 	$(MKDIR_P) $(@D)
 	$(INSTALL_DATA) $< $@
 
-$(OSX_APP)/Contents/MacOS/DeepOnion-Qt: $(BITCOIN_QT_BIN)
+$(OSX_APP)/Contents/MacOS/ARMR-Qt: $(BITCOIN_QT_BIN)
 	$(MKDIR_P) $(@D)
 	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM)  $< $@
 
 OSX_APP_BUILT=$(OSX_APP)/Contents/PkgInfo $(OSX_APP)/Contents/Resources/empty.lproj \
-  $(OSX_APP)/Contents/Resources/DeepOnion.icns $(OSX_APP)/Contents/Info.plist \
-  $(OSX_APP)/Contents/MacOS/DeepOnion-Qt
+  $(OSX_APP)/Contents/Resources/armr.icns $(OSX_APP)/Contents/Info.plist \
+  $(OSX_APP)/Contents/MacOS/ARMR-Qt
 
 if BUILD_DARWIN
 $(OSX_DMG): $(OSX_APP_BUILT) $(OSX_PACKAGING)
@@ -91,7 +91,7 @@ $(OSX_DMG): $(OSX_APP_BUILT) $(OSX_PACKAGING)
 	$(INSTALL) contrib/macdeploy/background.png dist/.background
 	$(INSTALL) contrib/macdeploy/DS_Store dist/.DS_Store
 	cd dist; $(LN_S) /Applications Applications
-	$(GENISOIMAGE) -no-cache-inodes -l -probe -V "DeepOnion-Qt" -no-pad -r -apple -o $@ dist
+	$(GENISOIMAGE) -no-cache-inodes -l -probe -V "ARMR-Qt" -no-pad -r -apple -o $@ dist
 endif
 
 if TARGET_DARWIN
@@ -131,7 +131,7 @@ test_bitcoin_filtered.info: test_bitcoin.info
 block_test.info: test_bitcoin_filtered.info
 	$(MKDIR_P) qa/tmp
 	-@TIMEOUT=15 qa/pull-tester/run-bitcoind-for-test.sh $(JAVA) -jar $(JAVA_COMPARISON_TOOL) qa/tmp/compTool 0
-	$(LCOV) -c -d $(abs_builddir)/src --t DEEPONIONJBlockTest -o $@
+	$(LCOV) -c -d $(abs_builddir)/src --t ARMRJBlockTest -o $@
 	$(LCOV) -z -d $(abs_builddir)/src
 	$(LCOV) -z -d $(abs_builddir)/src/leveldb
 
@@ -169,5 +169,5 @@ CLEANFILES = $(OSX_DMG) $(BITCOIN_WIN_INSTALLER)
 .INTERMEDIATE: $(COVERAGE_INFO)
 
 clean-local:
-	rm -rf test_bitcoin.coverage/ total.coverage/ $(OSX_APP) $(DEEPONION_QT_APP) $(DEEPONION_DAEMON) release_$(DEEPONION_PLATFORM).zip
+	rm -rf test_bitcoin.coverage/ total.coverage/ $(OSX_APP) $(ARMR_QT_APP) $(ARMR_DAEMON) release_$(ARMR_PLATFORM).zip
 	

@@ -667,7 +667,7 @@ void ThreadTorNet2(void* parg) {
     argv.push_back((tor_dir / "onion").string());
     argv.push_back("--HiddenServicePort");
     if(fTestNet)
-    	argv.push_back("26550");
+        argv.push_back("21510");
     else
     	argv.push_back("16560");
 
@@ -1197,7 +1197,7 @@ static const char *strMainNetOnionSeed[][1] = {
 };
 
 static const char *strTestNetOnionSeed[][1] = {
-        {"4ebm6fxpv7eclzc7.onion"}, {NULL}
+        {"4s5aterbpz6lzh4a.onion"}, {NULL}
 };
 
 void ThreadDNSAddressSeed(void* parg)

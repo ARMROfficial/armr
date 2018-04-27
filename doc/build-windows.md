@@ -1,7 +1,7 @@
-## HOWTO - Build the DeepOnion Wallet under Windows
+## HOWTO - Build the ARMR Wallet under Windows
 
 
-Building the DeepOnion Wallet is no easy task as it comprises of several components, libraries and tools which have to be stored, maintained and executed in certain order. This HOWTO aims to provide a detailed description, so that developers and power-users can easily solve all of the tasks and avoid several, often nasty, errors and misconfigurations. Pay close attention to all commands and do not ignore any one of them.  
+Building the ARMR Wallet is no easy task as it comprises of several components, libraries and tools which have to be stored, maintained and executed in certain order. This HOWTO aims to provide a detailed description, so that developers and power-users can easily solve all of the tasks and avoid several, often nasty, errors and misconfigurations. Pay close attention to all commands and do not ignore any one of them.  
 
 ### Prerequisites
 
@@ -60,7 +60,7 @@ If you see this then you've successfully configured your GCC compiler! :thumbsup
 
 ### Installing Libraries
 
-After having installed the MSYS & MinGW tools the next steps will be to download and compile certain libraries which we'll need to compile the DeepOnion Wallet. As some of those libraries come from the Unix world it is **absolutely necessary** to use **unix tools** to unpack them. In our case we'll use `tar`, so it's recommended to [learn a bit about this tool](https://kb.iu.edu/d/acfi). But this isn't a strict requirement, as one only has to type certain commands into the console. 
+After having installed the MSYS & MinGW tools the next steps will be to download and compile certain libraries which we'll need to compile the ARMR Wallet. As some of those libraries come from the Unix world it is **absolutely necessary** to use **unix tools** to unpack them. In our case we'll use `tar`, so it's recommended to [learn a bit about this tool](https://kb.iu.edu/d/acfi). But this isn't a strict requirement, as one only has to type certain commands into the console. 
 
 Here I'll use `C:\deps` as the root directory for the below libraries. If not stated otherwise, all of them will be unpacked there.
 
@@ -189,7 +189,7 @@ make install
 
 #### TOR Libraries
 
-The DeepOnion project delivers pre-compiled TOR libraries so there is no need to compile them again. However, in case of a new version or for testing purposes one can easily compile them by executing the following commands in a MSYS window:
+The ARMR project delivers pre-compiled TOR libraries so there is no need to compile them again. However, in case of a new version or for testing purposes one can easily compile them by executing the following commands in a MSYS window:
 
 ```
 cd TOR_UNPACKED_SRC_DIRECTORY
@@ -238,7 +238,7 @@ mingw32-make
 
 **Problem:** *Using wrong QMake*
 
-One aspect is the location of the *qmake* tool which in my case was located in two places. One was the Qt directory itself (which should have been used) and the other was a package brought by my Anaconda Toolset which I'm using when coding in Python. This, of course, had nothing to do with DeepOnion or C++ development at all, but it happened that in my case Anaconda's location got evaluated first and the end result was a messy Makefile. So, if you experience similar things the first command you should enter is `which qmake` to list all available locations of it. In my case the result was this one:
+One aspect is the location of the *qmake* tool which in my case was located in two places. One was the Qt directory itself (which should have been used) and the other was a package brought by my Anaconda Toolset which I'm using when coding in Python. This, of course, had nothing to do with ARMR or C++ development at all, but it happened that in my case Anaconda's location got evaluated first and the end result was a messy Makefile. So, if you experience similar things the first command you should enter is `which qmake` to list all available locations of it. In my case the result was this one:
 
 `c:\bin\Anaconda3\Library\bin\qmake`
 
@@ -250,11 +250,11 @@ Therefore I had to use the full path to the 'correct' Qmake:
 
 Another problem is the correct writing of paths inside the generated Makefiles (Debug & Release versions). I have run into problems with the location of `C:/Qt/5.3.2/bin/uic.exe` which was originally written as `C:\Qt\5.3.2\bin\uic.exe`. You'll have to replace all of them inside the Makefile. Qt seems to have problems with Windows-styled paths.
 
-But before you can generate a proper Makefile you'll have to adjust your local paths inside the DeepOnion.pro (the QT project file) as well. Open this file in your editor and go to the line 23. You'll see several paths that look like this:
+But before you can generate a proper Makefile you'll have to adjust your local paths inside the ARMR.pro (the QT project file) as well. Open this file in your editor and go to the line 23. You'll see several paths that look like this:
 
 ![qt-pro-original](https://img3.picload.org/image/ddilolcl/qt_pro_original.png)
 
-You'll have to set the paths to your locally compiled libraries. Here's how my local [DeepOnion.pro](https://github.com/brakmic/deeponion/blob/qt-local/DeepOnion-qt.pro) looks like:
+You'll have to set the paths to your locally compiled libraries.
 
 ![qt-pro-local](https://img1.picload.org/image/ddilocol/qt-local.png) 
 
@@ -267,7 +267,7 @@ cd src/leveldb
 TARGET_OS=OS_WINDOWS_CROSSCOMPILE make libleveldb.a libmemenv.a
 ```
 
-#### Compiling DeepOnion
+#### Compiling ARMR
 
 Now, it's time to type in a MSYS window the following commands:
 

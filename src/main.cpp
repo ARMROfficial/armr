@@ -41,8 +41,8 @@ set<pair<COutPoint, unsigned int> > setStakeSeen;
 
 CBigNum bnProofOfWorkLimit(~uint256(0) >> 20);
 CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
-CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 20);
-CBigNum bnProofOfWorkFirstBlock(~uint256(0) >> 20);
+CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 7);
+CBigNum bnProofOfWorkFirstBlock(~uint256(0) >> 7);
 
 unsigned int nWorkTargetSpacing = 240;                  // 240 sec block spacing for PoW
 unsigned int nStakeTargetSpacing = 60;			        // 60 sec block spacing for PoS
@@ -1104,11 +1104,11 @@ int GetPosHeight(const CBlockIndex* pindex)
 // miner's coin base reward
 int64_t GetProofOfWorkReward(int nHeight, int64_t nFees, const CBlockIndex* pindex)
 {
-	int64_t nSubsidy = 5000 * COIN;
+    int64_t nSubsidy = 0 * COIN;
 
 	if (nHeight == 1)
 	{
-		nSubsidy = 18000000 * COIN;
+        nSubsidy = 40000000 * COIN;
 		return nSubsidy + nFees;
 	}
 
@@ -1117,7 +1117,7 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees, const CBlockIndex* pind
 	int mm = nPoWHeight / 131400;
 	nSubsidy >>= mm;
 
-	return nSubsidy + nFees * 5000; //Rewarding 0 for Proof of Work
+    return (nSubsidy + nFees) * 0; //Rewarding 0 for Proof of Work
 }
 
 
@@ -1208,10 +1208,10 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
 
 	const CBlockIndex* pindexPrev = GetLastBlockIndex(pindexLast, fProofOfStake);
 	if (pindexPrev->pprev == NULL)
-		return bnTargetLimit.GetCompact(); // first block
+        return bnProofOfWorkFirstBlock.GetCompact(); // first block
 	const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
 	if (pindexPrevPrev->pprev == NULL)
-		return bnTargetLimit.GetCompact(); // second block
+        return bnTargetLimit.GetCompact(); // second block
 
 	int64_t nTargetSpacing = nWorkTargetSpacing;
 	if (fProofOfStake)
@@ -2618,7 +2618,7 @@ bool LoadBlockIndex(bool fAllowNew)
 		bnTrustedModulus.SetHex("a8852ebf7c49f01cd196e35394f3b74dd86283a07f57e0a262928e7493d4a3961d93d93c90ea3369719641d626d28b9cddc6d9307b9aabdbffc40b6d6da2e329d079b4187ff784b2893d9f53e9ab913a04ff02668114695b07d8ce877c4c8cac1b12b9beff3c51294ebe349eca41c24cd32a6d09dd1579d3947e5c4dcc30b2090b0454edb98c6336e7571db09e0fdafbd68d8f0470223836e90666a5b143b73b9cd71547c917bf24c0efc86af2eba046ed781d9acb05c80f007ef5a0a5dfca23236f37e698e8728def12554bc80f294f71c040a88eff144d130b24211016a97ce0f5fe520f477e555c9997683d762aff8bd1402ae6938dd5c994780b1bf6aa7239e9d8101630ecfeaa730d2bbc97d39beb057f016db2e28bf12fab4989c0170c2593383fd04660b5229adcd8486ba78f6cc1b558bcd92f344100dff239a8c00dbc4c2825277f241691dbe4a7d9bd503abb9");//
         bnProofOfWorkLimit = bnProofOfWorkLimitTestNet;
 		nStakeMinAge = 20 * 60; // test net min age is 20 min
-		nCoinbaseMaturity = 10; // test maturity is 10 blocks
+        nCoinbaseMaturity = 0; // test maturity is 10 blocks
 		nModifierInterval = 60;
     }
     else

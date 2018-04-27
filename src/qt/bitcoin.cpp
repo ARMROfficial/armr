@@ -150,11 +150,11 @@ int main(int argc, char *argv[])
     //XXX app.setOrganizationDomain("");
     bool isTestNet = true;
     if(GetBoolArg("-testnet")) { // Separate UI settings for testnet
-        app.setApplicationName("Armr-Qt-testnet");
+        app.setApplicationName("ARMR-Qt-testnet");
         isTestNet = true;
     }
     else
-        app.setApplicationName("Armr-Qt");
+        app.setApplicationName("ARMR-Qt");
 
     // ... then GUI settings:
     OptionsModel optionsModel;
