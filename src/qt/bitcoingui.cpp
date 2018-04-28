@@ -108,35 +108,36 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     setUnifiedTitleAndToolBarOnMac(true);
     QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
-    
+
 	qApp->setStyleSheet("QComboBox {border: 1px solid gray; color: black; background-color: #f6f6f6;} \
 		QWidget {color:black; background-color: #f6f6f6;} \
 		QMenu {color: black; background-color: #f6f6f6; border-color: #f6f6f6;} \
         QMainWindow {background-color: #f6f6f6; border:none;font-family:'Open Sans,sans-serif';} \
-		QTableView {color:black; background-color: transparent; alternate-background-color: rgb(50, 50, 50);} \
+		QTableView {color:black; background-color: transparent; alternate-background-color: rgb(168, 177, 183);} \
 		QHeaderView::section {color:black; background-color: #f6f6f6; } \
 		QPlainTextEdit {color: #1b202f; background-color: #d7e6ff;} \
 		QLineEdit {color: #1b202f; background: #d7e6ff; selection-background-color: #d7e6ff;} \
 		QLineEdit:hover{border: 1px solid gray; background-color: #d7e6ff;} \
 		QTabWidget {color:black; background-color: #111111;} \
 		QTabWidget::pane {color:white; background-color: #ff0000; border: 1px solid gray;} \
-		QTabBar::tab {color:black; background-color: #f6f6f6; border: 1px solid gray; padding: 3px; border-top-left-radius: 4px; border-top-right-radius: 4px;} \
-		QTabBar::tab:selected, QTabBar::tab:hover {background-color: #1b202f;} \
-		QComboBox:hover, QPushButton:hover {background-color: #1b202f;} \
+		QTabBar::tab {color:black; background-color: #ffffff; border: 1px solid gray; padding: 3px; border-top-left-radius: 4px; border-top-right-radius: 4px;} \
+		QTabBar::tab:selected, QTabBar::tab:hover {background-color: #ffffff;} \
+		QComboBox:hover:hover {background-color: #f6f6f6;} \
+    QPushButton:hover {background-color: #1b202f;} \
 		QDialog {color:black; background-color: #f6f6f6;} \
 		QLabel {color:black; background-color: #f6f6f6;} \
 		QToolBar {color:black; background-color: #111111;} \
 		QTreeView { color: white; background-color:#3973ac; alternate-background-color: #538cc6;} \
 		QTreeView::item {color: white; background-color: #3973ac; border: 1px solid gray;} \
 		QTreeView::item:hover {color: white; background-color: #79a6d2; border: 1px solid #0099cc;} \
-		QToolButton {color:white; background-color: #1b202f; border: 1px solid gray; padding: 3px;} \
+		QToolButton {color:white; background-color: #1b202f; border: 0px solid gray; padding: 3px; width: 8.5em; text-align: center; align: center; font-weight: bold; font-family: Open Sans;} \
 		QPushButton {color:white; background-color: #1b202f; border: 1px solid gray; padding: 3px;} \
 		QDialogButtonBox {color:white; background-color: #1b202f; border: 1px solid gray; padding: 3px;} \
-		QStatusBar {color:black; background-color: #111111; border: 1px solid gray;} \
-		QMenuBar {background-color: #f6f6f6;} \
+		QStatusBar {color:black; background-color: #111111; border: 1px solid red;} \
+		QMenuBar {background-color: #111111;} \
 		QToolTip {color: black; border: 0px; background-color: #f6f6f6; opacity: 225;} \
 		QMenuBar::item {color: white; background-color: #111111;} \
-		QMenuBar::item:selected {color: white; font-weight: bold; background-color: #ff0026;}");
+		QMenuBar::item:selected {color: white; font-weight: bold; background-color: #111111;}");
 //#ff0026 Armr Color
     // Accept D&D of URIs
     setAcceptDrops(true);
@@ -184,7 +185,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     signVerifyMessageDialog = new SignVerifyMessageDialog(this);
 
     centralWidget = new QStackedWidget(this);
-    centralWidget->addWidget(overviewPage);;	
+    centralWidget->addWidget(overviewPage);;
 	centralWidget->addWidget(messagePage);
     centralWidget->addWidget(transactionsPage);
     centralWidget->addWidget(addressBookPage);
@@ -202,11 +203,11 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
     QHBoxLayout *frameBlocksLayout = new QHBoxLayout(frameBlocks);
 
-	 
+
     frameBlocksLayout->setAlignment(Qt::AlignRight);
 
-    frameBlocksLayout->setContentsMargins(0,0,900,0);
-    //frameBlocksLayout->setSpacing(500);
+    frameBlocksLayout->setContentsMargins(3,0,3,0);
+    frameBlocksLayout->setSpacing(50);
     labelEncryptionIcon = new QLabel();
     labelStakingIcon = new QLabel();
     labelConnectionsIcon = new QLabel();
@@ -258,11 +259,11 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 
     progressBar->setStyleSheet("color: white; background-color: #1b202f; border-color: #f6f6f6;");
     progressBarLabel->setStyleSheet("color: white; background-color: #1b202f; border-color: #f6f6f6;");
-    
+
     statusBar()->addWidget(progressBarLabel);
     statusBar()->addWidget(progressBar);
     statusBar()->addPermanentWidget(frameBlocks);
-    statusBar()->setStyleSheet("color: white; background-color: #1b202f; border-color: #f6f6f6;");
+    statusBar()->setStyleSheet("color: white; background-color: #1b202f; border-color: #f6f6f6; border-top: 0px solid red;");
 
     syncIconMovie = new QMovie(":/movies/update_spinner", "mng", this);
 
@@ -299,37 +300,37 @@ void BitcoinGUI::createActions()
 {
     QActionGroup *tabGroup = new QActionGroup(this);
 
-    overviewAction = new QAction(QIcon(":/icons/overview"), tr("&DASHBOARD"), this);
+    overviewAction = new QAction(tr("&DASHBOARD"), this);
     overviewAction->setToolTip(tr("Show general overview of wallet"));
     overviewAction->setCheckable(true);
     overviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(overviewAction);
-	
-	messageAction = new QAction(QIcon(":/icons/messaging"), tr("&CHAT"), this);
+
+	messageAction = new QAction(tr("&CHAT"), this);
     messageAction->setToolTip(tr("View and Send Encrypted messages"));
     messageAction->setCheckable(true);
     messageAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
     tabGroup->addAction(messageAction);
 
-    sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&SEND ARMR"), this);
+    sendCoinsAction = new QAction(tr("&SEND"), this);
     sendCoinsAction->setToolTip(tr("Send coins to a Armr address"));
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
 
-    receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&RECEIVE ARMR"), this);
+    receiveCoinsAction = new QAction(tr("&RECEIVE"), this);
     receiveCoinsAction->setToolTip(tr("Show the list of addresses for receiving payments"));
     receiveCoinsAction->setCheckable(true);
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
-    historyAction = new QAction(QIcon(":/icons/history"), tr("&TRANSACTIONS"), this);
+    historyAction = new QAction(tr("&TRANSACTIONS"), this);
     historyAction->setToolTip(tr("Browse transaction history"));
     historyAction->setCheckable(true);
     historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
     tabGroup->addAction(historyAction);
 
-    addressBookAction = new QAction(QIcon(":/icons/address-book"), tr("&ADDRESS BOOK"), this);
+    addressBookAction = new QAction(tr("&ADDRESS BOOK"), this);
     addressBookAction->setToolTip(tr("Edit the list of stored addresses and labels"));
     addressBookAction->setCheckable(true);
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
@@ -380,7 +381,7 @@ void BitcoinGUI::createActions()
     signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
     verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
 
-    exportAction = new QAction(QIcon(":/icons/export"), tr("&Export..."), this);
+    exportAction = new QAction(tr("&EXPORT"), this);
     exportAction->setToolTip(tr("Export the data in the current tab to a file"));
     openRPCConsoleAction = new QAction(QIcon(":/icons/debugwindow"), tr("&Debug window"), this);
     openRPCConsoleAction->setToolTip(tr("Open debugging and diagnostic console"));
@@ -469,7 +470,7 @@ void BitcoinGUI::setClientModel(ClientModel *clientModel)
 #endif
             if(trayIcon)
             {
-                trayIcon->setToolTip(tr("Armr client") + QString(" ") + tr("[testnet]")); 
+                trayIcon->setToolTip(tr("Armr client") + QString(" ") + tr("[testnet]"));
                 trayIcon->setIcon(QIcon(":/icons/toolbar_testnet"));
                 toggleHideAction->setIcon(QIcon(":/icons/toolbar_testnet"));
             }

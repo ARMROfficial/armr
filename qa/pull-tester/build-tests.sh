@@ -22,7 +22,7 @@ if [ $# -lt 2 ]; then
   exit 1
 fi
 
-DISTDIR=deeponion-1.6.1
+DISTDIR=armr-1.6.1
 
 # Cross-compile for windows first (breaking the mingw/windows build is most common)
 cd /armr

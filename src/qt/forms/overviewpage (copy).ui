@@ -63,6 +63,16 @@
          </property>
         </widget>
        </item>
+       <item row="3" column="3">
+        <widget class="QPushButton" name="privacyPushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>PRIVACY</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="1">
         <widget class="QLabel" name="label_8">
          <property name="text">
@@ -84,6 +94,16 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="sendArmrPushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>SEND</string>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_12">
          <property name="text">
@@ -91,15 +111,28 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_11">
+       <item row="1" column="3">
+        <widget class="QPushButton" name="receiveArmrPushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
-          <string/>
+          <string>RECEIVE</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="label_13">
+       <item row="2" column="3">
+        <widget class="QPushButton" name="chatPushButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>CHAT</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_11">
          <property name="text">
           <string/>
          </property>

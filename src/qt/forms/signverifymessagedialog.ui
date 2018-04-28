@@ -263,6 +263,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="addressBookButton_VM">
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="toolTip">
             <string>Choose an address from the address book</string>
            </property>
