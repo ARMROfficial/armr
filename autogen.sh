@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-[ -d .git ] && [ -f ./tor/.git ] || \
+[ -d .git ] && [ -f ./tor/.git ] && [ -d src/leveldb ] || \
   { echo "Please run this command from the root of a recursive Git clone of the Armr repository." && exit 1; }
 
 git submodule init 
@@ -17,4 +17,7 @@ pushd tor
 $PATCH -p0 < ../tor-or-am.patch
 $PATCH -p0 < ../tor-am.patch
 ./autogen.sh
+popd
+pushd src/leveldb
+$PATCH -p0 < ../../leveldb.patch
 popd
