@@ -1015,7 +1015,7 @@ bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, co
                     scriptCode.FindAndDelete(CScript(vchSig));
 
                     bool fSuccess = false;
-                    if(pindexBest->nHeight < SWITCH_BLOCK_STEALTH_ADDRESS && !fTestNet)
+                    if(pindexBest->nHeight < SWITCH_BLOCK_STEALTH_ADDRESS && fTestNet)
                         fSuccess = IsCanonicalSignature(vchSig) && IsCanonicalPubKey(vchPubKey) &&
                             CheckSig(vchSig, vchPubKey, scriptCode, txTo, nIn, nHashType);
                     else
@@ -1080,7 +1080,7 @@ bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, co
 
                         // Check signature
                         bool fOk = false;
-                        if(pindexBest->nHeight < SWITCH_BLOCK_STEALTH_ADDRESS && !fTestNet)
+                        if(pindexBest->nHeight < SWITCH_BLOCK_STEALTH_ADDRESS && fTestNet)
                             fOk = IsCanonicalSignature(vchSig) && IsCanonicalPubKey(vchPubKey) &&
                                 CheckSig(vchSig, vchPubKey, scriptCode, txTo, nIn, nHashType);
                         else
@@ -1502,7 +1502,7 @@ bool Solver(const CKeyStore& keystore, const CScript& scriptPubKey, uint256 hash
         scriptSigRet << OP_0; // workaround CHECKMULTISIG bug
         return (SignN(vSolutions, keystore, hash, nHashType, scriptSigRet));
     }
-    
+
     return false;
 }
 
@@ -1685,7 +1685,7 @@ public:
     }
 
     void operator()(const CStealthAddress &stxAddr) {
-        CScript script;      
+        CScript script;
     }
 
     void operator()(const CNoDestination &none) {}

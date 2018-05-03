@@ -84,7 +84,7 @@ int64_t nMinimumInputValue = 0;
 static const int NUM_OF_POW_CHECKPOINT = 0;
 static const int checkpointPoWHeight[NUM_OF_POW_CHECKPOINT][2] =
 {
-		
+
 };
 
 extern enum Checkpoints::CPMode CheckpointsMode;
@@ -2688,7 +2688,7 @@ printf("Creating new Gen Block\n");
 
         //// debug print
 		assert(block.hashMerkleRoot == uint256("0xa9643c35da92a76934c9247b0b76188ef9fbd4401df4a12a374c738364359d11"));
-							  
+
 		block.print();
 		assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
 		assert(block.CheckBlock());
@@ -2982,7 +2982,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         uint64_t nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
         if (pfrom->nVersion < MIN_PROTO_VERSION ||
-        		(pfrom->nVersion < MIN_PROTO_VERSION_AFTER_SWITCH && pindexBest->nHeight >= SWITCH_BLOCK_STEALTH_ADDRESS && !fTestNet))
+        		(pfrom->nVersion < MIN_PROTO_VERSION_AFTER_SWITCH && pindexBest->nHeight >= SWITCH_BLOCK_STEALTH_ADDRESS && fTestNet))
         {
             printf("partner %s using obsolete version %i; disconnecting\n", pfrom->addr.ToString().c_str(), pfrom->nVersion);
             pfrom->fDisconnect = true;

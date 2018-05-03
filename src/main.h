@@ -34,9 +34,9 @@ static const unsigned int MAX_INV_SZ = 50000;
 static const int64_t MIN_TX_FEE = 100000;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
 static const int64_t MAX_MONEY = 40000000 * COIN;
-static const int64_t MAX_PROOF_OF_STAKE_STABLE = 0.01 * COIN;	
+static const int64_t MAX_PROOF_OF_STAKE_STABLE = 0.01 * COIN;
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
-static const int SWITCH_BLOCK_STEALTH_ADDRESS = 460000;
+static const int SWITCH_BLOCK_STEALTH_ADDRESS = 0;
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -1049,7 +1049,7 @@ public:
             nVersion,
             hashPrevBlock.ToString().c_str(),
             hashMerkleRoot.ToString().c_str(),
-			nTime, nBits, nNonce, 
+			nTime, nBits, nNonce,
 			vtx.size(),
             HexStr(vchBlockSig.begin(), vchBlockSig.end()).c_str());
         for (unsigned int i = 0; i < vtx.size(); i++)
@@ -1106,7 +1106,7 @@ public:
     int64_t nMoneySupply;
 
     unsigned int nFlags;  // ARMR: block index flags
-    enum  
+    enum
     {
         BLOCK_PROOF_OF_STAKE = (1 << 0), // is proof-of-stake block
         BLOCK_STAKE_ENTROPY  = (1 << 1), // entropy bit for stake modifier
@@ -1309,7 +1309,7 @@ public:
             pprev, pnext, nFile, nBlockPos, nHeight,
             FormatMoney(nMint).c_str(), FormatMoney(nMoneySupply).c_str(),
             GeneratedStakeModifier() ? "MOD" : "-", GetStakeEntropyBit(), IsProofOfStake()? "PoS" : "PoW",
-            nStakeModifier, nStakeModifierChecksum, 
+            nStakeModifier, nStakeModifierChecksum,
             hashProofOfStake.ToString().c_str(),
             prevoutStake.ToString().c_str(), nStakeTime,
             hashMerkleRoot.ToString().c_str(),
