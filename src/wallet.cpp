@@ -415,7 +415,7 @@ void CWallet::WalletUpdateSpent(const CTransaction &tx, bool fBlock)
                     printf("WalletUpdateSpent: bad wtx %s\n", wtx.GetHash().ToString().c_str());
                 else if (!wtx.IsSpent(txin.prevout.n) && IsMine(wtx.vout[txin.prevout.n]))
                 {
-                    printf("WalletUpdateSpent found spent coin %s ONION %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
+                    printf("WalletUpdateSpent found spent coin %s ARMR %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
                     wtx.MarkSpent(txin.prevout.n);
                     wtx.WriteToDisk();
                     NotifyTransactionChanged(this, txin.prevout.hash, CT_UPDATED);
@@ -960,7 +960,7 @@ void CWallet::ReacceptWalletTransactions()
                 }
                 if (fUpdated)
                 {
-                    printf("ReacceptWalletTransactions found spent coin %s ONION %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
+                    printf("ReacceptWalletTransactions found spent coin %s ARMR %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
                     wtx.MarkDirty();
                     wtx.WriteToDisk();
                 }
@@ -1725,41 +1725,54 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
                 }
                 if (fDebug && GetBoolArg("-printcoinstake"))
                     printf("CreateCoinStake : parsed kernel type=%d\n", whichType);
-                if (whichType != TX_PUBKEY && whichType != TX_PUBKEYHASH)
+                if (whichType != TX_PUBKEY && whichType != TX_PUBKEYHASH || whichType != TX_SCRIPTHASH)
                 {
                     if (fDebug && GetBoolArg("-printcoinstake"))
                         printf("CreateCoinStake : no support for kernel type=%d\n", whichType);
-                    break;  // only support pay to public key and pay to address
+                    break;  // only support pay to public key, stealth key and pay to address
                 }
-                if (whichType == TX_PUBKEYHASH) // pay to address type
-                {
-                    // convert to pay to public key type
-                    if (!keystore.GetKey(uint160(vSolutions[0]), key))
+                if(whichType == TX_SCRIPTHASH){//pay to stealth type if exist
+//                    std::set<CStealthAddress>::iterator it;
+//                    for (it = stealthAddresses.begin(); it != stealthAddresses.end(); ++it){
+//                    if(!keystore.GetCScript(stealthAddresses.begin()->Encoded(), key)){
+//                        if (fDebug && GetBoolArg("-printcoinstake"))
+//                            printf("CreateCoinStake : failed to get key for kernel type=%d\n", whichType);
+//                        break;  // unable to find hash of the first stealth address
+//                    }
+
+//                    }
+                    return true;
+                } else {//no stealth address found pay to
+                    if (whichType == TX_PUBKEYHASH) // pay to address type
+                    {
+                        // convert to pay to public key type
+                        if (!keystore.GetKey(uint160(vSolutions[0]), key))
+                        {
+                            if (fDebug && GetBoolArg("-printcoinstake"))
+                                printf("CreateCoinStake : failed to get key for kernel type=%d\n", whichType);
+                            break;  // unable to find corresponding public key
+                        }
+                        scriptPubKeyOut << key.GetPubKey() << OP_CHECKSIG;
+                    }
+                    if (whichType == TX_PUBKEY)
+                    {
+                        valtype& vchPubKey = vSolutions[0];
+                        if (!keystore.GetKey(Hash160(vchPubKey), key))
+                        {
+                            if (fDebug && GetBoolArg("-printcoinstake"))
+                                printf("CreateCoinStake : failed to get key for kernel type=%d\n", whichType);
+                            break;  // unable to find corresponding public key
+                        }
+
+                    if (key.GetPubKey() != vchPubKey)
                     {
                         if (fDebug && GetBoolArg("-printcoinstake"))
-                            printf("CreateCoinStake : failed to get key for kernel type=%d\n", whichType);
-                        break;  // unable to find corresponding public key
-                    }
-                    scriptPubKeyOut << key.GetPubKey() << OP_CHECKSIG;
-                }
-                if (whichType == TX_PUBKEY)
-                {
-                    valtype& vchPubKey = vSolutions[0];
-                    if (!keystore.GetKey(Hash160(vchPubKey), key))
-                    {
-                        if (fDebug && GetBoolArg("-printcoinstake"))
-                            printf("CreateCoinStake : failed to get key for kernel type=%d\n", whichType);
-                        break;  // unable to find corresponding public key
-                    }
+                            printf("CreateCoinStake : invalid key for kernel type=%d\n", whichType);
+                            break; // keys mismatch
+                        }
 
-                if (key.GetPubKey() != vchPubKey)
-                {
-                    if (fDebug && GetBoolArg("-printcoinstake"))
-                        printf("CreateCoinStake : invalid key for kernel type=%d\n", whichType);
-                        break; // keys mismatch
+                        scriptPubKeyOut = scriptPubKeyKernel;
                     }
-
-                    scriptPubKeyOut = scriptPubKeyKernel;
                 }
 
                 txNew.nTime -= n;
@@ -2406,7 +2419,7 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, bo
         {
             if (IsMine(pcoin->vout[n]) && pcoin->IsSpent(n) && (txindex.vSpent.size() <= n || txindex.vSpent[n].IsNull()))
             {
-                printf("FixSpentCoins found lost coin %s ONION %s[%d], %s\n",
+                printf("FixSpentCoins found lost coin %s ARMR %s[%d], %s\n",
                     FormatMoney(pcoin->vout[n].nValue).c_str(), pcoin->GetHash().ToString().c_str(), n, fCheckOnly? "repair not attempted" : "repairing");
                 nMismatchFound++;
                 nBalanceInQuestion += pcoin->vout[n].nValue;
@@ -2418,7 +2431,7 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, bo
             }
             else if (IsMine(pcoin->vout[n]) && !pcoin->IsSpent(n) && (txindex.vSpent.size() > n && !txindex.vSpent[n].IsNull()))
             {
-                printf("FixSpentCoins found spent coin %s ONION %s[%d], %s\n",
+                printf("FixSpentCoins found spent coin %s ARMR %s[%d], %s\n",
                     FormatMoney(pcoin->vout[n].nValue).c_str(), pcoin->GetHash().ToString().c_str(), n, fCheckOnly? "repair not attempted" : "repairing");
                 nMismatchFound++;
                 nBalanceInQuestion += pcoin->vout[n].nValue;
