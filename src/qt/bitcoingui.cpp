@@ -90,13 +90,13 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 {
 
 #ifdef Q_OS_MAC
-    resize(1200, 600);
+    resize(748, 514);
     setWindowTitle(tr("ARMR wallet - Mac"));
 #elif _WIN32
-    resize(1200, 600);
+    resize(748, 514);
     setWindowTitle(tr("ARMR wallet - Windows"));
 #else
-    resize(1200, 600);
+    resize(748, 514);
     setWindowTitle(tr("ARMR wallet - Linux"));
 #endif
 
@@ -130,7 +130,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 		QTreeView { color: white; background-color:#3973ac; alternate-background-color: #538cc6;} \
 		QTreeView::item {color: white; background-color: #3973ac; border: 1px solid gray;} \
 		QTreeView::item:hover {color: white; background-color: #79a6d2; border: 1px solid #0099cc;} \
-		QToolButton {color:white; background-color: #1b202f; border: 0px solid gray; padding: 3px; width: 8.5em; text-align: center; align: center; font-weight: bold; font-family: Open Sans;} \
+        QToolButton {color:white; background-color: #1b202f; border: 0px solid gray; padding: 3px; width: 100px; text-align: center; align: center; font-weight: bold; font-family: Open Sans; font-size:12px;} \
 		QPushButton {color:white; background-color: #1b202f; border: 1px solid gray; padding: 3px;} \
 		QDialogButtonBox {color:white; background-color: #1b202f; border: 1px solid gray; padding: 3px;} \
 		QStatusBar {color:black; background-color: #111111; border: 1px solid red;} \
@@ -330,7 +330,7 @@ void BitcoinGUI::createActions()
     historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
     tabGroup->addAction(historyAction);
 
-    addressBookAction = new QAction(tr("&ADDRESS BOOK"), this);
+    addressBookAction = new QAction(tr("&CONTACTS"), this);
     addressBookAction->setToolTip(tr("Edit the list of stored addresses and labels"));
     addressBookAction->setCheckable(true);
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
