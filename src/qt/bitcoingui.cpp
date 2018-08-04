@@ -89,6 +89,8 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     rpcConsole(0)
 {
 
+    //GUIUtil::restoreWindowGeometry("nWindow", QSize(890, 600), this);
+
 #ifdef Q_OS_MAC
     resize(748, 514);
     setWindowTitle(tr("ARMR wallet - Mac"));
@@ -476,7 +478,7 @@ void BitcoinGUI::setClientModel(ClientModel *clientModel)
             }
 
 
-               aboutAction->setIcon(QIcon(":/icons/toolbar_testnet"));
+//               aboutAction->setIcon(QIcon(":/icons/toolbar_testnet"));
 
         }
 

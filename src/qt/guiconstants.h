@@ -8,7 +8,7 @@ static const int MODEL_UPDATE_DELAY = 500;
 static const int MAX_PASSPHRASE_SIZE = 1024;
 
 /* BitcoinGUI -- Size of icons in status bar */
-static const int STATUSBAR_ICONSIZE = 16;
+static const int STATUSBAR_ICONSIZE = 40;
 
 /* Invalid field background style */
 #define STYLE_INVALID "background:#FF8080"
@@ -32,3 +32,6 @@ static const int MAX_URI_LENGTH = 255;
 #define EXPORT_IMAGE_SIZE 256
 
 #endif // GUICONSTANTS_H
+
+/* Number of frames in spinner animation */
+#define SPINNER_FRAMES 36

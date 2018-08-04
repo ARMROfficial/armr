@@ -322,7 +322,7 @@ void RPCConsole::clear()
                 "td.message { font-family: Monospace; font-size: 12px; } "
                 "td.cmd-request { color: #ffff99; } "
                 "td.cmd-error { color: red; } "
-                "b { color: #ffff99; } "
+                "b { color: #ff0000; } "
                 );
 
     message(CMD_REPLY, (tr("Welcome to the Armr RPC console.") + "<br>" +
