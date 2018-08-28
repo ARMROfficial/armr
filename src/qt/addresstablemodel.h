@@ -29,7 +29,7 @@ public:
     enum ColumnIndex {
         Label = 0,   /**< User specified label */
         Address = 1,  /**< ARMR Public address */
-        Type = 2, /** < ARMR Stealth Address */
+		Type = 2, /** < ARMR Stealth Address */
     };
 
     enum RoleIndex {

@@ -1,7 +1,7 @@
 #ifndef QTIPCSERVER_H
 #define QTIPCSERVER_H
 
-// Define ARMR-Qt message queue name
+// Define ARMR-qt message queue name
 #define BITCOINURI_QUEUE_NAME "ARMRURI"
 
 void ipcScanRelay(int argc, char *argv[]);

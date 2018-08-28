@@ -1,3 +1,7 @@
+// Copyright (c) 2017-2018 The ARMR Developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "addresstablemodel.h"
 
 #include "guiutil.h"
@@ -517,7 +521,8 @@ void AddressTableModel::emitDataChanged(int idx)
 
 bool AddressTableModel::beforeSaSwitch() const
 {
-	if(wallet->GetBestBlockHeight() < SWITCH_BLOCK_STEALTH_ADDRESS && !fTestNet)
+    if(wallet->GetBestBlockHeight() < INIT_BLOCK && !fTestNet)
+	// if(!fTestNet)
 		return true;
 	
 	return false;

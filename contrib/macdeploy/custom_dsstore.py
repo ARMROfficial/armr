@@ -19,7 +19,7 @@ ds['.']['bwsp'] = {
     'SidebarWidth': 0,
     'ShowTabView': False,
     'PreviewPaneVisibility': False,
-    'ShowToolbar': False,aaaaaaaaaaa
+    'ShowToolbar': False,
     'ShowSidebar': False,
     'ShowPathbar': True
 }

@@ -1,4 +1,4 @@
-IDI_ICON1 ICON DISCARDABLE "icons/armr.ico"
+IDI_ICON1 ICON DISCARDABLE "icons/ARMR.ico"
 
 #include <windows.h>             // needed for VERSIONINFO
 #include "../../clientversion.h" // holds the needed client version information
@@ -22,7 +22,7 @@ BEGIN
             VALUE "FileDescription",    "ARMR-Qt (OSS GUI client for ARMR)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "ARMR-Qt"
-            VALUE "LegalCopyright",     "2018 The ARMR developers"
+            VALUE "LegalCopyright",     "2017-2018 The ARMR developers"
             VALUE "LegalTrademarks1",   "Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
             VALUE "OriginalFilename",   "ARMR-Qt.exe"
             VALUE "ProductName",        "ARMR-Qt"

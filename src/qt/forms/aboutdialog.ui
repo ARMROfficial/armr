@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>542</width>
-    <height>495</height>
+    <height>491</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,7 +63,7 @@
           <cursorShape>IBeamCursor</cursorShape>
          </property>
          <property name="text">
-          <string notr="true">1.0.0.0</string>
+          <string notr="true">0.8.0.0</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -91,7 +91,7 @@
         <cursorShape>IBeamCursor</cursorShape>
        </property>
        <property name="text">
-        <string>Copyright © ARMR developers</string>
+        <string>Copyright © The ARMR developers</string>
        </property>
        <property name="textInteractionFlags">
         <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -101,7 +101,7 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.armr.network&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://www.armr.network&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://ARMR.org&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffaa00;&quot;&gt;https://armr.network&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="openExternalLinks">
         <bool>true</bool>

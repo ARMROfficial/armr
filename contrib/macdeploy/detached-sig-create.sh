@@ -2,7 +2,7 @@
 set -e
 
 ROOTDIR=dist
-BUNDLE="${ROOTDIR}/DeepOnion-Qt.app"
+BUNDLE="${ROOTDIR}/ARMR-Qt.app"
 CODESIGN=codesign
 TEMPDIR=sign.temp
 TEMPLIST=${TEMPDIR}/signatures.txt

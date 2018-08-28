@@ -1,16 +1,23 @@
 /*
  * W.J. van der Laan 2011-2012
  */
+ 
+// Copyright (c) 2017-2018 The ARMR Developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "bitcoingui.h"
 #include "clientmodel.h"
 #include "walletmodel.h"
 #include "optionsmodel.h"
 #include "messagemodel.h"
 #include "guiutil.h"
+#include "intro.h"
 #include "guiconstants.h"
 #include "util.h"
 #include "net.h"
 #include "init.h"
+#include "main.h"
 #include "ui_interface.h"
 #include "qtipcserver.h"
 
@@ -61,7 +68,7 @@ static bool ThreadSafeAskFee(int64_t nFeeRequired, const std::string& strCaption
 {
     if(!guiref)
         return false;
-    if(nFeeRequired < MIN_TX_FEE || nFeeRequired <= nTransactionFee || fDaemon)
+    if(nFeeRequired < GetMinTxFee() || nFeeRequired <= nTransactionFee || fDaemon)
         return true;
     bool payFee = false;
 
@@ -108,7 +115,7 @@ static std::string Translate(const char* psz)
 static void handleRunawayException(std::exception *e)
 {
     PrintExceptionContinue(e, "Runaway exception");
-    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occurred. Armr can no longer continue safely and will quit.") + QString("\n\n") + QString::fromStdString(strMiscWarning));
+    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occurred. ARMR can no longer continue safely and will quit.") + QString("\n\n") + QString::fromStdString(strMiscWarning));
     exit(1);
 }
 
@@ -125,7 +132,11 @@ int main(int argc, char *argv[])
 #endif
 
     Q_INIT_RESOURCE(bitcoin);
+    Q_INIT_RESOURCE(bitcoin_locale);
     QApplication app(argc, argv);
+
+    // Already apply custom stylesheets so they are already visible on the intro screen
+    qApp->setStyleSheet(GUIUtil::loadStyleSheet());
 
     // Install global event filter that makes sure that long tooltips can be word-wrapped
     app.installEventFilter(new GUIUtil::ToolTipToRichTextFilter(TOOLTIP_WRAP_THRESHOLD, &app));
@@ -133,12 +144,15 @@ int main(int argc, char *argv[])
     // Command-line options take precedence:
     ParseParameters(argc, argv);
 
+    if (!Intro::pickDataDirectory())
+        return EXIT_SUCCESS;
+
     // ... then bitcoin.conf:
     if (!boost::filesystem::is_directory(GetDataDir(false)))
     {
         // This message can not be translated, as translation is not initialized yet
         // (which not yet possible because lang=XX can be overridden in bitcoin.conf in the data directory)
-        QMessageBox::critical(0, "Armr",
+        QMessageBox::critical(0, "ARMR",
                               QString("Error: Specified data directory \"%1\" does not exist.").arg(QString::fromStdString(mapArgs["-datadir"])));
         return 1;
     }
@@ -146,12 +160,10 @@ int main(int argc, char *argv[])
 
     // Application identification (must be set before OptionsModel is initialized,
     // as it is used to locate QSettings)
-    app.setOrganizationName("Armr");
-    //XXX app.setOrganizationDomain("");
-    bool isTestNet = true;
+    app.setOrganizationName("ARMR");
+
     if(GetBoolArg("-testnet")) { // Separate UI settings for testnet
         app.setApplicationName("ARMR-Qt-testnet");
-        isTestNet = true;
     }
     else
         app.setApplicationName("ARMR-Qt");
@@ -203,6 +215,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    // Read fPrintDebugLog and decide wether to start logging
+    fPrintDebugLog = optionsModel.getPrintDebugLog();
+
+    //QSplashScreen splash(QPixmap(GetBoolArg("-testnet") ? ":/images/splash_testnet" : ":/images/splash"), 0);
     QSplashScreen splash(QPixmap(GetBoolArg("-testnet") ? ":/images/splash_testnet" : ":/images/splash_testnet"), 0);
 
     if (GetBoolArg("-splash", true) && !GetBoolArg("-min"))
@@ -238,11 +254,11 @@ int main(int argc, char *argv[])
 
                 ClientModel clientModel(&optionsModel);
                 WalletModel walletModel(pwalletMain, &optionsModel);
-                MessageModel messageModel(pwalletMain, &walletModel);
+				MessageModel messageModel(pwalletMain, &walletModel);
 
                 window.setClientModel(&clientModel);
                 window.setWalletModel(&walletModel);
-                window.setMessageModel(&messageModel);
+				window.setMessageModel(&messageModel);
 
                 // If -min option passed, start window minimized.
                 if(GetBoolArg("-min"))
@@ -262,7 +278,7 @@ int main(int argc, char *argv[])
                 window.hide();
                 window.setClientModel(0);
                 window.setWalletModel(0);
-                window.setMessageModel(0);
+				window.setMessageModel(0);
                 guiref = 0;
             }
             // Shutdown the core and its threads, but don't exit Bitcoin-Qt here

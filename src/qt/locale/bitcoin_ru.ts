@@ -1068,8 +1068,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../guiutil.cpp" line="+420"/>
         <location line="+12"/>
-        <source>ARMR-Qt</source>
-        <translation>ARMR-Qt</translation>
+        <source>ARMR-qt</source>
+        <translation>ARMR-qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1548,8 +1548,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the ARMR-Qt help message to get a list with possible ARMR command-line options.</source>
-        <translation>Показать помощь по ARMR-Qt, чтобы получить список доступных параметров командной строки.</translation>
+        <source>Show the ARMR-qt help message to get a list with possible ARMR command-line options.</source>
+        <translation>Показать помощь по ARMR-qt, чтобы получить список доступных параметров командной строки.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1667,7 +1667,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 ONION</source>
+        <source>0.00 ARMR</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1737,8 +1737,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+16"/>
-        <source>123.456 ONION</source>
-        <translation>123.456 ONION</translation>
+        <source>123.456 ARMR</source>
+        <translation>123.456 ARMR</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -2621,8 +2621,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or Armrd</source>
-        <translation>Отправить команду на -server или Armrd</translation>
+        <source>Send command to -server or ARMRd</source>
+        <translation>Отправить команду на -server или ARMRd</translation>
     </message>
     <message>
         <location line="+1"/>

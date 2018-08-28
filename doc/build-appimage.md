@@ -1,6 +1,6 @@
 ## HOWTO - Packaging ARMR QT wallet with AppImage
 
-Right now there's no easy way to distribute the [ARMR](https://ARMR.network/) QT graphical wallet to Linux users, being the only option to compile it oneself from sources. Many Linux users are technically skilled and have no problems with the typical command line instructions, but it’d be desirable to have an easier way of distribution. In this tutorial we’ll cover how to achieve that with [AppImage](https://appimage.org/).
+Right now there's no easy way to distribute the [ARMR](https://armr.network/) QT graphical wallet to Linux users, being the only option to compile it oneself from sources. Many Linux users are technically skilled and have no problems with the typical command line instructions, but it’d be desirable to have an easier way of distribution. In this tutorial we’ll cover how to achieve that with [AppImage](https://appimage.org/).
 
 ### What’s an AppImage?
 
@@ -16,11 +16,11 @@ So, from the user’s perspective, it’s an easier to use distribution system:
 
 ### Packaging ARMR wallet
 
-Once we have compiled and linked the QT ARMR wallet by following the [instructions provided on GitHub](https://github.com/ARMR/ARMR/blob/master/doc/build-unix.txt), the following steps must be applied to obtain an AppImage; the `ARMR` folder is where the GitHub sources were previously downloaded:
+Once we have compiled and linked the QT ARMR wallet by following the [instructions provided on GitHub](https://github.com/armr/armr/blob/master/doc/build-unix.txt), the following steps must be applied to obtain an AppImage; the `armr` folder is where the GitHub sources were previously downloaded:
 
 ```shell
-$ mkdir -p ARMR/dist/usr/bin
-$ cd ARMR/dist
+$ mkdir -p armr/dist/usr/bin
+$ cd armr/dist
 $ cp ../src/qt/ARMR-qt usr/bin/
 $ nano ARMR-qt.desktop
  — — — — — — — — — — — — — —
@@ -32,7 +32,7 @@ Exec=AppRun %F
 Icon=ARMR
 Categories=Network;
  — — — — — — — — — — — — — —
-$ wget https://raw.githubusercontent.com/ARMROfficial/armr/master/src/qt/res/icons/ARMR.png
+$ wget https://raw.githubusercontent.com/armr/armr/master/src/qt/res/icons/ARMR.png
 $ wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
 $ chmod a+x linuxdeployqt-continuous-x86_64.AppImage
 $ sudo apt install qt5-default qt5-qmake

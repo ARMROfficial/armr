@@ -8,9 +8,9 @@ To run the Wallet with obfs4 enabled one must install the *obfs4proxy* [package]
 sudo apt-get install obfs4proxy
 ```
 
-#### Activate obfs4 functionality in DeepOnion.conf
+#### Activate obfs4 functionality in ARMR.conf
 
-Open your *DeepOnion.conf* and add those two lines:
+Open your *ARMR.conf* and add those two lines:
 
 ```
 torplugin=obfs4
@@ -31,14 +31,14 @@ Visit this [website](https://bridges.torproject.org/bridges) to get a list of Br
 
 Your *datadir* depends on the OS you're using. Possible locations of the *torrc* are:
 
-* Windows - %APPDATA%/Roaming/DeepOnion/tor
+* Windows - %APPDATA%/Roaming/ARMR/tor
 
 This is the path under Windows.
 
 ![win-torrc-path](https://img2.picload.org/image/ddpcagra/torrc_path.png)
 
-* Linux - ~/.DeepOnion/tor
-* Mac -  ~/Library/Application Support/DeepOnion/tor
+* Linux - ~/.ARMR/tor
+* Mac -  ~/Library/Application Support/ARMR/tor
 
 Open *torrc* and remove any lines that begin with *Bridge*. Now add the bridges you got from the above website with the keyword *Bridge* prepended.
 
@@ -79,7 +79,7 @@ Jan 28 20:31:16.000 [notice] Bootstrapped 100%: Done
 
 ### Windows Installation 
 
-As Windows has no default Package Manager there are several ways to get **obfs4proxy.exe**. One could simply install the Tor-Browser manually and put the provided **obfs4proxy.exe** into the directory of your DeepOnion installation. 
+As Windows has no default Package Manager there are several ways to get **obfs4proxy.exe**. One could simply install the Tor-Browser manually and put the provided **obfs4proxy.exe** into the directory of your ARMR installation. 
 
 There are also some open-source Package Managers for Windows available, like *choclolatey* for example. As **obfs4proxy.exe** is a [portable executable](https://tor.stackexchange.com/questions/14850/where-can-i-download-windows-binary-for-obfs4proxy) any of the possible ways is *correct* and it's up to the user to decide.
 

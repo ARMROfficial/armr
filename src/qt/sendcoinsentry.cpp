@@ -1,3 +1,7 @@
+// Copyright (c) 2018 The ARMR Developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "sendcoinsentry.h"
 #include "ui_sendcoinsentry.h"
 #include "guiutil.h"
@@ -135,7 +139,7 @@ SendCoinsRecipient SendCoinsEntry::getValue()
     rv.address = ui->payTo->text();
     rv.label = ui->addAsLabel->text();
     rv.amount = ui->payAmount->value();
-
+    
     if (rv.address.length() > STEALTH_LENGTH_TRESHOLD 
         && IsStealthAddress(rv.address.toStdString()))
     {

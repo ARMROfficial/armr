@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
+// Copyright (c) 2017-2018 The ARMR Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef BITCOIN_MAIN_H
@@ -33,10 +34,12 @@ static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64_t MIN_TX_FEE = 100000;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
+static const int64_t MIN_TX_FEE_NEW = 10000;
+static const int64_t MIN_RELAY_TX_FEE_NEW = MIN_TX_FEE_NEW;
 static const int64_t MAX_MONEY = 40000000 * COIN;
-static const int64_t MAX_PROOF_OF_STAKE_STABLE = 0.01 * COIN;
+static const int64_t MAX_PROOF_OF_STAKE_STABLE = 0.01 * COIN;	
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
-static const int SWITCH_BLOCK_STEALTH_ADDRESS = 10046;
+static const int INIT_BLOCK = 1;
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -50,8 +53,8 @@ static const int fHaveUPnP = false;
 
 static const uint256 hashGenesisBlock("0x000002cacc2088b661c2fb84ec8676525f59a62f1f28cf97da82fd318cf5ac04");
 static const uint256 hashGenesisBlockTestNet("0x00784c3a56f8bcf734b2c97aae3edf8d1137b469d41f8d816f6e26eebf7ca4f2");
-inline int64_t PastDrift(int64_t nTime) { return nTime - 2 * 60 * 60; } // up to 2 hrs from the past
-inline int64_t FutureDrift(int64_t nTime) { return nTime + 2 * 60 * 60; } // up to 2 hrs from the future
+//static const uint256 hashMerkleRootMainNet("0xa9643c35da92a76934c9247b0b76188ef9fbd4401df4a12a374c738364359d11");
+//static const uint256 hashMerkleRootTestNet("0xa9643c35da92a76934c9247b0b76188ef9fbd4401df4a12a374c738364359d11");
 
 extern CScript COINBASE_FLAGS;
 extern CCriticalSection cs_main;
@@ -91,6 +94,11 @@ class CReserveKey;
 class CTxDB;
 class CTxIndex;
 
+int64_t PastDrift(int64_t nTime);
+int64_t FutureDrift(int64_t nTime);
+int64_t GetMinTxFee();
+int64_t GetMinRelayTxFee();
+
 void RegisterWallet(CWallet* pwalletIn);
 void UnregisterWallet(CWallet* pwalletIn);
 void SyncWithWallets(const CTransaction& tx, const CBlock* pblock = NULL, bool fUpdate = false, bool fConnect = true);
@@ -125,6 +133,8 @@ void StakeMiner(CWallet *pwallet);
 void ResendWalletTransactions(bool fForce = false);
 
 bool GetWalletFile(CWallet* pwallet, std::string &strWalletFileOut);
+// get node statistics (currently not implemented)
+bool GetNodeStateStats(NodeId nodeid, CNodeStateStats &stats);
 
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
@@ -682,6 +692,7 @@ public:
                        const CBlockIndex* pindexBlock, bool fBlock, bool fMiner);
     bool ClientConnectInputs();
     bool CheckTransaction() const;
+    bool CheckStealthTxNarrSize() const;
     bool AcceptToMemoryPool(CTxDB& txdb, bool fCheckInputs=true, bool* pfMissingInputs=NULL);
     bool GetCoinAge(CTxDB& txdb, uint64_t& nCoinAge) const;  // ARMR: get transaction coin age
 
@@ -1049,7 +1060,7 @@ public:
             nVersion,
             hashPrevBlock.ToString().c_str(),
             hashMerkleRoot.ToString().c_str(),
-			nTime, nBits, nNonce,
+			nTime, nBits, nNonce, 
 			vtx.size(),
             HexStr(vchBlockSig.begin(), vchBlockSig.end()).c_str());
         for (unsigned int i = 0; i < vtx.size(); i++)
@@ -1106,7 +1117,7 @@ public:
     int64_t nMoneySupply;
 
     unsigned int nFlags;  // ARMR: block index flags
-    enum
+    enum  
     {
         BLOCK_PROOF_OF_STAKE = (1 << 0), // is proof-of-stake block
         BLOCK_STAKE_ENTROPY  = (1 << 1), // entropy bit for stake modifier
@@ -1309,7 +1320,7 @@ public:
             pprev, pnext, nFile, nBlockPos, nHeight,
             FormatMoney(nMint).c_str(), FormatMoney(nMoneySupply).c_str(),
             GeneratedStakeModifier() ? "MOD" : "-", GetStakeEntropyBit(), IsProofOfStake()? "PoS" : "PoW",
-            nStakeModifier, nStakeModifierChecksum,
+            nStakeModifier, nStakeModifierChecksum, 
             hashProofOfStake.ToString().c_str(),
             prevoutStake.ToString().c_str(), nStakeTime,
             hashMerkleRoot.ToString().c_str(),

@@ -1,13 +1,14 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Copyright (c) 2013 The NovaCoin developers
+// Copyright (c) 2017-2018 The ARMR Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "txdb.h"
 #include "miner.h"
 #include "kernel.h"
-
+#include "main.h"
 
 using namespace std;
 
@@ -159,7 +160,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
     // a transaction spammer can cheaply fill blocks using
     // 1-satoshi-fee transactions. It should be set above the real
     // cost to you of processing a transaction.
-    int64_t nMinTxFee = MIN_TX_FEE;
+    int64_t nMinTxFee = GetMinTxFee();
     if (mapArgs.count("-mintxfee"))
         ParseMoney(mapArgs["-mintxfee"], nMinTxFee);
 
@@ -485,6 +486,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         // Process this block the same as if we had received it from another node
         if (!ProcessBlock(NULL, pblock))
             return error("CheckWork() : ProcessBlock, block not accepted");
+
     }
 
     return true;

@@ -1155,7 +1155,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "Armrd.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "ARMRd.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1187,7 +1187,7 @@ bool RenameOver(boost::filesystem::path src, boost::filesystem::path dest)
  * Ignores exceptions thrown by Boost's create_directories if the requested directory exists.
  * Specifically handles case where path p exists, but it wasn't possible for the user to
  * write to the parent directory.
- 
+ */
 bool TryCreateDirectories(const fs::path& p)
 {
     try
@@ -1201,7 +1201,6 @@ bool TryCreateDirectories(const fs::path& p)
     // create_directories didn't create the directory, it had to have existed already
     return false;
 }
-*/
 
 void FileCommit(FILE *fileout)
 {
@@ -1408,4 +1407,10 @@ bool NewThread(void(*pfn)(void*), void* parg)
         return false;
     }
     return true;
+}
+
+// Obtain the application startup time (used for uptime calculation)
+int64_t GetStartupTime()
+{
+    return nStartupTime;
 }

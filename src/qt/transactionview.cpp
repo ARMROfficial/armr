@@ -70,9 +70,9 @@ TransactionView::TransactionView(QWidget *parent) :
 
     typeWidget->addItem(tr("All"), TransactionFilterProxy::ALL_TYPES);
     typeWidget->addItem(tr("Received with"), TransactionFilterProxy::TYPE(TransactionRecord::RecvWithAddress) |
-                                        TransactionFilterProxy::TYPE(TransactionRecord::RecvFromOther));
+                                             TransactionFilterProxy::TYPE(TransactionRecord::RecvFromOther));
     typeWidget->addItem(tr("Sent to"), TransactionFilterProxy::TYPE(TransactionRecord::SendToAddress) |
-                                  TransactionFilterProxy::TYPE(TransactionRecord::SendToOther));
+                                       TransactionFilterProxy::TYPE(TransactionRecord::SendToOther));
     typeWidget->addItem(tr("To yourself"), TransactionFilterProxy::TYPE(TransactionRecord::SendToSelf));
     typeWidget->addItem(tr("Staked"), TransactionFilterProxy::TYPE(TransactionRecord::Generated));
     typeWidget->addItem(tr("Other"), TransactionFilterProxy::TYPE(TransactionRecord::Other));
@@ -196,43 +196,43 @@ void TransactionView::chooseDate(int idx)
     dateRangeWidget->setVisible(false);
     switch(dateWidget->itemData(idx).toInt())
     {
-    case All:
-        transactionProxyModel->setDateRange(
-                TransactionFilterProxy::MIN_DATE,
-                TransactionFilterProxy::MAX_DATE);
-        break;
-    case Today:
-        transactionProxyModel->setDateRange(
-                QDateTime(current),
-                TransactionFilterProxy::MAX_DATE);
-        break;
-    case ThisWeek: {
-        // Find last Monday
-        QDate startOfWeek = current.addDays(-(current.dayOfWeek()-1));
-        transactionProxyModel->setDateRange(
-                QDateTime(startOfWeek),
-                TransactionFilterProxy::MAX_DATE);
+        case All:
+            transactionProxyModel->setDateRange(
+                    TransactionFilterProxy::MIN_DATE,
+                    TransactionFilterProxy::MAX_DATE);
+            break;
+        case Today:
+            transactionProxyModel->setDateRange(
+                    QDateTime(current),
+                    TransactionFilterProxy::MAX_DATE);
+            break;
+        case ThisWeek: {
+            // Find last Monday
+            QDate startOfWeek = current.addDays(-(current.dayOfWeek()-1));
+            transactionProxyModel->setDateRange(
+                    QDateTime(startOfWeek),
+                    TransactionFilterProxy::MAX_DATE);
 
         } break;
-    case ThisMonth:
-        transactionProxyModel->setDateRange(
-                QDateTime(QDate(current.year(), current.month(), 1)),
-                TransactionFilterProxy::MAX_DATE);
-        break;
-    case LastMonth:
-        transactionProxyModel->setDateRange(
-                QDateTime(QDate(current.year(), current.month()-1, 1)),
-                QDateTime(QDate(current.year(), current.month(), 1)));
-        break;
-    case ThisYear:
-        transactionProxyModel->setDateRange(
-                QDateTime(QDate(current.year(), 1, 1)),
-                TransactionFilterProxy::MAX_DATE);
-        break;
-    case Range:
-        dateRangeWidget->setVisible(true);
-        dateRangeChanged();
-        break;
+        case ThisMonth:
+            transactionProxyModel->setDateRange(
+                    QDateTime(QDate(current.year(), current.month(), 1)),
+                    TransactionFilterProxy::MAX_DATE);
+            break;
+        case LastMonth:
+            transactionProxyModel->setDateRange(
+                    QDateTime(QDate(current.year(), current.month()-1, 1)),
+                    QDateTime(QDate(current.year(), current.month(), 1)));
+            break;
+        case ThisYear:
+            transactionProxyModel->setDateRange(
+                    QDateTime(QDate(current.year(), 1, 1)),
+                    TransactionFilterProxy::MAX_DATE);
+            break;
+        case Range:
+            dateRangeWidget->setVisible(true);
+            dateRangeChanged();
+            break;
     }
 }
 
@@ -241,7 +241,7 @@ void TransactionView::chooseType(int idx)
     if(!transactionProxyModel)
         return;
     transactionProxyModel->setTypeFilter(
-        typeWidget->itemData(idx).toInt());
+            typeWidget->itemData(idx).toInt());
 }
 
 void TransactionView::changedPrefix(const QString &prefix)
@@ -351,8 +351,8 @@ void TransactionView::editLabel()
             QString type = modelIdx.data(AddressTableModel::TypeRole).toString();
 
             EditAddressDialog dlg(type==AddressTableModel::Receive
-                                         ? EditAddressDialog::EditReceivingAddress
-                                         : EditAddressDialog::EditSendingAddress,
+                                  ? EditAddressDialog::EditReceivingAddress
+                                  : EditAddressDialog::EditSendingAddress,
                                   this);
             dlg.setModel(addressBook);
             dlg.loadRow(idx);

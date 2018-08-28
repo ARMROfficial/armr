@@ -4,30 +4,36 @@ SUBDIRS = tor src
 
 GZIP_ENV="-9n"
 
-BITCOIND_BIN=$(top_builddir)/src/Armrd$(EXEEXT)
+BITCOIND_BIN=$(top_builddir)/src/ARMRd$(EXEEXT)
 BITCOIN_QT_BIN=$(top_builddir)/src/qt/ARMR-qt$(EXEEXT)
 BITCOIN_WIN_INSTALLER=$(PACKAGE)-$(PACKAGE_VERSION)-win$(WINDOWS_BITS)-setup$(EXEEXT)
 
 ARMR_QT_APP=ARMR-qt
-ARMR_DAEMON=Armrd
+ARMR_DAEMON=ARMRd
 OSX_APP=ARMR-Qt.app
 OSX_DMG=ARMR-Qt.dmg
+OSX_BACKGROUND_SVG=background.svg
+OSX_BACKGROUND_IMAGE=background.png
+OSX_BACKGROUND_IMAGE_DPIS=36 72
 OSX_DEPLOY_SCRIPT=$(top_srcdir)/contrib/macdeploy/macdeployqtplus
+OSX_DSSTORE_GEN=$(top_srcdir)/contrib/macdeploy/custom_dsstore.py
 OSX_FANCY_PLIST=$(top_srcdir)/contrib/macdeploy/fancy.plist
-OSX_INSTALLER_ICONS=$(top_srcdir)/src/qt/res/icons/armr.icns
+OSX_INSTALLER_ICONS=$(top_srcdir)/src/qt/res/icons/ARMR.icns
 OSX_PLIST=$(top_srcdir)/share/qt/Info.plist #not installed
 OSX_QT_TRANSLATIONS = da,de,es,hu,ru,uk,zh_CN,zh_TW
 
 DIST_DOCS = $(wildcard doc/*.md) $(wildcard doc/release-notes/*.md)
 
-WINDOWS_PACKAGING = $(top_srcdir)/share/pixmaps/armr.ico \
+WINDOWS_PACKAGING = $(top_srcdir)/share/pixmaps/ARMR.ico \
   $(top_srcdir)/share/pixmaps/nsis-header.bmp \
   $(top_srcdir)/share/pixmaps/nsis-wizard.bmp \
   $(top_srcdir)/doc/README_windows.txt
 
 OSX_PACKAGING = $(OSX_DEPLOY_SCRIPT) $(OSX_FANCY_PLIST) $(OSX_INSTALLER_ICONS) \
-  $(top_srcdir)/contrib/macdeploy/background.png \
-  $(top_srcdir)/contrib/macdeploy/custom_dsstore
+  $(top_srcdir)/contrib/macdeploy/$(OSX_BACKGROUND_IMAGE) \
+  $(OSX_DSSTORE_GEN) \
+  $(top_srcdir)/contrib/macdeploy/detached-sig-apply.sh \
+  $(top_srcdir)/contrib/macdeploy/detached-sig-create.sh
 
 COVERAGE_INFO = baseline_filtered_combined.info baseline.info block_test.info \
   leveldb_baseline.info test_bitcoin_filtered.info total_coverage.info \
@@ -68,7 +74,7 @@ $(OSX_APP)/Contents/Info.plist: $(OSX_PLIST)
 	$(MKDIR_P) $(@D)
 	$(INSTALL_DATA) $< $@
 
-$(OSX_APP)/Contents/Resources/armr.icns: $(OSX_INSTALLER_ICONS)
+$(OSX_APP)/Contents/Resources/ARMR.icns: $(OSX_INSTALLER_ICONS)
 	$(MKDIR_P) $(@D)
 	$(INSTALL_DATA) $< $@
 
@@ -77,21 +83,16 @@ $(OSX_APP)/Contents/MacOS/ARMR-Qt: $(BITCOIN_QT_BIN)
 	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM)  $< $@
 
 OSX_APP_BUILT=$(OSX_APP)/Contents/PkgInfo $(OSX_APP)/Contents/Resources/empty.lproj \
-  $(OSX_APP)/Contents/Resources/armr.icns $(OSX_APP)/Contents/Info.plist \
+  $(OSX_APP)/Contents/Resources/ARMR.icns $(OSX_APP)/Contents/Info.plist \
   $(OSX_APP)/Contents/MacOS/ARMR-Qt
 
 if BUILD_DARWIN
 $(OSX_DMG): $(OSX_APP_BUILT) $(OSX_PACKAGING)
-	$(OSX_DEPLOY_SCRIPT) $(OSX_APP) -add-qt-tr $(OSX_QT_TRANSLATIONS) -dmg -fancy $(OSX_FANCY_PLIST) -verbose 2
-
+	$(OSX_DEPLOY_SCRIPT) $(OSX_APP) -add-qt-tr $(OSX_QT_TRANSLATIONS) -dmg -fancy $(OSX_FANCY_PLIST) -verbose 2 -add-resources contrib/Frameworks/libboost_system.dylib
+	$(OSX_DEPLOY_SCRIPT) $(OSX_APP) -add-qt-tr $(OSX_QT_TRANSLATIONS) -dmg -fancy $(OSX_FANCY_PLIST) -verbose 2 -add-resources contrib/Frameworks/libboost_system-mt.dylib
 else
 $(OSX_DMG): $(OSX_APP_BUILT) $(OSX_PACKAGING)
-	INSTALLNAMETOOL=$(INSTALLNAMETOOL)  OTOOL=$(OTOOL) STRIP=$(STRIP) $(OSX_DEPLOY_SCRIPT) $(OSX_APP) -add-qt-tr $(OSX_QT_TRANSLATIONS) -verbose 2
-	$(MKDIR_P) dist/.background
-	$(INSTALL) contrib/macdeploy/background.png dist/.background
-	$(INSTALL) contrib/macdeploy/DS_Store dist/.DS_Store
-	cd dist; $(LN_S) /Applications Applications
-	$(GENISOIMAGE) -no-cache-inodes -l -probe -V "ARMR-Qt" -no-pad -r -apple -o $@ dist
+	$(PYTHON) $(OSX_DEPLOY_SCRIPT) $(OSX_APP) -add-qt-tr $(OSX_QT_TRANSLATIONS) -translations-dir=$(QT_TRANSLATION_DIR) -dmg -fancy $(OSX_FANCY_PLIST) -verbose 2 -volname $(OSX_VOLNAME)
 endif
 
 if TARGET_DARWIN

@@ -1,10 +1,22 @@
+// Copyright (c) 2018 The ARMR Developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #ifndef TRANSACTIONRECORD_H
 #define TRANSACTIONRECORD_H
 
 #include "uint256.h"
 
 #include <QList>
+#include <QString>
 
+// modified BOOST_FOREACH to show indices
+#define INDEX_FOREACH(index, a, b)                           \
+	for (unsigned int index = static_cast<unsigned int>(-1); \
+			index == static_cast<unsigned int>(-1);)         \
+		BOOST_FOREACH (a, b)                                 \
+			if (++index, true)
+	
 class CWallet;
 class CWalletTx;
 
@@ -19,18 +31,18 @@ public:
     { }
 
     enum Status {
-        Confirmed,          /**< Have 6 or more confirmations (normal tx) or fully mature (mined tx) **/
+        Confirmed,          /**< Have 6 or more confirmations (normal tx) or fully mature (Staked tx) **/
         /// Normal (sent/received) transactions
         OpenUntilDate,      /**< Transaction not yet final, waiting for date */
         OpenUntilBlock,     /**< Transaction not yet final, waiting for block */
         Offline,            /**< Not sent to any other nodes **/
-        Unconfirmed,        /**< Not yet mined into a block **/
+        Unconfirmed,        /**< Not yet Staked into a block **/
         Confirming,         /**< Confirmed, but waiting for the recommended number of confirmations **/
         Conflicted,         /**< Conflicts with other transaction or mempool **/
-        /// Generated (mined) transactions
-        Immature,           /**< Mined but waiting for maturity */
+        /// Generated (Staked) transactions
+        Immature,           /**< Staked but waiting for maturity */
         MaturesWarning,     /**< Transaction will likely not mature because no nodes have confirmed */
-        NotAccepted         /**< Mined but not accepted */
+        NotAccepted         /**< Staked but not accepted */
     };
 
     /// Transaction counts towards available balance
@@ -38,7 +50,7 @@ public:
     /// Sorting key based on status
     std::string sortKey;
 
-    /** @name Generated (mined) transactions
+    /** @name Generated (Staked) transactions
        @{*/
     int matures_in;
     /**@}*/
@@ -74,22 +86,21 @@ public:
     /** Number of confirmation recommended for accepting a transaction */
     static const int RecommendedNumConfirmations = 5;
 
-    TransactionRecord():
-            hash(), time(0), type(Other), address(""), debit(0), credit(0), idx(0)
+    TransactionRecord(): 
+             hash(), time(0), type(Other), address(""), narration(""), debit(0), credit(0), idx(0)
     {
     }
 
-    TransactionRecord(uint256 hash, int64_t time):
-            hash(hash), time(time), type(Other), address(""), debit(0),
+    TransactionRecord(uint256 hash, int64_t time): 
+            hash(hash), time(time), type(Other), address(""), narration(""), debit(0),
             credit(0), idx(0)
     {
     }
 
     TransactionRecord(uint256 hash, int64_t time,
-                Type type, const std::string &address,
-                int64_t debit, int64_t credit):
-            hash(hash), time(time), type(type), address(address), debit(debit), credit(credit),
-            idx(0)
+            Type type, const std::string &address, const std::string &narration, int64_t debit, int64_t credit): 
+            hash(hash), time(time), type(type), address(address), narration(narration), debit(debit), credit(credit),
+                idx(0)
     {
     }
 
@@ -104,6 +115,7 @@ public:
     qint64 time;
     Type type;
     std::string address;
+    std::string narration;
     qint64 debit;
     qint64 credit;
     /**@}*/
@@ -117,6 +129,9 @@ public:
     /** Return the unique identifier for this transaction (part) */
     std::string getTxID();
 
+    /* Return human readable info on tx type */
+    QString getTypeLabel();
+    
     /** Update status from core wallet tx.
      */
     void updateStatus(const CWalletTx &wtx);

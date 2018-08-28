@@ -1,8 +1,17 @@
+.idea
+cmake-build-debug
+CMakeLists.txt
+make.exe.stackdump
+
+src/.idea
+src/CMakeLists.txt
+src/cmake-build-debug/
+
 *.tar.gz
 
 *.exe
 ARMR-qt
-Armrd
+ARMRd
 
 # autoreconf
 Makefile.in
@@ -25,7 +34,7 @@ config.log
 config.status
 configure
 libtool
-src/config/armr-config.h
+src/config/ARMR-config.h
 src/config/stamp-h1
 share/setup.nsi
 share/qt/Info.plist
@@ -36,6 +45,7 @@ src/qt/moc_*.cpp
 src/qt/plugins/mrichtexteditor/moc_*
 src/qt/plugins/mrichtexteditor/ui_mrichtextedit.h
 src/qt/forms/ui_*.h
+src/qt/locale/*.qm
 
 src/qt/test/moc*.cpp
 
@@ -68,7 +78,6 @@ src/*.a
 *.la
 
 # Compilation and Qt preprocessor part
-*.qm
 Makefile
 background.tiff*
 
@@ -109,7 +118,7 @@ db-4.8.30.NC/
 
 Makefile.Debug
 Makefile.Release
-armr-qt_plugin_import.cpp
-object_script.armr-qt.Debug
-object_script.armr-qt.Release
+ARMR-qt_plugin_import.cpp
+object_script.ARMR-qt.Debug
+object_script.ARMR-qt.Release
 release/

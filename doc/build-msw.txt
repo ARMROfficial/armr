@@ -81,4 +81,4 @@ ARMR
 DOS prompt:
 cd \ARMR\src
 mingw32-make -f makefile.mingw
-strip Armrd.exe
+strip ARMRd.exe

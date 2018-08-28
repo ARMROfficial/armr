@@ -1,12 +1,12 @@
 dnl require autoconf 2.60 (AS_ECHO/AS_ECHO_N)
 AC_PREREQ([2.69])
-define(_CLIENT_VERSION_MAJOR, 1)
-define(_CLIENT_VERSION_MINOR, 6)
-define(_CLIENT_VERSION_REVISION, 1)
+define(_CLIENT_VERSION_MAJOR, 0)
+define(_CLIENT_VERSION_MINOR, 8)
+define(_CLIENT_VERSION_REVISION, 0)
 define(_CLIENT_VERSION_BUILD, 0)
 define(_CLIENT_VERSION_IS_RELEASE, true)
 define(_COPYRIGHT_YEAR, 2018)
-AC_INIT([ARMR Core],[_CLIENT_VERSION_MAJOR._CLIENT_VERSION_MINOR._CLIENT_VERSION_REVISION],[https://github.com/ARMROfficial/armr-dv/issues],[armr],[http://armr.network/])
+AC_INIT([ARMR Core],[_CLIENT_VERSION_MAJOR._CLIENT_VERSION_MINOR._CLIENT_VERSION_REVISION],[https://github.com/ARMR/ARMR-dv/issues],[ARMR],[http://armr.network/])
 AC_CONFIG_AUX_DIR([src/build-aux])
 AC_CONFIG_MACRO_DIR([src/m4])
 AC_CANONICAL_HOST
@@ -130,7 +130,7 @@ AC_ARG_ENABLE([glibc-back-compat],
 AC_ARG_WITH([protoc-bindir],[AS_HELP_STRING([--with-protoc-bindir=BIN_DIR],[specify protoc bin path])], [protoc_bin_path=$withval], [])
 
 AC_CONFIG_SRCDIR([src])
-AC_CONFIG_HEADERS([src/config/armr-config.h])
+AC_CONFIG_HEADERS([src/config/ARMR-config.h])
 
 dnl Checks for programs.
 AC_PROG_CXX
@@ -326,7 +326,7 @@ dnl Check for pthread compile/link requirements
 AX_PTHREAD
 INCLUDES="$INCLUDES $PTHREAD_CFLAGS"
 
-# The following macro will add the necessary defines to armr-config.h, but
+# The following macro will add the necessary defines to ARMR-config.h, but
 # they also need to be passed down to any subprojects. Pull the results out of
 # the cache and add them to CPPFLAGS.
 AC_SYS_LARGEFILE
@@ -571,7 +571,7 @@ fi
 
 BITCOIN_QT_PATH_PROGS([PROTOC], [protoc],$protoc_bin_path)
 
-AC_MSG_CHECKING([whether to build Armrd])
+AC_MSG_CHECKING([whether to build ARMRd])
 AM_CONDITIONAL([BUILD_BITCOIND], [test x$build_bitcoind = xyes])
 AC_MSG_RESULT($build_bitcoind)
 

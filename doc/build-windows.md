@@ -254,7 +254,7 @@ But before you can generate a proper Makefile you'll have to adjust your local p
 
 ![qt-pro-original](https://img3.picload.org/image/ddilolcl/qt_pro_original.png)
 
-You'll have to set the paths to your locally compiled libraries.
+You'll have to set the paths to your locally compiled libraries. Here's how my local [ARMR.pro](https://github.com/brakmic/armr/blob/qt-local/ARMR-qt.pro) looks like:
 
 ![qt-pro-local](https://img1.picload.org/image/ddilocol/qt-local.png) 
 
@@ -278,4 +278,4 @@ make
 
 If the compilation succeeds you'll get the executables inside the *src* directory.
 
-Have fun with [DeepOnion](https://deeponion.org/)! :heart:
+Have fun with [ARMR](https://armr.network/)! :heart:

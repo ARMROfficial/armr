@@ -28,11 +28,11 @@ First get the dependencies:
 if you want to build GUI version, do this, otherwise you can skip this step:
     apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
 
-then get armr source from the github:
-    git clone --recursive https://github.com/armrofficial/armr.git
+then get ARMR source from the github:
+    git clone --recursive https://github.com/ARMR/ARMR.git
 
 build with autotools:
-    cd armr
+    cd ARMR
     ./autogen.sh
     ./configure --with-gui=qt5    (if you want to build daemon, use --without-gui)
     make
@@ -46,4 +46,4 @@ It has been reported that under Debian 9 the installation of libssl1.1-dev leads
 
 Ubuntu 14.04:
 
-
+If you have problems with boost libraries visit this link for a possible solution: https://github.com/ARMR/ARMR/issues/63#issuecomment-365329304

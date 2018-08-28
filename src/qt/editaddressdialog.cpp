@@ -1,3 +1,7 @@
+// Copyright (c) 2017-2018 The ARMR Developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "editaddressdialog.h"
 #include "ui_editaddressdialog.h"
 #include "addresstablemodel.h"
@@ -26,6 +30,7 @@ EditAddressDialog::EditAddressDialog(Mode mode, QWidget *parent) :
         break;
     case NewSendingAddress:
         setWindowTitle(tr("New sending address"));
+
 		ui->stealthCB->setVisible(false);
         break;
     case EditReceivingAddress:
@@ -37,7 +42,7 @@ EditAddressDialog::EditAddressDialog(Mode mode, QWidget *parent) :
         break;
     case EditSendingAddress:
         setWindowTitle(tr("Edit sending address"));
-		ui->stealthCB->setVisible(false);
+        ui->stealthCB->setVisible(false);
         break;
     }
 

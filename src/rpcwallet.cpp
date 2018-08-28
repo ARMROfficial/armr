@@ -1,5 +1,6 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
+// Copyright (c) 2017-2018 The ARMR Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -157,7 +158,7 @@ Value getnewaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "getnewaddress [account]\n"
-            "Returns a new Armr address for receiving payments.  "
+            "Returns a new ARMR address for receiving payments.  "
             "If [account] is specified (recommended), it is added to the address book "
             "so payments received with the address will be credited to [account].");
 
@@ -224,7 +225,7 @@ Value getaccountaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaccountaddress <account>\n"
-            "Returns the current Armr address for receiving payments to this account.");
+            "Returns the current ARMR address for receiving payments to this account.");
 
     // Parse the account first so we don't generate a key if there's an error
     string strAccount = AccountFromValue(params[0]);
@@ -242,12 +243,12 @@ Value setaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "setaccount <Armraddress> <account>\n"
+            "setaccount <ARMRaddress> <account>\n"
             "Sets the account associated with the given address.");
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Armr address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ARMR address");
 
 
     string strAccount;
@@ -272,12 +273,12 @@ Value getaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "getaccount <Armraddress>\n"
+            "getaccount <ARMRaddress>\n"
             "Returns the account associated with the given address.");
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Armr address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ARMR address");
 
     string strAccount;
     map<CTxDestination, string>::iterator mi = pwalletMain->mapAddressBook.find(address.Get());
@@ -312,13 +313,13 @@ Value sendtoaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 2 || params.size() > 5)
         throw runtime_error(
-            "sendtoaddress <Armraddress> <amount> [narration] [comment] [comment-to]\n"
+            "sendtoaddress <ARMRaddress> <amount> [narration] [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.000001" 
             + HelpRequiringPassphrase());
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Armr address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ARMR address");
 
     // Amount
     int64 nAmount = AmountFromValue(params[1]);
@@ -386,7 +387,7 @@ Value signmessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 2)
         throw runtime_error(
-            "signmessage <Armraddress> <message>\n"
+            "signmessage <ARMRaddress> <message>\n"
             "Sign a message with the private key of an address");
 
     EnsureWalletIsUnlocked();
@@ -421,7 +422,7 @@ Value verifymessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 3)
         throw runtime_error(
-            "verifymessage <Armraddress> <signature> <message>\n"
+            "verifymessage <ARMRaddress> <signature> <message>\n"
             "Verify a signed message");
 
     string strAddress = params[0].get_str();
@@ -457,14 +458,14 @@ Value getreceivedbyaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "getreceivedbyaddress <Armraddress> [minconf=1]\n"
-            "Returns the total amount received by <Armraddress> in transactions with at least [minconf] confirmations.");
+            "getreceivedbyaddress <ARMRaddress> [minconf=1]\n"
+            "Returns the total amount received by <ARMRaddress> in transactions with at least [minconf] confirmations.");
 
     // Bitcoin address
     CBitcoinAddress address = CBitcoinAddress(params[0].get_str());
     CScript scriptPubKey;
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Armr address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ARMR address");
     scriptPubKey.SetDestination(address.Get());
     if (!IsMine(*pwalletMain,scriptPubKey))
         return (double)0.0;
@@ -683,14 +684,14 @@ Value sendfrom(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 3 || params.size() > 7)
         throw runtime_error(
-            "sendfrom <fromaccount> <toArmrAddress> <amount> [minconf=1] [narration] [comment] [comment-to]\n"
+            "sendfrom <fromaccount> <toARMRAddress> <amount> [minconf=1] [narration] [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.000001" 
             + HelpRequiringPassphrase());
 
     string strAccount = AccountFromValue(params[0]);
     CBitcoinAddress address(params[1].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Armr address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ARMR address");
     int64 nAmount = AmountFromValue(params[2]);
 
     if (nAmount < MIN_TXOUT_AMOUNT)
@@ -756,7 +757,7 @@ Value sendmany(const Array& params, bool fHelp)
     {
         CBitcoinAddress address(s.name_);
         if (!address.IsValid())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid Armr address: ")+s.name_);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid ARMR address: ")+s.name_);
 
         if (setAddress.count(address))
             throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid parameter, duplicated address: ")+s.name_);
@@ -784,7 +785,8 @@ Value sendmany(const Array& params, bool fHelp)
     // Send
     CReserveKey keyChange(pwalletMain);
     int64 nFeeRequired = 0;
-    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired);
+    int nChangePos;
+    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, nChangePos);
     if (!fCreated)
     {
         if (totalAmount + nFeeRequired > pwalletMain->GetBalance())
@@ -803,7 +805,7 @@ Value addmultisigaddress(const Array& params, bool fHelp)
     {
         string msg = "addmultisigaddress <nrequired> <'[\"key\",\"key\"]'> [account]\n"
                      "Add a nrequired-to-sign multisignature address to the wallet\"\n"
-                     "each key is a Armr address or hex-encoded public key\n"
+                     "each key is a ARMR address or hex-encoded public key\n"
                      "If [account] is specified, assign address to [account].";
         throw runtime_error(msg);
     }
@@ -1409,7 +1411,7 @@ Value keypoolrefill(const Array& params, bool fHelp)
 void ThreadTopUpKeyPool(void* parg)
 {
     // Make this thread recognisable as the key-topping-up thread
-    RenameThread("Armr-key-top");
+    RenameThread("ARMR-key-top");
 
     pwalletMain->TopUpKeyPool();
 }
@@ -1417,7 +1419,7 @@ void ThreadTopUpKeyPool(void* parg)
 void ThreadCleanWalletPassphrase(void* parg)
 {
     // Make this thread recognisable as the wallet relocking thread
-    RenameThread("Armr-lock-wa");
+    RenameThread("ARMR-lock-wa");
 
     int64_t nMyWakeTime = GetTimeMillis() + *((int64_t*)parg) * 1000;
 
@@ -1493,7 +1495,7 @@ Value walletpassphrase(const Array& params, bool fHelp)
     int64_t* pnSleepTime = new int64_t(params[1].get_int64());
     NewThread(ThreadCleanWalletPassphrase, pnSleepTime);
 
-    // Armr: if user OS account compromised prevent trivial sendmoney commands
+    // ARMR: if user OS account compromised prevent trivial sendmoney commands
     if (params.size() > 2)
         fWalletUnlockStakingOnly = params[2].get_bool();
     else
@@ -1587,7 +1589,7 @@ Value encryptwallet(const Array& params, bool fHelp)
     // slack space in .dat files; that is bad if the old data is
     // unencrypted private keys. So:
     StartShutdown();
-    return "wallet encrypted; Armr server stopping, restart to run with encrypted wallet.  The keypool has been flushed, you need to make a new backup.";
+    return "wallet encrypted; ARMR server stopping, restart to run with encrypted wallet.  The keypool has been flushed, you need to make a new backup.";
 }
 
 class DescribeAddressVisitor : public boost::static_visitor<Object>
@@ -1639,8 +1641,8 @@ Value validateaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "validateaddress <Armraddress>\n"
-            "Return information about <Armraddress>.");
+            "validateaddress <ARMRaddress>\n"
+            "Return information about <ARMRaddress>.");
 
     CBitcoinAddress address(params[0].get_str());
     bool isValid = address.IsValid();
@@ -1669,8 +1671,8 @@ Value validatepubkey(const Array& params, bool fHelp)
 {
     if (fHelp || !params.size() || params.size() > 2)
         throw runtime_error(
-            "validatepubkey <Armrpubkey>\n"
-            "Return information about <Armrpubkey>.");
+            "validatepubkey <ARMRpubkey>\n"
+            "Return information about <ARMRpubkey>.");
 
     std::vector<unsigned char> vchPubKey = ParseHex(params[0].get_str());
     CPubKey pubKey(vchPubKey);
@@ -1703,7 +1705,7 @@ Value validatepubkey(const Array& params, bool fHelp)
     return ret;
 }
 
-// Armr: reserve balance from being staked for network protection
+// ARMR: reserve balance from being staked for network protection
 Value reservebalance(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 2)
@@ -1742,7 +1744,7 @@ Value reservebalance(const Array& params, bool fHelp)
 }
 
 
-// Armr: check wallet integrity
+// ARMR: check wallet integrity
 Value checkwallet(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 0)
@@ -1765,7 +1767,7 @@ Value checkwallet(const Array& params, bool fHelp)
 }
 
 
-// Armr: repair wallet
+// ARMR: repair wallet
 Value repairwallet(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 0)
@@ -1787,7 +1789,7 @@ Value repairwallet(const Array& params, bool fHelp)
     return result;
 }
 
-// Armr: resend unconfirmed wallet transactions
+// ARMR: resend unconfirmed wallet transactions
 Value resendtx(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 1)
@@ -1801,7 +1803,7 @@ Value resendtx(const Array& params, bool fHelp)
     return Value::null;
 }
 
-// Armr: make a public-private key pair
+// ARMR: make a public-private key pair
 Value makekeypair(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 1)
@@ -1831,7 +1833,7 @@ Value getnewstealthaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "getnewstealthaddress [label]\n"
-            "Returns a new Armr stealth address for receiving payments anonymously.  ");
+            "Returns a new ARMR stealth address for receiving payments anonymously.  ");
 
     if (pwalletMain->IsLocked())
         throw runtime_error("Failed: Wallet must be unlocked.");
@@ -2005,6 +2007,39 @@ Value importstealthaddress(const Array& params, bool fHelp)
     return result;
 }
 
+Value exportstealthaddress(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "exportstealthaddress <label/address>\n"
+            "Exports the given stealth address.");
+
+    std::string stealth_address_label = params[0].get_str();
+    
+    if (pwalletMain->IsLocked())
+        throw runtime_error("Failed: Wallet must be unlocked.");
+    
+    Object result;
+    
+    std::set<CStealthAddress>::iterator it;
+    for (it = pwalletMain->stealthAddresses.begin(); it != pwalletMain->stealthAddresses.end(); ++it)
+    {
+        if (it->scan_secret.size() < 1)
+            continue; // stealth address is not owned
+        
+        if (stealth_address_label == it->label || stealth_address_label == it->Encoded())
+        {
+            Object objA;
+            objA.push_back(Pair("scan_secret", HexStr(it->scan_secret.begin(), it->scan_secret.end())));
+            objA.push_back(Pair("spend_secret", HexStr(it->spend_secret.begin(), it->spend_secret.end())));
+            objA.push_back(Pair("label", it->label));
+            return objA;
+        } 
+    };
+
+    return result;
+}
+
 Value sendtostealthaddress(const Array &params, bool fHelp)
 {
     if (fHelp || params.size() < 2 || params.size() > 5)
@@ -2031,7 +2066,7 @@ Value sendtostealthaddress(const Array &params, bool fHelp)
 
     if (!sxAddr.SetEncoded(sEncoded))
     {
-        result.push_back(Pair("result", "Invalid Armr stealth address."));
+        result.push_back(Pair("result", "Invalid ARMR stealth address."));
         return result;
     };
 
@@ -2154,4 +2189,19 @@ Value scanforstealthtxns(const Array& params, bool fHelp)
     result.push_back(Pair("found", std::string(cbuf)));
 
     return result;
+}
+
+Value getnettotals(const Array &params, bool fHelp)
+{
+    if (fHelp || params.size() > 0)
+        throw runtime_error(
+            "getnettotals\n"
+            "Returns information about network traffic, including bytes in, bytes out,\n"
+            "and current time.");
+
+    Object obj;
+    obj.push_back(Pair("totalbytesrecv", CNode::GetTotalBytesRecv()));
+    obj.push_back(Pair("totalbytessent", CNode::GetTotalBytesSent()));
+    obj.push_back(Pair("timemillis", GetTimeMillis()));
+    return obj;
 }

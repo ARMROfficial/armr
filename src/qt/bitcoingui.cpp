@@ -92,13 +92,13 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     //GUIUtil::restoreWindowGeometry("nWindow", QSize(890, 600), this);
 
 #ifdef Q_OS_MAC
-    resize(748, 514);
+    resize(960, 610);
     setWindowTitle(tr("ARMR wallet - Mac"));
 #elif _WIN32
-    resize(748, 514);
+    resize(890, 600);
     setWindowTitle(tr("ARMR wallet - Windows"));
 #else
-    resize(748, 514);
+    resize(1020, 650);
     setWindowTitle(tr("ARMR wallet - Linux"));
 #endif
 

@@ -1,9 +1,9 @@
 Building ARMR
 
-See doc/readme-qt.rst for instructions on building Armr Qt,
+See doc/readme-qt.rst for instructions on building ARMR Qt,
 the intended-for-end-users, nice-graphical-interface, reference
-implementation of Armr.
+implementation of ARMR.
 
-See doc/build-*.txt for instructions on building Armrd,
+See doc/build-*.txt for instructions on building ARMRd,
 the intended-for-services, no-graphical-interface, reference
-implementation of Armr.
+implementation of ARMR.

@@ -1,11 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2013 The Bitcoin developers
-// Copyright (c) 2014-2018 The DeepOnion developers
+// Copyright (c) 2017-2018 The ARMR developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "util.h"
-#include "init.h"
 #include "rpcclient.h"
 #include "rpcprotocol.h"
 #include "ui_interface.h" /* for _(...) */
@@ -42,11 +41,11 @@ static bool AppInitRPC(int argc, char* argv[])
     if (argc<2 || mapArgs.count("-?") || mapArgs.count("--help"))
     {
         // First part of help message is specific to RPC client
-        std::string strUsage = _("DeepOnion RPC client version") + " " + FormatFullVersion() + "\n\n" +
+        std::string strUsage = _("ARMR RPC client version") + " " + FormatFullVersion() + "\n\n" +
             _("Usage:") + "\n" +
-              "  deeponion-cli [options] <command> [params]  " + _("Send command to DeepOnion") + "\n" +
-              "  deeponion-cli [options] help                " + _("List commands") + "\n" +
-              "  deeponion-cli [options] help <command>      " + _("Get help for a command") + "\n";
+              "  ARMR-cli [options] <command> [params]  " + _("Send command to ARMR") + "\n" +
+              "  ARMR-cli [options] help                " + _("List commands") + "\n" +
+              "  ARMR-cli [options] help <command>      " + _("Get help for a command") + "\n";
 
         strUsage += "\n" + HelpMessageCli(true);
 

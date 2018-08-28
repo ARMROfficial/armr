@@ -1,4 +1,5 @@
 // Copyright (c) 2009-2012 Bitcoin Developers
+// Copyright (c) 2017-2018 The ARMR Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -55,6 +56,8 @@ Value getpeerinfo(const Array& params, bool fHelp)
         obj.push_back(Pair("services", strprintf("%08" PRIx64, stats.nServices)));
         obj.push_back(Pair("lastsend", (boost::int64_t)stats.nLastSend));
         obj.push_back(Pair("lastrecv", (boost::int64_t)stats.nLastRecv));
+        obj.push_back(Pair("bytessent", (int64_t)stats.nSendBytes));
+        obj.push_back(Pair("bytesrecv", (int64_t)stats.nRecvBytes));
         obj.push_back(Pair("conntime", (boost::int64_t)stats.nTimeConnected));
         obj.push_back(Pair("version", stats.nVersion));
         obj.push_back(Pair("subver", stats.strSubVer));

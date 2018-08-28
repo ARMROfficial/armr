@@ -1,3 +1,7 @@
+// Copyright (c) 2018 The ARMR Developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "transactiondesc.h"
 
 #include "guiutil.h"
@@ -215,6 +219,14 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx)
         if (wtx.mapValue.count("comment") && !wtx.mapValue["comment"].empty())
             strHTML += "<br><b>" + tr("Comment") + ":</b><br>" + GUIUtil::HtmlEscape(wtx.mapValue["comment"], true) + "<br>";
 
+        char cbuf[256];
+        for (uint32_t k = 0; k < wtx.vout.size(); ++k)
+        {
+            snprintf(cbuf, sizeof(cbuf), "n_%d", k);
+            if (wtx.mapValue.count(cbuf) && !wtx.mapValue[cbuf].empty())
+            	strHTML += "<br><b>" + tr(cbuf) + ":</b> " + GUIUtil::HtmlEscape(wtx.mapValue[cbuf], true) + "<br>";
+        }
+ 
         strHTML += "<b>" + tr("Transaction ID") + ":</b> " + wtx.GetHash().ToString().c_str() + "<br>";
 
         if (wtx.IsCoinBase() || wtx.IsCoinStake())

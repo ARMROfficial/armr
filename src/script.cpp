@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
+// Copyright (c) 2017-2018 The ARMR Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1014,12 +1015,7 @@ bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, co
                     // Drop the signature, since there's no way for a signature to sign itself
                     scriptCode.FindAndDelete(CScript(vchSig));
 
-                    bool fSuccess = false;
-                    if(pindexBest->nHeight < SWITCH_BLOCK_STEALTH_ADDRESS && fTestNet)
-                        fSuccess = IsCanonicalSignature(vchSig) && IsCanonicalPubKey(vchPubKey) &&
-                            CheckSig(vchSig, vchPubKey, scriptCode, txTo, nIn, nHashType);
-                    else
-                    	fSuccess = CheckSig(vchSig, vchPubKey, scriptCode, txTo, nIn, nHashType);
+                    bool fSuccess = CheckSig(vchSig, vchPubKey, scriptCode, txTo, nIn, nHashType);
 
                     popstack(stack);
                     popstack(stack);
@@ -1079,12 +1075,7 @@ bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, co
                         valtype& vchPubKey = stacktop(-ikey);
 
                         // Check signature
-                        bool fOk = false;
-                        if(pindexBest->nHeight < SWITCH_BLOCK_STEALTH_ADDRESS && fTestNet)
-                            fOk = IsCanonicalSignature(vchSig) && IsCanonicalPubKey(vchPubKey) &&
-                                CheckSig(vchSig, vchPubKey, scriptCode, txTo, nIn, nHashType);
-                        else
-                        	fOk = CheckSig(vchSig, vchPubKey, scriptCode, txTo, nIn, nHashType);
+                        bool fOk = CheckSig(vchSig, vchPubKey, scriptCode, txTo, nIn, nHashType);
 
                         if (fOk)
                         {
@@ -1502,7 +1493,7 @@ bool Solver(const CKeyStore& keystore, const CScript& scriptPubKey, uint256 hash
         scriptSigRet << OP_0; // workaround CHECKMULTISIG bug
         return (SignN(vSolutions, keystore, hash, nHashType, scriptSigRet));
     }
-
+    
     return false;
 }
 
@@ -1572,15 +1563,9 @@ private:
     const CKeyStore *keystore;
 public:
     CKeyStoreIsMineVisitor(const CKeyStore *keystoreIn) : keystore(keystoreIn) { }
-    bool operator()(const CNoDestination &dest) const {
-        return false;
-    }
-    bool operator()(const CKeyID &keyID) const {
-        return keystore->HaveKey(keyID);
-    }
-    bool operator()(const CScriptID &scriptID) const {
-        return keystore->HaveCScript(scriptID);
-    }
+    bool operator()(const CNoDestination &dest) const { return false; }
+    bool operator()(const CKeyID &keyID) const { return keystore->HaveKey(keyID); }
+    bool operator()(const CScriptID &scriptID) const { return keystore->HaveCScript(scriptID); }
     bool operator()(const CStealthAddress &stxAddr) const {
         return stxAddr.scan_secret.size() == ec_secret_size;
     }
@@ -1691,7 +1676,7 @@ public:
     }
 
     void operator()(const CStealthAddress &stxAddr) {
-        CScript script;
+        CScript script;      
     }
 
     void operator()(const CNoDestination &none) {}

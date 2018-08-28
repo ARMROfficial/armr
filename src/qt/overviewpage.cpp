@@ -1,3 +1,7 @@
+// Copyright (c) 2018 The ARMR developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "overviewpage.h"
 #include "ui_overviewpage.h"
 
@@ -134,6 +138,7 @@ OverviewPage::~OverviewPage()
 void OverviewPage::setBalance(qint64 balance, qint64 stake, qint64 unconfirmedBalance, qint64 immatureBalance)
 {
     int unit = model->getOptionsModel()->getDisplayUnit();
+
     currentBalance = balance;
     currentStake = stake;
     currentUnconfirmedBalance = unconfirmedBalance;

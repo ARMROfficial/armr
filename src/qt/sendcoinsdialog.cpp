@@ -1,3 +1,7 @@
+// Copyright (c) 2018 The ARMR Developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "sendcoinsdialog.h"
 #include "ui_sendcoinsdialog.h"
 
@@ -37,7 +41,7 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
 
 #if QT_VERSION >= 0x040700
     /* Do not move this to the XML file, Qt before 4.7 will choke on it */
-    ui->lineEditCoinControlChange->setPlaceholderText(tr("Enter Armr address"));
+    ui->lineEditCoinControlChange->setPlaceholderText(tr("Enter a ARMR address"));
 #endif
 
     addEntry();
@@ -195,7 +199,7 @@ void SendCoinsDialog::on_sendButton_clicked()
         break;
     case WalletModel::AmountWithFeeExceedsBalance:
         QMessageBox::warning(this, tr("Send Coins"),
-            tr("The total exceeds your balance when the %/0.5 transaction fee is included.").
+            tr("The total exceeds your balance when the %0.05 transaction fee is included.").
             arg(BitcoinUnits::formatWithUnit(BitcoinUnits::BTC, sendstatus.fee)),
             QMessageBox::Ok, QMessageBox::Ok);
         break;
@@ -462,7 +466,7 @@ void SendCoinsDialog::coinControlChangeEdited(const QString & text)
         else if (!CBitcoinAddress(text.toStdString()).IsValid())
         {
             ui->labelCoinControlChangeLabel->setStyleSheet("QLabel{color:red;}");
-            ui->labelCoinControlChangeLabel->setText(tr("WARNING: Invalid Armr address"));
+            ui->labelCoinControlChangeLabel->setText(tr("WARNING: Invalid ARMR address"));
         }
         else
         {

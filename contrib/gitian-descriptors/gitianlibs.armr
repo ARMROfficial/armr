@@ -1,8 +1,0 @@
-Libs to bundle with Armr-qt with gitian builder
-
-
-1.	http://ftp.uk.debian.org/debian/pool/main/b/build-essential/build-essential_12.4.tar.gz		//build-essential
-2	http://ftp.uk.debian.org/debian/pool/main/libt/libtool/libtool_2.4.6-2.debian.tar.xz		//libtool
-3.	http://ftp.uk.debian.org/debian/pool/main/a/autotools-dev/autotools-dev_20180224.1.tar.xz	//autotools-dev
-4.	http://ftp.uk.debian.org/debian/pool/main/a/autoconf/autoconf_2.69-11.debian.tar.xz		//autoconf
-5.

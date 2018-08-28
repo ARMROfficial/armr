@@ -1,3 +1,7 @@
+// Copyright (c) 2018 The ARMR developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #ifndef OPTIONSMODEL_H
 #define OPTIONSMODEL_H
 
@@ -32,6 +36,8 @@ public:
         DetachDatabases,   // bool
         Language,          // QString
         CoinControlFeatures, // bool
+        Theme,             // QString
+        PrintDebugLog,     // bool
         OptionIDRowCount,
     };
 
@@ -52,7 +58,9 @@ public:
     int getDisplayUnit();
     bool getDisplayAddresses();
     bool getCoinControlFeatures();
+    bool getPrintDebugLog();
     QString getLanguage() { return language; }
+    QString getTheme() { return theme; }
 
 private:
     int nDisplayUnit;
@@ -60,7 +68,9 @@ private:
     bool fMinimizeToTray;
     bool fMinimizeOnClose;
     bool fCoinControlFeatures;
+    bool fPrintDebugLog;
     QString language;
+    QString theme;
 
 signals:
     void displayUnitChanged(int unit);

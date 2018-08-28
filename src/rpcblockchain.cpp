@@ -1,5 +1,6 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
+// Copyright (c) 2017-2018 The ARMR Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -192,7 +193,7 @@ Value getdifficulty(const Array& params, bool fHelp)
 
 Value settxfee(const Array& params, bool fHelp)
 {
-    if (fHelp || params.size() < 1 || params.size() > 1 || AmountFromValue(params[0]) < MIN_TX_FEE)
+    if (fHelp || params.size() < 1 || params.size() > 1 || AmountFromValue(params[0]) < GetMinTxFee())
         throw runtime_error(
             "settxfee <amount>\n"
             "<amount> is a real and is rounded to the nearest 0.01");
@@ -232,6 +233,7 @@ Value getblockhash(const Array& params, bool fHelp)
         throw runtime_error("Block number out of range.");
 
     CBlockIndex* pblockindex = FindBlockByHeight(nHeight);
+    
     return pblockindex->phashBlock->GetHex();
 }
 

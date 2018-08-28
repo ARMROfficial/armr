@@ -112,6 +112,7 @@ private:
 
     QMovie *syncIconMovie;
 
+
     /** Create the main UI actions. */
     void createActions();
     /** Create the menu bar and sub-menus. */
@@ -120,6 +121,7 @@ private:
     void createToolBars(QToolBar* toolbar);
     /** Create system tray (notification) icon */
     void createTrayIcon();
+
 
 public slots:
     /** Set number of connections shown in the UI */

@@ -34,10 +34,10 @@ QString BitcoinUnits::name(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("ARMR");
-    case mBTC: return QString("mARMR");
-    case uBTC: return QString::fromUtf8("μARMR");
-    default: return QString("???");
+    case BTC: return QString("   ARMR          ");
+    case mBTC: return QString("   mARMR ");
+    case uBTC: return QString::fromUtf8("   μARMR ");
+    default: return QString("  ");
     }
 }
 
@@ -115,6 +115,11 @@ QString BitcoinUnits::format(int unit, qint64 n, bool fPlus)
 QString BitcoinUnits::formatWithUnit(int unit, qint64 amount, bool plussign)
 {
     return format(unit, amount, plussign) + QString(" ") + name(unit);
+}
+
+QString BitcoinUnits::formatWithoutUnit(int unit, qint64 amount, bool plussign)
+{
+    return format(unit, amount, plussign);
 }
 
 bool BitcoinUnits::parse(int unit, const QString &value, qint64 *val_out)

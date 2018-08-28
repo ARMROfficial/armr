@@ -2,13 +2,13 @@
 
 [Tails](https://tails.boum.org) is an amnesic live operating system that aims to preserve your privacy and anonymity. It is a Linux Debian distribution configured to follow several security measures including sending all internet traffic through the Tor network. The following tutorial documents how to build ARMR in Tails, create an AppImage, configure the amnesic system to whitelist the ARMR application, as well as creating a bash script to automate this configuration in Live sessions.
 
-To install the ARMR QT wallet in Tails you will need a [persistent volume](https://tails.boum.org/doc/first_steps/persistence/index.en.html) configured with Personal Data and GnuPG enabled. You can build ARMR in Tails and create an AppImage or [download the image](https://ARMR.org/community/threads/tutorial-packaging-ARMR-qt-wallet-with-appimage.29042/) and configure Tails to use it instead. This process has been tested with ARMR 1.5.5 in Tails 3.5, it may not work for newer versions.
+To install the ARMR QT wallet in Tails you will need a [persistent volume](https://tails.boum.org/doc/first_steps/persistence/index.en.html) configured with Personal Data and GnuPG enabled. You can build armr in Tails and create an AppImage or [download the image](https://armr.network/community/threads/tutorial-packaging-armr-qt-wallet-with-appimage.29042/) and configure Tails to use it instead. This process has been tested with ARMR 1.5.5 in Tails 3.5, it may not work for newer versions.
 
 *Please read: [Warnings about persistence](https://tails.boum.org/doc/first_steps/persistence/warnings/index.en.html) before continuing. Downloading and executing the ARMR pacakaged image is at your own risk, as is configuring the firewall from the default [Tails configuration](https://tails.boum.org/contribute/design/Tor_enforcement/Network_filter/)*.
 
 ## Building from source into persistent volume
 
-Follow the slightly modified version of [unix build](https://github.com/armrofficial/official/blob/master/doc/build-unix.txt) instructions. You can otherwise follow the generic build instructions and make the ARMR AppImage in a more convenient Linux environment to use with Tails, which has also been tested.
+Follow the slightly modified version of [unix build](https://github.com/armr/armr/blob/master/doc/build-unix.txt) instructions. You can otherwise follow the generic build instructions and make the ARMR AppImage in a more convenient Linux environment to use with Tails, which has also been tested.
 
 These instructions are tailored for a Debian Stretch/Sid distribution with dependencies acquired through the Tor Network by using [torsocks](https://github.com/dgoulet/torsocks) and it's frontend torify to connect via local proxy, as is a requirement in Tails.
 
@@ -45,11 +45,11 @@ sudo apt update
 sudo apt install libdb4.8-dev libdb4.8++-dev libssl1.0 libssl1.0-dev
 ```
 
-6. Clone ARMR repository to persistent volume, as you would normally:
+6. Clone armr repository to persistent volume, as you would normally:
 
 ```
 cd /home/amnesia/Persistent
-git clone --recursive https://github.com/armrofficial/armr.git
+git clone --recursive https://github.com/armr/armr.git
 ```
 
 7. Build with autotools into the persistent volume:
@@ -63,7 +63,7 @@ make
 
 ## Creating AppImage in the persistent volume
 
-We then follow the instructions for packaging armr, but again using torsocks where necessary and within the persistent volume. To get an insight about these steps, read ARMR's [AppImage tutorial](https://github.com/armrofficial/armr/blob/master/doc/build-appimage.md).
+We then follow the instructions for packaging armr, but again using torsocks where necessary and within the persistent volume. To get an insight about these steps, read ARMR's [AppImage tutorial](https://github.com/armr/armr/blob/master/doc/build-appimage.md).
 
 > In this way, we obtain a file named ARMR_wallet-x86_64.AppImage, that can be distributed without worrying about dependencies; the only step needed to get it running is making it executable.
 
@@ -82,7 +82,7 @@ Exec=AppRun %F
 Icon=ARMR
 Categories=Network;
  — — — — — — — — — — — — — —
-$ torify wget https://raw.githubusercontent.com/ARMR/ARMR/master/src/qt/res/icons/ARMR.png
+$ torify wget https://raw.githubusercontent.com/armr/armr/master/src/qt/res/icons/ARMR.png
 $ torify wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
 $ chmod a+x linuxdeployqt-continuous-x86_64.AppImage
 $ sudo apt install qt5-default qt5-qmake
@@ -91,7 +91,7 @@ $ ./linuxdeployqt-continuous-x86_64.AppImage usr/bin/ARMR-qt -appimage -bundle-n
 
 ## Configuring firewall and data directory
 
-If you have downloaded the AppImage or produced it in another system then create the directory ARMR/dist in the persistent volume and copy the image to this folder before proceeding with configuration instructions.
+If you have downloaded the AppImage or produced it in another system then create the directory armr/dist in the persistent volume and copy the image to this folder before proceeding with configuration instructions.
 
 > [Ferm](http://ferm.foo-projects.org/download/2.1/ferm.html) is a tool to maintain complex firewalls, without having the trouble to rewrite the complex rules over and over again. ferm allows the entire firewall rule set to be stored in a separate file, and to be loaded with one command. The firewall configuration resembles structured programming-like language, which can contain levels and lists.
 
@@ -125,11 +125,11 @@ mkdir -p /home/amnesia/Persistent/.ARMR
 5. Launch with torsocks and data target option:
 
 ```
-cd ~/Persistent/ARMR/dist
+cd ~/Persistent/armr/dist
 torsocks ./ARMR_wallet-x86_64.AppImage -datadir=/home/amnesia/Persistent/.ARMR
 ```
 
-*Note: You will additionally need a [ARMR.conf](https://ARMR.org/ARMR.conf.php?action=download) file to place in the .ARMR directory.*
+*Note: You will additionally need a [ARMR.conf](https://armr.network/ARMR.conf.php?action=download) file to place in the .ARMR directory.*
 
 ## Creating bash script for auto-configuring executable
 
@@ -142,13 +142,13 @@ sudo mkdir -p /home/amnesia/Persistent/.ARMR/ferm
 sudo cp /etc/ferm/ferm.conf /home/amnesia/Persistent/.ARMR/ferm/ferm.conf
 ```
 
-2. Create new file in /ARMR directory named ARMR-Tails and input this data:
+2. Create new file in /armr directory named ARMR-Tails and input this data:
 
 ```
 #!/bin/bash
 sudo cp /home/amnesia/Persistent/.ARMR/ferm/ferm.conf /etc/ferm/ferm.conf
 sudo ferm /etc/ferm/ferm.conf
-cd /home/amnesia/Persistent/ARMR/dist/
+cd /home/amnesia/Persistent/armr/dist/
 torsocks ./ARMR_wallet-x86_64.AppImage -datadir=/home/amnesia/Persistent/.ARMR
 ```
 
@@ -167,6 +167,6 @@ On rebooting Tails will return to it's default live state with the blockchain an
 To launch ARMR we unlock our persistent volume and run the ARMR-Tails executable:
 
 ```
-./Persistent/ARMR/ARMR-Tails
+./Persistent/armr/ARMR-Tails
 ```
 *Note: You will be prompted for your admin password in order for the executable to configure the firewall configuration. ARMR is otherwise launched from the amnesic user. Do not execute ARMR-Tails with root privileges.*

@@ -43,12 +43,6 @@
      </item>
      <item>
       <widget class="QToolButton" name="addressBookButton">
-       <property name="maximumSize">
-        <size>
-         <width>30</width>
-         <height>30</height>
-        </size>
-       </property>
        <property name="toolTip">
         <string>Choose address from address book</string>
        </property>
@@ -66,12 +60,6 @@
      </item>
      <item>
       <widget class="QToolButton" name="pasteButton">
-       <property name="maximumSize">
-        <size>
-         <width>30</width>
-         <height>30</height>
-        </size>
-       </property>
        <property name="toolTip">
         <string>Paste address from clipboard</string>
        </property>
@@ -89,12 +77,6 @@
      </item>
      <item>
       <widget class="QToolButton" name="deleteButton">
-       <property name="maximumSize">
-        <size>
-         <width>30</width>
-         <height>30</height>
-        </size>
-       </property>
        <property name="toolTip">
         <string>Remove this recipient</string>
        </property>

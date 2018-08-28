@@ -1,3 +1,7 @@
+// Copyright (c) 2018 The ARMR developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "optionsmodel.h"
 #include "bitcoinunits.h"
 #include <QSettings>
@@ -46,9 +50,11 @@ void OptionsModel::Init()
     fMinimizeToTray = settings.value("fMinimizeToTray", false).toBool();
     fMinimizeOnClose = settings.value("fMinimizeOnClose", false).toBool();
     fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
+    fPrintDebugLog = settings.value("fPrintDebugLog", false).toBool();
     nTransactionFee = settings.value("nTransactionFee").toLongLong();
     nReserveBalance = settings.value("nReserveBalance").toLongLong();
     language = settings.value("language", "").toString();
+    theme = settings.value("theme", "").toString();
 
     // These are shared with core Bitcoin; we want
     // command-line options to override the GUI settings:
@@ -62,6 +68,8 @@ void OptionsModel::Init()
         SoftSetBoolArg("-detachdb", settings.value("detachDB").toBool());
     if (!language.isEmpty())
         SoftSetArg("-lang", language.toStdString());
+    if (!theme.isEmpty())
+        SoftSetArg("-theme", theme.toStdString());
 }
 
 bool OptionsModel::Upgrade()
@@ -176,6 +184,10 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return settings.value("language", "");
         case CoinControlFeatures:
             return QVariant(fCoinControlFeatures);
+        case Theme:
+            return settings.value("theme", "default");
+	      case PrintDebugLog:
+	          return QVariant(fPrintDebugLog);
         default:
             return QVariant();
         }
@@ -276,6 +288,15 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             emit coinControlFeaturesChanged(fCoinControlFeatures);
             }
             break;
+        case Theme:
+            theme = value.toString();
+            settings.setValue("theme", value);
+            break;
+	      case PrintDebugLog: {
+	          fPrintDebugLog = value.toBool();
+	          settings.setValue("fPrintDebugLog", fPrintDebugLog);
+	          }
+	          break;
         default:
             break;
         }
@@ -318,4 +339,9 @@ int OptionsModel::getDisplayUnit()
 bool OptionsModel::getDisplayAddresses()
 {
     return bDisplayAddresses;
+}
+
+bool OptionsModel::getPrintDebugLog()
+{
+    return fPrintDebugLog;
 }

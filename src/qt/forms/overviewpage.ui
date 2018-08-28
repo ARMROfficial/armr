@@ -278,7 +278,7 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>Mined balance that has not yet matured</string>
+          <string>Staked balance that has not yet matured</string>
          </property>
          <property name="text">
           <string notr="true">0 ARMR</string>

@@ -1098,8 +1098,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../guiutil.cpp" line="+420"/>
         <location line="+12"/>
-        <source>ARMR-Qt</source>
-        <translation>ARMR-Qt</translation>
+        <source>ARMR-qt</source>
+        <translation>ARMR-qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1578,8 +1578,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the ARMR-Qt help message to get a list with possible ARMR command-line options.</source>
-        <translation>Show the ARMR-Qt help message to get a list with possible ARMR command-line options.</translation>
+        <source>Show the ARMR-qt help message to get a list with possible ARMR command-line options.</source>
+        <translation>Show the ARMR-qt help message to get a list with possible ARMR command-line options.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1697,8 +1697,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 ONION</source>
-        <translation type="unfinished">123.456 ONION {0.00 ?}</translation>
+        <source>0.00 ARMR</source>
+        <translation type="unfinished">123.456 ARMR {0.00 ?}</translation>
     </message>
     <message>
         <location line="-191"/>
@@ -1767,8 +1767,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+16"/>
-        <source>123.456 ONION</source>
-        <translation>123.456 ONION</translation>
+        <source>123.456 ARMR</source>
+        <translation>123.456 ARMR</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -2663,8 +2663,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or Armrd</source>
-        <translation>Send command to -server or Armrd</translation>
+        <source>Send command to -server or ARMRd</source>
+        <translation>Send command to -server or ARMRd</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2688,8 +2688,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: Armrd.pid)</source>
-        <translation>Specify pid file (default: Armrd.pid)</translation>
+        <source>Specify pid file (default: ARMRd.pid)</source>
+        <translation>Specify pid file (default: ARMRd.pid)</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -3027,7 +3027,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <source>%s, you must set a rpcpassword in the configuration file:
  %s
 It is recommended you use the following random password:
-rpcuser=armrrpc
+rpcuser=ARMRrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
@@ -3335,6 +3335,97 @@ If the file does not exist, create it with owner-readable-only file permissions.
         <translation>You must set rpcpassword=&lt;password&gt; in the configuration file:
 %s
 If the file does not exist, create it with owner-readable-only file permissions.</translation>
+    </message>
+</context>
+<context>
+    <name>BlockchainDialog</name>
+    <message>
+        <location filename="../forms/blockchaindialog.ui" line="+38"/>
+        <source>The current ARMR blockchain you are using matches the hash registered in the Bitcoin blockchain at height 523,000. The matched hash is 99c0ec9462c28d7fa2c4beaf8af92b98a45692f2bec88d3af0837f4798fcff16, which is registered at Bitcoin blockchain at Block 521,681, with txid b8678ba1e6497cf7141636d3b373cfd1316c69054fdcf05a2cdca1dee4c17f73.</source>
+        <translation>The current ARMR blockchain you are using matches the hash registered in the Bitcoin blockchain at height 523,000. The matched hash is 99c0ec9462c28d7fa2c4beaf8af92b98a45692f2bec88d3af0837f4798fcff16, which is registered at Bitcoin blockchain at Block 521,681, with txid b8678ba1e6497cf7141636d3b373cfd1316c69054fdcf05a2cdca1dee4c17f73.</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>ARMR blockchain is already a very secure immutable database, as it is guaranteed by close to 1000 nodes in the network. However, to further guarantee that everything in the ARMR blockchain is immutable, we periodically register the ARMR blockchain hash in the Bitcoin blockchain. Bitcoin blockchain is the most secure immutable database in the world, with over 10,000 nodes running in about 100 different countries.</source>    
+        <translation>ARMR blockchain is already a very secure immutable database, as it is guaranteed by close to 1000 nodes in the network. However, to further guarantee that everything in the ARMR blockchain is immutable, we periodically register the ARMR blockchain hash in the Bitcoin blockchain. Bitcoin blockchain is the most secure immutable database in the world, with over 10,000 nodes running in about 100 different countries.</translation>
+    </message>
+    <message>   
+        <location line="+51"/>
+        <source>When the ARMR wallet starts, it automatically verifies its blockchain hash up to the latest checkpoint where it is registered in the Bitcoin blockchain. When the hash matches, it means that the ARMR blockchain (up to the latest checkpoint) is authentic and thus all the file hashes registered by DeepVault is also guaranteed by Bitcoin blockchain! Thus with a much lower cost, you can register your file with the world most secure immutable database and check its authencity later at any time by Deepvault.</source>
+        <translation>When the ARMR wallet starts, it automatically verifies its blockchain hash up to the latest checkpoint where it is registered in the Bitcoin blockchain. When the hash matches, it means that the ARMR blockchain (up to the latest checkpoint) is authentic and thus all the file hashes registered by DeepVault is also guaranteed by Bitcoin blockchain! Thus with a much lower cost, you can register your file with the world most secure immutable database and check its authencity later at any time by Deepvault.</translation>    
+    </message>
+     <message>
+        <location line="+51"/>
+        <source>If your blockchain is not matched, then it mean you are on a forked chain, you need to resynchronize with the ARMR network in order to be on the right blockchain (this protects your ARMR assets too).</source>
+        <translation>If your blockchain is not matched, then it mean you are on a forked chain, you need to resynchronize with the ARMR network in order to be on the right blockchain (this protects your ARMR assets too).</translation>
+    </message>  
+</context>
+<context>
+    <name>WalletModel</name>
+    <message>
+        <location filename="../walletmodel.cpp" line="+648"/>
+        <source>The DeepOnoion blockchain is not fully sychronized.</source>
+        <translation>The DeepOnoion blockchain is not fully sychronized.</translation>
+    </message>
+        <message>
+        <location line="+650"/>
+        <source>The DeepOnoion blockchain sychronized, but it does not match the latest checkpoint hash at Block </source>
+        <translation>The DeepOnoion blockchain sychronized, but it does not match the latest checkpoint hash at Block </translation>
+    </message>
+     <message>
+        <location line="+651"/>
+        <source> (which is registered and guaranteed by the Bitcoin blockchain). </source>
+        <translation> (which is registered and guaranteed by the Bitcoin blockchain). </translation>
+    </message>
+    <message>
+        <location line="+652"/>
+        <source>So you are most likely on a forked chain, please resync with official peers at https://ARMR.org.</source>
+        <translation>So you are most likely on a forked chain, please resync with official peers at https://ARMR.org.</translation>
+    </message>
+    <message>
+        <location line="+654"/>
+        <source>The DeepOnoion blockchain is fully sychronized. It is authentic! It is guaranteed by Bitcoin blockchain </source>
+        <translation>The DeepOnoion blockchain is fully sychronized. It is authentic! It is guaranteed by Bitcoin blockchain </translation>
+    </message>
+    <message>
+        <location line="+655"/>
+        <source>the most secure immuatble database in the world) up to Block </source>
+        <translation>the most secure immuatble database in the world) up to Block </translation>
+    </message>
+    <message>
+        <location line="+667"/>
+        <source>We can't verify the DeepOnoion blockchain as it is not fully sychronized yet. </source>
+        <translation>We can't verify the DeepOnoion blockchain as it is not fully sychronized yet. </translation>
+    </message>
+    <message>
+        <location line="+668"/>
+        <source>Please wait until it is fully synchronized and check back.</source>
+        <translation>Please wait until it is fully synchronized and check back.</translation>
+    </message>
+    <message>
+        <location line="+674"/>
+        <source>The current ARMR blockchain you are using matches the hash registered in the Bitcoin blockchain at height </source>
+        <translation>The current ARMR blockchain you are using matches the hash registered in the Bitcoin blockchain at height </translation>
+    </message>
+    <message>
+        <location line="+675"/>
+        <source>. The matched hash is </source>
+        <translation>. The matched hash is </translation>
+    </message>
+    <message>
+        <location line="+676"/>
+        <source>, which is registered at Bitcoin blockchain at Block </source>
+        <translation>, which is registered at Bitcoin blockchain at Block </translation>
+    </message>
+    <message>
+        <location line="+677"/>
+        <source>, with txid </source>
+        <translation>, with txid </translation>
+    </message>
+    <message>
+        <location line="+678"/>
+        <source>.</source>
+        <translation>.</translation>
     </message>
 </context>
 </TS>
