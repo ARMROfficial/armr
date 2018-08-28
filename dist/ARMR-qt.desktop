@@ -1,7 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=ARMR Linux wallet
-Exec=AppRun %F
-Icon=ARMR
-Categories=Network;
