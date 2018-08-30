@@ -1281,7 +1281,8 @@ static const char *strMainNetOnionSeed[][1] = {
 
 static const char *strTestNetOnionSeed[][1] = {
         {"4s5aterbpz6lzh4a.onion"},
-        {"jvflgp2hs2q35dyp.onion"},{NULL}
+        {"jvflgp2hs2q35dyp.onion"},
+        {"3eysqxvnpl6ywu3y.onion"}, {NULL}
 };
 
 void ThreadDNSAddressSeed(void *parg)

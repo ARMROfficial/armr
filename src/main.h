@@ -37,7 +37,7 @@ static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
 static const int64_t MIN_TX_FEE_NEW = 10000;
 static const int64_t MIN_RELAY_TX_FEE_NEW = MIN_TX_FEE_NEW;
 static const int64_t MAX_MONEY = 40000000 * COIN;
-static const int64_t MAX_PROOF_OF_STAKE_STABLE = 0.01 * COIN;	
+static const int64_t MAX_PROOF_OF_STAKE_STABLE = 0.03 * COIN;
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const int INIT_BLOCK = 1;
 
