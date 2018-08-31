@@ -1274,7 +1274,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
 
 	if (nPoSHeight < YEARLY_POS_BLOCK_COUNT)
 	{
-        nSubsidy = nRewardCoinYear * nCoinAge / 365;
+        nSubsidy = nRewardCoinYear * nCoinAge * (33 / (365 * 33 + 8));
 	}
 
 	return nSubsidy;
