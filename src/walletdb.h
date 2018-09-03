@@ -200,6 +200,12 @@ public:
         return Write(std::string("defaultkey"), vchPubKey.Raw());
     }
 
+    bool WriteDefaultStealthAddress(const CStealthAddress& sxAddr)
+    {
+        nWalletDBUpdated++;
+        return Write(std::make_pair(std::string("sxAddr"), sxAddr.scan_pubkey), sxAddr, true);
+    }
+
     bool ReadPool(int64_t nPool, CKeyPool& keypool)
     {
         return Read(std::make_pair(std::string("pool"), nPool), keypool);

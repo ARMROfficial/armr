@@ -813,7 +813,7 @@ bool AppInit2()
 //        pwalletMain->SetDefaultKey(newDefaultKey);
 //        if (!pwalletMain->SetAddressBookName(pwalletMain->vchDefaultKey.GetID(), ""))
 //            strErrors << _("Cannot write default address") << "\n";
-        std::string sLabel = "Default Stealth Address";
+        std::string sLabel;
 //        if (params.size() > 0)
 //            sLabel = params[0].get_str();
 

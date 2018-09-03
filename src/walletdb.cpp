@@ -381,7 +381,7 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
                 (keyMeta.nCreateTime < pwallet->nTimeFirstKey))
                 pwallet->nTimeFirstKey = keyMeta.nCreateTime;
         }
-        else if (strType == "defaultkey")
+        else if (strType == "sxAddr") //old defaultkey
         {
             ssValue >> pwallet->vchDefaultKey;
         }
