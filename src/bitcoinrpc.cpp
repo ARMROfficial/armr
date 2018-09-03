@@ -843,7 +843,7 @@ void ThreadRPCServer2(void* parg)
     {
         unsigned char rand_pwd[32];
         RAND_bytes(rand_pwd, 32);
-        string strWhatAmI = "To use ARMRd";
+        string strWhatAmI = "To use ARMR";
         if (mapArgs.count("-server"))
             strWhatAmI = strprintf(_("To use the %s option"), "\"-server\"");
         else if (mapArgs.count("-daemon"))
