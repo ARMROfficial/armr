@@ -5,14 +5,12 @@
 #include "guiconstants.h"
 #include "guiutil.h"
 #include "optionsmodel.h"
-//#include "thememanager.h"
 
 #include <QPixmap>
 #include <QUrl>
 
 #include <qrencode.h>
 
-//extern ThemeManager *themeManager;
 
 QRCodeDialog::QRCodeDialog(const QString &addr, const QString &label, bool enableReq, QWidget *parent) :
     QDialog(parent),
@@ -21,12 +19,6 @@ QRCodeDialog::QRCodeDialog(const QString &addr, const QString &label, bool enabl
     address(addr)
 {
     ui->setupUi(this);
-
-
-//    ui->outUri->setStyleSheet(themeManager->getCurrent()->getQLineEdit());
-//    ui->lnReqAmount->setStyleSheet(themeManager->getCurrent()->getQLineEdit());
-//    ui->lnLabel->setStyleSheet(themeManager->getCurrent()->getQLineEdit());
-//    ui->lnMessage->setStyleSheet(themeManager->getCurrent()->getQLineEdit());
 
     setWindowTitle(QString("%1").arg(address));
 
