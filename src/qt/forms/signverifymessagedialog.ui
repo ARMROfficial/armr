@@ -60,6 +60,18 @@
          </item>
          <item>
           <widget class="QToolButton" name="addressBookButton_SM">
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="toolTip">
             <string>Choose an address from the address book</string>
            </property>
@@ -80,6 +92,18 @@
          </item>
          <item>
           <widget class="QToolButton" name="pasteButton_SM">
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="toolTip">
             <string>Paste address from clipboard</string>
            </property>

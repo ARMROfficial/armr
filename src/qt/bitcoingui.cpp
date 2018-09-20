@@ -429,10 +429,11 @@ void BitcoinGUI::createMenuBar()
     QMenu *settings = appMenuBar->addMenu(tr("&Settings"));
     settings->addAction(encryptWalletAction);
     settings->addAction(changePassphraseAction);
+    settings->addSeparator();
     settings->addAction(unlockWalletAction);
     settings->addAction(lockWalletAction);
-    //settings->addSeparator();
-   // settings->addAction(optionsAction);
+    settings->addSeparator();
+    settings->addAction(optionsAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     help->addAction(openRPCConsoleAction);

@@ -66,6 +66,18 @@
         </item>
         <item>
          <widget class="QToolButton" name="addressBookButton">
+          <property name="minimumSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="toolTip">
            <string>Choose address from address book</string>
           </property>
@@ -83,6 +95,18 @@
         </item>
         <item>
          <widget class="QToolButton" name="pasteButton">
+          <property name="minimumSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="toolTip">
            <string>Paste address from clipboard</string>
           </property>
@@ -114,7 +138,7 @@
         <x>0</x>
         <y>0</y>
         <width>830</width>
-        <height>315</height>
+        <height>305</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">

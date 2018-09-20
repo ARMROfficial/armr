@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>808</width>
-    <height>500</height>
+    <width>750</width>
+    <height>459</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>750</width>
+    <height>459</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>750</width>
+    <height>459</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Welcome to ARMR</string>
