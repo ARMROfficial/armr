@@ -552,7 +552,7 @@ void BitcoinGUI::createTrayIcon()
     trayIcon = new QSystemTrayIcon(this);
     trayIconMenu = new QMenu(this);
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setToolTip(tr("A client"));
+    trayIcon->setToolTip(tr("ARMR client"));
 
     trayIcon->setIcon(QIcon(":/icons/toolbar"));
 
@@ -619,19 +619,29 @@ void BitcoinGUI::setNumConnections(int count)
     QString icon;
     switch(count)
     {
-    case 0: icon = ":/icons/connect_0"; break;
-    case 1: icon = ":/icons/connect_1"; break;
-    case 2: icon = ":/icons/connect_2"; break;
-    case 3: icon = ":/icons/connect_3"; break;
-    case 4: icon = ":/icons/connect_4"; break;
-    case 5: icon = ":/icons/connect_5"; break;
-    case 6: icon = ":/icons/connect_6"; break;
-    case 7: icon = ":/icons/connect_7"; break;
-    case 8: icon = ":/icons/connect_8"; break;
-    default: icon = ":/icons/connect_9"; break;
+    case 0: icon = ":/icons/connect_0"; 
+			break;
+    case 1: icon = ":/icons/connect_1"; 
+			break;
+    case 2: icon = ":/icons/connect_2"; 
+			break;
+    case 3: icon = ":/icons/connect_3"; 
+			break;
+    case 4: icon = ":/icons/connect_4"; 
+			break;
+    case 5: icon = ":/icons/connect_5"; 
+			break;
+    case 6: icon = ":/icons/connect_6"; 
+			break;
+    case 7: icon = ":/icons/connect_7"; 
+			break;
+    case 8: icon = ":/icons/connect_8"; 
+			break;
+    default: icon = ":/icons/connect_9"; 
+			break;
     }
     labelConnectionsIcon->setPixmap(QIcon(icon).pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Armr network", "", count));
+    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to ARMR network", "", count));
 
 	if (fTorEnabled == 1)
 	{
