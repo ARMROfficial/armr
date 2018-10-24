@@ -101,6 +101,9 @@ public:
     std::map<CKeyID, CKeyMetadata> mapKeyMetadata;
 
     std::set<CStealthAddress> stealthAddresses;
+
+    CStealthAddress defaultStealthAddress;
+
     StealthKeyMetaMap mapStealthKeyMeta;
     uint32_t nStealth, nFoundStealth; // for reporting, zero before use
 
@@ -133,6 +136,17 @@ public:
         nOrderPosNext = 0;
     }
 
+    CWallet(std::string strWalletFileIn, CStealthAddress sxAddr)
+    {
+        nWalletVersion = FEATURE_BASE;
+        nWalletMaxVersion = FEATURE_BASE;
+        strWalletFile = strWalletFileIn;
+        defaultStealthAddress = sxAddr;
+        fFileBacked = true;
+        nMasterKeyMaxID = 0;
+        pwalletdbEncryption = NULL;
+        nOrderPosNext = 0;
+    }
     std::map<uint256, CWalletTx> mapWallet;
     int64_t nOrderPosNext;
     std::map<uint256, int> mapRequestCount;

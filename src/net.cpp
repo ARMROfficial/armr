@@ -1496,17 +1496,17 @@ void static ThreadStakeMiner(void *parg)
 
         //The magic begins here
         //Generate a new address when a block is accepted and use it for staking
-        std::ostringstream strErrors;
+//        std::ostringstream strErrors;
 
 
-        RandAddSeedPerfmon();
+//        RandAddSeedPerfmon();
 
-        CPubKey newDefaultKey;
-        if (!pwalletMain->GetKeyFromPool(newDefaultKey, false))
-            strErrors << _("Cannot initialize keypool") << "\n";
-        pwalletMain->SetDefaultKey(newDefaultKey);
-        if (!pwalletMain->SetAddressBookName(pwalletMain->vchDefaultKey.GetID(), ""))
-            strErrors << _("Cannot write default address") << "\n";
+//        CPubKey newDefaultKey;
+//        if (!pwalletMain->GetKeyFromPool(newDefaultKey, false))
+//            strErrors << _("Cannot initialize keypool") << "\n";
+//        pwalletMain->SetDefaultKey(newDefaultKey);
+//        if (!pwalletMain->SetAddressBookName(pwalletMain->vchDefaultKey.GetID(), ""))
+//            strErrors << _("Cannot write default address") << "\n";
 
         //RegisterWallet(pwalletMain); //overkill like creating a stealth transaction
 
