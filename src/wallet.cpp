@@ -3369,7 +3369,7 @@ void CWallet::ScanBlockchainForHash(bool bDisplay)
 	printf(">> blockchainStatus = %d\n", blockchainStatus);
 }
 
-void liststealthaddresses(const Array& params, bool fHelp)
+void LoadStealthAddresses(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 1)
         throw runtime_error(
