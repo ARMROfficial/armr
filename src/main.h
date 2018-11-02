@@ -33,6 +33,7 @@ static const unsigned int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE/50;
 static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64_t MIN_TX_FEE = 100000;
+static const int64_t SELF_TX_FEE = MIN_TX_FEE * 0;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
 static const int64_t MIN_TX_FEE_NEW = 10000;
 static const int64_t MIN_RELAY_TX_FEE_NEW = MIN_TX_FEE_NEW;

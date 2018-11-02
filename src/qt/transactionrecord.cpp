@@ -156,9 +156,9 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 mapValue_t::const_iterator mi = wtx.mapValue.find(cbuf);
                 if (mi != wtx.mapValue.end() && !mi->second.empty())
                 {
-                	sub.narration = mi->second;
-                	LogPrintf("DEBIT | ADDED NARRATION: %s from POSITION: %s\n", sub.narration.c_str(), mi->first.c_str());
-               	}
+                    sub.narration = mi->second;
+                    LogPrintf("DEBIT | ADDED NARRATION: %s from POSITION: %s\n", sub.narration.c_str(), mi->first.c_str());
+                }
 
                 int64 nValue = txout.nValue;
 
@@ -184,7 +184,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
             //
             // Mixed debit transaction, can't break down payees
             //
-        	parts.append(TransactionRecord(hash, nTime, TransactionRecord::Other, "", "", nNet, 0));
+            parts.append(TransactionRecord(hash, nTime, TransactionRecord::Other, "", "", nNet, 0));
         }
     }
 

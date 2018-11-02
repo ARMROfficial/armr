@@ -318,6 +318,7 @@ Value sendtoaddress(const Array& params, bool fHelp)
             + HelpRequiringPassphrase());
 
     CBitcoinAddress address(params[0].get_str());
+    std::cout << "Reaching The addresses"<< std::endl;
     if (!address.IsValid())
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ARMR address");
 
