@@ -17,6 +17,8 @@
 
 using namespace std;
 extern unsigned int nStakeMaxAge;
+extern CWallet* pwalletMain;
+
 
 unsigned int nStakeSplitAge = 20 * 24 * 60 * 60;
 int64_t nStakeCombineThreshold = 100 * COIN;
@@ -2019,7 +2021,8 @@ DBErrors CWallet::LoadWallet(bool& fFirstRunRet)
 
     if (nLoadWalletRet != DB_LOAD_OK)
         return nLoadWalletRet;
-    fFirstRunRet = !vchDefaultKey.IsValid();
+//    fFirstRunRet = !vchDefaultKey.IsValid();
+//    fFirstRunRet = !IsStealthAddress()?
 
     NewThread(ThreadFlushWalletDB, &strWalletFile);
     return DB_LOAD_OK;
@@ -3366,3 +3369,46 @@ void CWallet::ScanBlockchainForHash(bool bDisplay)
 	printf(">> blockchainStatus = %d\n", blockchainStatus);
 }
 
+void LoadStealthAddresses(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() > 1)
+        throw runtime_error(
+            "liststealthaddresses [show_secrets=0]\n"
+            "List owned stealth addresses.");
+
+    bool fShowSecrets = false;
+
+    if (params.size() > 0)
+    {
+        std::string str = params[0].get_str();
+
+        if (str == "0" || str == "n" || str == "no" || str == "-" || str == "false")
+            fShowSecrets = false;
+        else
+            fShowSecrets = true;
+    };
+
+    if (fShowSecrets)
+    {
+        if (pwalletMain->IsLocked())
+            throw runtime_error("Failed: Wallet must be unlocked.");
+    };
+
+    std::set<CStealthAddress>::iterator it;
+    for (it = pwalletMain->stealthAddresses.begin(); it != pwalletMain->stealthAddresses.end(); ++it)
+    {
+        if (it->scan_secret.size() < 1)
+            continue; // stealth address is not owned
+
+        if (fShowSecrets)
+        {
+            //Wait to pass results from reward sending method
+        }
+        else
+        {
+            //
+        };
+    };
+
+//    return 1;
+}
