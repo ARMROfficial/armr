@@ -3357,8 +3357,8 @@ Wenn die Datei nicht existiert, erstellen Sie diese mit nur für den Besitzer le
     </message>
     <message>
         <location line="+652"/>
-        <source>So you are most likely on a forked chain, please resync with official peers at https://ARMR.org.</source>
-        <translation>Sie sind also höchstwahrscheinlich auf einer abgespaltenen Blockchain! Bitte synchronisieren Sie sich mit den offiziellen Peers unter https://ARMR.org.</translation>
+        <source>So you are most likely on a forked chain, please resync with official peers at https://armr.network.</source>
+        <translation>Sie sind also höchstwahrscheinlich auf einer abgespaltenen Blockchain! Bitte synchronisieren Sie sich mit den offiziellen Peers unter https://armr.network.</translation>
     </message>
     <message>
         <location line="+654"/>

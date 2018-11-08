@@ -804,7 +804,7 @@ bool AppInit2()
 
     if (fFirstRun)
     {
-        fFirstRun=false;
+        //fFirstRun=false;
         // Create new keyUser and set as default key
 //        RandAddSeedPerfmon();
 

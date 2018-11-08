@@ -3379,8 +3379,8 @@ If the file does not exist, create it with owner-readable-only file permissions.
     </message>
     <message>
         <location line="+652"/>
-        <source>So you are most likely on a forked chain, please resync with official peers at https://ARMR.org.</source>
-        <translation>So you are most likely on a forked chain, please resync with official peers at https://ARMR.org.</translation>
+        <source>So you are most likely on a forked chain, please resync with official peers at https://armr.network.</source>
+        <translation>So you are most likely on a forked chain, please resync with official peers at https://armr.network.</translation>
     </message>
     <message>
         <location line="+654"/>

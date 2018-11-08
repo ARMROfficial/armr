@@ -3361,8 +3361,8 @@ Si le fichier n&apos;existe pas, créez-le avec les droits de lecture seule acco
     </message>
          <message>
         <location line="+652"/>
-        <source>So you are most likely on a forked chain, please resync with official peers at https://ARMR.org.</source>
-        <translation>Il semblerait que vous êtes sur une &quot;forked chain&quot;, s&apos;il vous plaît synchroniser à nouveau avec des pairs officiels sur https://ARMR.org.</translation>
+        <source>So you are most likely on a forked chain, please resync with official peers at https://armr.network.</source>
+        <translation>Il semblerait que vous êtes sur une &quot;forked chain&quot;, s&apos;il vous plaît synchroniser à nouveau avec des pairs officiels sur https://armr.network.</translation>
     </message>
     <message>
         <location line="+654"/>
