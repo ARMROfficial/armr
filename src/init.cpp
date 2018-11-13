@@ -804,15 +804,29 @@ bool AppInit2()
 
     if (fFirstRun)
     {
+        //fFirstRun=false;
         // Create new keyUser and set as default key
-        RandAddSeedPerfmon();
+//        RandAddSeedPerfmon();
 
-        CPubKey newDefaultKey;
-        if (!pwalletMain->GetKeyFromPool(newDefaultKey, false))
-            strErrors << _("Cannot initialize keypool") << "\n";
-        pwalletMain->SetDefaultKey(newDefaultKey);
-        if (!pwalletMain->SetAddressBookName(pwalletMain->vchDefaultKey.GetID(), ""))
-            strErrors << _("Cannot write default address") << "\n";
+//        CPubKey newDefaultKey;
+//        if (!pwalletMain->GetKeyFromPool(newDefaultKey, false))
+//            strErrors << _("Cannot initialize keypool") << "\n";
+//        pwalletMain->SetDefaultKey(newDefaultKey);
+//        if (!pwalletMain->SetAddressBookName(pwalletMain->vchDefaultKey.GetID(), ""))
+//            strErrors << _("Cannot write default address") << "\n";
+        std::string sLabel;
+//        if (params.size() > 0)
+//            sLabel = params[0].get_str();
+
+//        CStealthAddress sxAddr;
+//        std::string sError;
+//        if (!pwalletMain->NewStealthAddress(sError, sLabel, sxAddr))
+//            throw runtime_error(std::string("Could get new stealth address: ") + sError);
+
+//        if (!pwalletMain->AddStealthAddress(sxAddr))
+//            throw runtime_error("Could not save to wallet.");
+
+//        return sxAddr.Encoded();
     }
 
     printf("%s", strErrors.str().c_str());
