@@ -1894,11 +1894,11 @@ Value liststakingstealthaddress(const Array& params, bool fHelp)
             objA.push_back(Pair("Address      ", it->Encoded()));
             objA.push_back(Pair("Scan Secret  ", HexStr(it->scan_secret.begin(), it->scan_secret.end())));
             objA.push_back(Pair("Spend Secret ", HexStr(it->spend_secret.begin(), it->spend_secret.end())));
-            result.push_back(Pair("Stealth Address", objA));
+            result.push_back(Pair("Staking Stealth Address", objA));
         }
         else
         {
-            result.push_back(Pair("Stealth Address", it->Encoded() + " - " + it->label));
+            result.push_back(Pair("Staking Stealth Address", it->Encoded() + " - " + it->label));
         };
     };
     return result;

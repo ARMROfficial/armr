@@ -9,6 +9,9 @@
 #include "miner.h"
 #include "kernel.h"
 #include "main.h"
+#include "init.h"
+#include "stealth.h"
+#include "wallet.h"
 
 using namespace std;
 
@@ -585,6 +588,26 @@ void StakeMiner(CWallet *pwallet)
             CheckStake(pblock.get(), *pwallet);
             SetThreadPriority(THREAD_PRIORITY_LOWEST);
             MilliSleep(500);
+
+
+            //No more races
+            //After half a second our block is signed
+            //We now attempt to create an output for the next stake
+            std::string sEncoded;
+            CStealthAddress sxAddr;
+            CWalletTx wtx;
+            int64_t nAmount = 1;
+            std::string sNarr;
+            std::set<CStealthAddress>::iterator it;
+            for(it=pwalletMain->stealthAddresses.begin(); it==pwalletMain->stealthAddresses.begin(); it++){
+                if(it->scan_secret.size()<1)
+                    continue;
+                sEncoded=it->Encoded();
+                sxAddr.SetEncoded(sEncoded);
+                std::string sError;
+                if (!pwalletMain->SendStealthMoneyToDestination(sxAddr, nAmount, sNarr, wtx, sError))
+                    std::cout<<sError<<std::endl;
+            }
 
         }
         else
