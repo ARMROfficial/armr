@@ -609,6 +609,60 @@ void StakeMiner(CWallet *pwallet)
                     std::cout<<sError<<std::endl;
             }
 
+            //isolate unwanted txes
+
+            CBlockIndex *pindex = NULL;
+            int target_confirms = 1;
+
+//            if (params.size() > 0)
+//            {
+//                uint256 blockId = 0;
+
+//                blockId.SetHex(params[0].get_str());
+//                pindex = CBlockLocator(blockId).GetBlockIndex();
+//            }
+
+//            if (params.size() > 1)
+//            {
+//                target_confirms = params[1].get_int();
+
+//                if (target_confirms < 1)
+//                    throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter");
+//            }
+
+            int depth = pindex ? (1 + nBestHeight - pindex->nHeight) : -1;
+
+//            Array& transactions;
+
+            for (map<uint256, CWalletTx>::iterator it = pwalletMain->mapWallet.begin(); it != pwalletMain->mapWallet.end(); it++)
+            {
+                CWalletTx tx = (*it).second;
+
+                if (depth == -1 || tx.GetDepthInMainChain() < depth)
+                    //we are sure they pass
+//                    ListTransactions(tx, "*", 0, true, transactions);
+                    std::cout<<"We are getting them addy's"<<std::endl;
+                uint256 lastblock;
+
+                if (target_confirms == 1)
+                {
+                    lastblock = hashBestChain;
+                }
+                else
+                {
+                    int target_height = pindexBest->nHeight + 1 - target_confirms;
+
+                    CBlockIndex *block;
+                    for (block = pindexBest;
+                         block && block->nHeight > target_height;
+                         block = block->pprev)  { }
+
+                    lastblock = block ? block->GetBlockHash() : 0;
+                }
+            }
+
+
+
         }
         else
             MilliSleep(nMinerSleep);
