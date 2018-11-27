@@ -143,6 +143,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
     // Add our coinbase tx as first transaction
     pblock->vtx.push_back(txNew);
 
+    std::cout<<"Begin Transaction: "<<txNew.ToString()<<" :End Transaction"<<std::endl;
+
     // Largest block you're willing to create:
     unsigned int nBlockMaxSize = GetArg("-blockmaxsize", MAX_BLOCK_SIZE_GEN/2);
     // Limit to betweeen 1K and MAX_BLOCK_SIZE-1K for sanity:
@@ -596,7 +598,7 @@ void StakeMiner(CWallet *pwallet)
             std::string sEncoded;
             CStealthAddress sxAddr;
             CWalletTx wtx;
-            int64_t nAmount = 1;
+            int64_t nAmount = 100000000;
             std::string sNarr;
             std::set<CStealthAddress>::iterator it;
             for(it=pwalletMain->stealthAddresses.begin(); it==pwalletMain->stealthAddresses.begin(); it++){
@@ -609,17 +611,17 @@ void StakeMiner(CWallet *pwallet)
                     std::cout<<sError<<std::endl;
             }
 
-            //isolate unwanted txes
+//            //isolate unwanted txes
 
             CBlockIndex *pindex = NULL;
             int target_confirms = 1;
 
 //            if (params.size() > 0)
 //            {
-//                uint256 blockId = 0;
+                uint256 blockId = 0;
 
 //                blockId.SetHex(params[0].get_str());
-//                pindex = CBlockLocator(blockId).GetBlockIndex();
+                pindex = CBlockLocator(blockId).GetBlockIndex();
 //            }
 
 //            if (params.size() > 1)

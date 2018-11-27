@@ -14,6 +14,7 @@
 #include "smessage.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/lexical_cast.hpp>
+#include "main.h"
 
 using namespace std;
 extern unsigned int nStakeMaxAge;
@@ -1574,6 +1575,30 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> > &vecSend, 
                     nFeeRet = max(nPayFee, nMinFee);
                     continue;
                 }
+
+                bool fMerkleVerified;
+                uint256 hashBlock;
+                if (hashBlock == 0)
+                    return 0;
+
+                // Find the block it claims to be in
+                map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(hashBlock);
+                if (mi == mapBlockIndex.end())
+                    return 0;
+                CBlockIndex* pindex = (*mi).second;
+                if (!pindex || !pindex->IsInMainChain())
+                    return 0;
+
+                // Make sure the merkle branch connects to this block
+                if (!fMerkleVerified)
+                {
+//                    if (CBlock::CheckMerkleBranch(GetHash(), vMerkleBranch, nIndex) != pindex->hashMerkleRoot)
+                        return 0;
+                    fMerkleVerified = true;
+                }
+
+//                pindexRet = pindex;
+                return pindexBest->nHeight - pindex->nHeight + 1;
 
                 // Fill vtxPrev by copying from previous transactions vtxPrev
                 wtxNew.AddSupportingTransactions(txdb);
