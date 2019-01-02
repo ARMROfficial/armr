@@ -40,7 +40,7 @@ unsigned int nTransactionsUpdated = 0;
 map<uint256, CBlockIndex*> mapBlockIndex;
 set<pair<COutPoint, unsigned int> > setStakeSeen;
 
-CBigNum bnProofOfWorkLimit(~uint256(0) >> 20); 
+CBigNum bnProofOfWorkLimit(~uint256(0) >> 3);
 CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 7);
 CBigNum bnProofOfWorkFirstBlock(~uint256(0) >> 7);
