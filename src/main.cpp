@@ -40,15 +40,15 @@ unsigned int nTransactionsUpdated = 0;
 map<uint256, CBlockIndex*> mapBlockIndex;
 set<pair<COutPoint, unsigned int> > setStakeSeen;
 
-CBigNum bnProofOfWorkLimit(~uint256(0) >> 3);
+CBigNum bnProofOfWorkLimit(~uint256(0) >> 20); 
 CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 7);
 CBigNum bnProofOfWorkFirstBlock(~uint256(0) >> 7);
 
 unsigned int nWorkTargetSpacing = 240;                  // 240 sec block spacing for PoW
 unsigned int nStakeTargetSpacing = 60;			        // 60 sec block spacing for PoS
-unsigned int nStakeMinAge = 60 * 1 * 1 * 1;			// minimum age for coin age: 4 mins
-unsigned int nStakeMaxAge = 60 * 60 * 24 * 1;	        // stake age of full weight: 1d
+unsigned int nStakeMinAge = 60 * 60 * 24 * 1;			// minimum age for coin age: 1d
+unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	        // stake age of full weight: 30d
 
 unsigned int nModifierInterval = 8 * 60;				// time to elapse before new modifier is computed
 
@@ -1274,7 +1274,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
 
 	if (nPoSHeight < YEARLY_POS_BLOCK_COUNT)
 	{
-        nSubsidy = nRewardCoinYear * nCoinAge / 365;
+        nSubsidy = (nRewardCoinYear * nCoinAge / 365)*.01;//1% until airfork is complete
 	}
 
 	return nSubsidy;
@@ -2444,7 +2444,7 @@ bool CBlock::AcceptBlock()
         return error("AcceptBlock() : rejected by synchronized checkpoint");
 
     if (CheckpointsMode == Checkpoints::ADVISORY && !cpSatisfies)
-        strMiscWarning = _("WARNING: syncronized checkpoint violation detected, but skipped!");
+        strMiscWarning = _("WARNING: synchronized checkpoint violation detected, but skipped!");
 
     // Enforce rule that the coinbase starts with serialized block height
     CScript expect = CScript() << nHeight;
