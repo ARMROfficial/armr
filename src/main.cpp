@@ -2805,7 +2805,7 @@ printf("Creating new Gen Block\n");
         block.nVersion = 1;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
         block.nTime    = 1524174497;
-        block.nNonce   = 0;
+        block.nNonce   = 3832541;
 
         if(fTestNet)
         {
@@ -2821,7 +2821,7 @@ printf("Creating new Gen Block\n");
             block.nNonce   	= 2021;
         }
 
-        if ((block.GetHash() != hashGenesisBlock)) {
+        if (true && block.GetHash() != hashGenesisBlock) {
 			// This will figure out a valid hash and Nonce if you're
 			// creating a different genesis block:
 			uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
