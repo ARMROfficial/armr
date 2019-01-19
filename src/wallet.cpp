@@ -2021,7 +2021,7 @@ DBErrors CWallet::LoadWallet(bool& fFirstRunRet)
 
     if (nLoadWalletRet != DB_LOAD_OK)
         return nLoadWalletRet;
-//    fFirstRunRet = !vchDefaultKey.IsValid();
+    fFirstRunRet = !vchDefaultKey.IsValid();
 //    fFirstRunRet = !IsStealthAddress()?
 
     NewThread(ThreadFlushWalletDB, &strWalletFile);
@@ -2489,26 +2489,26 @@ CPubKey CReserveKey::GetReservedKey()
     std::ostringstream strErrors;
 
      // Generate a new key that is added to wallet
-    RandAddSeedPerfmon();
+//    RandAddSeedPerfmon();
 
-    CPubKey newDefaultKey;
-    if (!pwalletMain->GetKeyFromPool(newDefaultKey, false))
-        strErrors << _("Cannot initialize keypool") << "\n";
-    if (!pwalletMain->SetAddressBookName(pwalletMain->vchDefaultKey.GetID(), ""))
-        strErrors << _("Cannot write default address") << "\n";
-//    if (nIndex == -1)
-//    {
-//        CKeyPool keypool;
-//        pwallet->ReserveKeyFromKeyPool(nIndex, keypool);
-//        if (nIndex != -1)
-//            vchPubKey = keypool.vchPubKey;
-//        else
-//        {
+//    CPubKey newDefaultKey;
+//    if (!pwalletMain->GetKeyFromPool(newDefaultKey, false))
+//        strErrors << _("Cannot initialize keypool") << "\n";
+//    if (!pwalletMain->SetAddressBookName(pwalletMain->vchDefaultKey.GetID(), ""))
+//        strErrors << _("Cannot write default address") << "\n";
+    if (nIndex == -1)
+    {
+        CKeyPool keypool;
+        pwallet->ReserveKeyFromKeyPool(nIndex, keypool);
+        if (nIndex != -1)
+            vchPubKey = keypool.vchPubKey;
+        else
+        {
             printf("CReserveKey::GetReservedKey(): Warning: Using default key instead of a new key, top up your keypool!");
             vchPubKey = pwallet->vchDefaultKey;
-//        }
-//    }
-//    assert(vchPubKey.IsValid());
+        }
+    }
+    assert(vchPubKey.IsValid());
     return vchPubKey;
 }
 
