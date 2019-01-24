@@ -243,7 +243,7 @@
    <item>
     <widget class="QLabel" name="lblExplanation1">
      <property name="text">
-      <string>When you click OK, %1 will begin to download and process the full beta test block chain starting with the earliest transactions.</string>
+      <string>When you click OK, %1 will begin to download and process the full block chain starting with the earliest transactions.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>

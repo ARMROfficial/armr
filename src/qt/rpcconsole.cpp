@@ -639,13 +639,6 @@ void RPCConsole::on_openDebugLogfileButton_clicked()
     GUIUtil::openDebugLogfile();
 }
 
-void RPCConsole::on_showMeDetailsButton_clicked()
-{
-    BlockchainDialog dlg;
-    dlg.setLabelText(walletModel);
-    dlg.exec();
-}
-
 void RPCConsole::scrollToEnd()
 {
     QScrollBar *scrollbar = ui->messagesWidget->verticalScrollBar();

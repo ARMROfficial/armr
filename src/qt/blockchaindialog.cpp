@@ -20,10 +20,3 @@ void BlockchainDialog::on_buttonBox_accepted()
 {
     close();
 }
-
-
-void BlockchainDialog::setLabelText(WalletModel* walletModel)
-{
-	ui->label->setText(walletModel->getBlockchainStatusDetailsText());
-	ui->label->setStyleSheet(walletModel->getBlockchainTextStylesheet());
-}

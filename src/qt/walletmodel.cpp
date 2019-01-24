@@ -645,7 +645,7 @@ QString WalletModel::getBlockchainStatusText()
 	QString text;
 	
 	if(blockchainStatus == -1)
-		text = QString("The DeepOnoion blockchain is not fully sychronized.");
+        text = QString("ARMR blockchain is not fully sychronized.");
 	else if(blockchainStatus == 0)
 		text = QString("The ARMR blockchain synchronized, but it does not match the latest checkpoint hash at Block ")
 			+ QString::number(CWallet::LAST_REGISTERED_BLOCK_HEIGHT) + QString(" (which is registered and guaranteed by the Bitcoin blockchain). ")
@@ -664,10 +664,10 @@ QString WalletModel::getBlockchainStatusDetailsText()
 	QString text;
 	
 	if(blockchainStatus == -1)
-		text = QString("We can't verify the DeepOnoion blockchain as it is not fully sychronized yet. ")
+        text = QString("We can't verify ARMR blockchain as it is not fully sychronized yet. ")
 				+ QString("Please wait until it is fully synchronized and check back.");
 	else if(blockchainStatus == 0)
-		text = QString("The DeepOnoion blockchain sychronized, but it does not match the latest checkpoint hash at Block ")
+        text = QString("ARMR blockchain sychronized, but it does not match the latest checkpoint hash at Block ")
 			+ QString::number(CWallet::LAST_REGISTERED_BLOCK_HEIGHT) + QString(" (which is registered and guaranteed by the Bitcoin blockchain). ")
 			+ QString("So you are most likely on a forked chain, please resync with official peers at https://armr.network.");
 	else
