@@ -2022,7 +2022,6 @@ DBErrors CWallet::LoadWallet(bool& fFirstRunRet)
     if (nLoadWalletRet != DB_LOAD_OK)
         return nLoadWalletRet;
     fFirstRunRet = !vchDefaultKey.IsValid();
-//    fFirstRunRet = !IsStealthAddress()?
 
     NewThread(ThreadFlushWalletDB, &strWalletFile);
     return DB_LOAD_OK;

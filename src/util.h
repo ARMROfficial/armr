@@ -485,7 +485,7 @@ public:
     }
 };
 
-
+//extern ArgsManager gArgs;
 template<typename T1, typename T2>
 inline uint256 Hash(const T1 p1begin, const T1 p1end,
                     const T2 p2begin, const T2 p2end)

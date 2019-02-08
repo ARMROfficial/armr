@@ -20,6 +20,7 @@
 #include "main.h"
 #include "ui_interface.h"
 #include "qtipcserver.h"
+#include "alert.h"
 
 #include <QApplication>
 #include <QMessageBox>

@@ -88,6 +88,7 @@ bool fPrintDebugLog = true;
 const int64_t nStartupTime = GetTime();
 
 // Init OpenSSL library multithreading support
+//ArgsManager gArgs;
 static CCriticalSection** ppmutexOpenSSL;
 void locking_callback(int mode, int i, const char* file, int line)
 {
