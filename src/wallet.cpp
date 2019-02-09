@@ -2486,15 +2486,6 @@ void CWallet::DisableTransaction(const CTransaction &tx)
 CPubKey CReserveKey::GetReservedKey()
 {
     std::ostringstream strErrors;
-
-     // Generate a new key that is added to wallet
-//    RandAddSeedPerfmon();
-
-//    CPubKey newDefaultKey;
-//    if (!pwalletMain->GetKeyFromPool(newDefaultKey, false))
-//        strErrors << _("Cannot initialize keypool") << "\n";
-//    if (!pwalletMain->SetAddressBookName(pwalletMain->vchDefaultKey.GetID(), ""))
-//        strErrors << _("Cannot write default address") << "\n";
     if (nIndex == -1)
     {
         CKeyPool keypool;

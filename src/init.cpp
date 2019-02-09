@@ -801,7 +801,7 @@ bool AppInit2()
             strErrors << _("Cannot downgrade wallet") << "\n";
         pwalletMain->SetMaxVersion(nMaxVersion);
     }
-        fFirstRun=false;
+
     if (fFirstRun)
     {
         // Create new keyUser and set as default key
