@@ -1281,7 +1281,28 @@ static const char *strMainNetOnionSeed[][1] = {
         {"2pkzdw63xgfwhamm.onion"},
         {"j7bmhpny2roes5b4.onion"},
         {"jvflgp2hs2q35dyp.onion"},
-        {"3eysqxvnpl6ywu3y.onion"},{NULL}
+        {"3eysqxvnpl6ywu3y.onion"},
+        {"awutcyrjtndrvrr3.onion"},
+        {"ommj7doxtwj7gvod.onion"},
+        {"c62qni2tbzd2uweg.onion"},
+        {"ti2kev6wcuttymqd.onion"},
+        {"ztxqnbvhuoobaddh.onion"},
+        {"53phz42ogjm4wojb.onion"},
+        {"irlvmgzw6l52wasv.onion"},
+        {"kq5ewc5t7hf2kr4w.onion"},
+        {"v5oc47t756xlyvk2.onion"},
+        {"mkhquivkktck7xa6.onion"},
+        {"xpypdxcxhotebdut.onion"},
+        {"d7zxbo5k6awi6rri.onion"},
+        {"7n7roxkfwddamllc.onion"},
+        {"xogv5tw7rb5apbir.onion"},
+        {"lim6czfldgqdayew.onion"},
+        {"b4imjfeb7m2n32wj.onion"},
+        {"2shq6oerbt5ibtbk.onion"},
+        {"t63uijqc7bn5hn54.onion"},
+        {"rk3a24ojnt5hk32p.onion"},
+        {"ycyqmr2wlesek57i.onion"},
+        {NULL}
 };
 
 static const char *strTestNetOnionSeed[][1] = {
