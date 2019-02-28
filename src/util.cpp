@@ -215,7 +215,7 @@ inline int OutputDebugStringF(const char* pszFormat, ...)
         va_end(arg_ptr);
     }
     else //always print debug log
-//        if (!fPrintToDebugger && fPrintDebugLog)
+    if (!fPrintToDebugger && fPrintDebugLog)
     {
         // print to debug.log
 

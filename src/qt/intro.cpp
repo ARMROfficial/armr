@@ -165,7 +165,7 @@ QString Intro::getDefaultDataDirectory()
 
 bool Intro::pickDataDirectory()
 {
-    QSettings settings;
+    QSettings settings("ARMR","ARMR-Qt");
     /* If data directory provided on command line, no need to look at settings
        or show a picking dialog */
     if(!GetArg("-datadir", "").empty())
