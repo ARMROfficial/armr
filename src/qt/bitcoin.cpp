@@ -93,6 +93,11 @@ static void InitMessage(const std::string &message)
 {
     if(splashref)
     {
+        QFont splashFont;
+        splashFont.setFamily("HelveticaNeue");
+        splashFont.setBold(true);
+        splashFont.setPixelSize(20);
+        splashref->setFont(splashFont);
         splashref->showMessage(QString::fromStdString(message), Qt::AlignBottom|Qt::AlignHCenter, QColor(0,0,0));
         QApplication::instance()->processEvents();
     }
