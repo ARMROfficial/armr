@@ -3,7 +3,7 @@ Open a *Terminal*.
 1.  *Clone the github tree to get the source code*
 
 ```
-git clone --recursive https://github.com/armr/armr.git
+git clone --recursive https://github.com/ARMROfficial/armr.git
 cd armr
 ```
 
