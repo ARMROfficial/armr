@@ -34,11 +34,7 @@ Then expand your system PATH variable so that it contains the location of the *b
 
 The usual way to change those settings is via System/Environment Variables
 
-![env-vars](https://img3.picload.org/image/ddilaorl/env_vars.png)
-
 Click `Environment Variables`, then search for the entry `PATH` in the newly opened window. Click on `New` and add the **full path** to the *bin* subdirectory of mingw. Take care of moving the entry to the top of the list. Just in case you have several GCC compilers available.
-
-![env-settings](https://img2.picload.org/image/ddiloirw/env_settings.png)
 
 
 Apply those changes, close the toolboxes and open a DOS window. Type `gcc -v` to check if you get a response like this one:
@@ -64,13 +60,12 @@ After having installed the MSYS & MinGW tools the next steps will be to download
 
 Here I'll use `C:\deps` as the root directory for the below libraries. If not stated otherwise, all of them will be unpacked there.
 
-![all-libs](https://img3.picload.org/image/ddilowgw/all_libs.png)
 
 #### OpenSSL
 
-Download OpenSSL [from here](http://www.openssl.org/source/openssl-1.0.1l.tar.gz) and unpack it with `tar xvfz openssl-1.0.1l.tar.gz`
+Download OpenSSL [from here](http://www.openssl.org/source/openssl-1.0.1l.tar.gz) and unpack it with `tar xvfz openssl-1.0.1l.tar.gz` using mysys
 
-Then `cd openssl-1.0.1l` and execute the configuration tool with:
+Using Mysys, `cd openssl-1.0.1l` and execute the configuration tool with:
 
 `./Configure no-zlib no-shared no-dso no-krb5 no-camellia no-capieng no-cast no-cms no-dtls1 no-gost no-gmp no-heartbeats no-idea no-jpake no-md2 no-mdc2 no-rc5 no-rdrand no-rfc3779 no-rsax no-sctp no-seed no-sha0 no-static_engine no-whirlpool no-rc2 no-rc4 no-ssl2 no-ssl3 mingw`
 
@@ -98,14 +93,12 @@ make
 This library is *OS agnostic* and should therefore be unpacked by 7zip which you can download from [here](http://www.7-zip.org/). **Do not try to unpack it with** *tar* **like you did with previous libraries!**
 
 ```
-bootstrap.bat mingw
+Using Windows command prompt:
+bootstrap.bat mingw 
 b2 --build-type=complete --with-chrono --with-filesystem --with-program_options --with-system --with-thread toolset=gcc variant=release link=static threading=multi runtime-link=static stage
 
 ```
-
 The compiled libraries will land in the `stage/lib` directory as stated in the command above.
-
-![boost-stage](https://img2.picload.org/image/ddilaioi/boost_stage.png)
 
 #### MiniUPNPC
 
@@ -115,7 +108,7 @@ After unpacking with *tar* rename the folder to *miniupnpc* first before buildin
 
 ```
 tar xvfz miniupnpc-1.9.20150206.tar.gz
-cd miniupnpc
+cd miniupnpc-1.9.20150206
 mingw32-make -f Makefile.mingw init upnpc-static
 ```
 
@@ -145,6 +138,7 @@ cp .libs/libpng16.a .libs/libpng.a
 Then [download](http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz) QrEncode.
 
 ```
+tar xvfz qrencode-3.4.4.tar.gz
 cd qrencode-3.4.4
 
 LIBS="../libpng-1.6.34/.libs/libpng.a C:/bin/toolchains/mingw32/i686-w64-mingw32/lib/libz.a" \
@@ -161,17 +155,6 @@ Regarding LibPNG in the **LIBS** variable: *make sure you're pointing to the cor
 
 In this case I've used relative ones, but you're free to hard code them according to your local structure. If you encounter any errors during compilation of *QrEncode*, look at those paths first, as this is the most frequent source of problems.
 
-#### Libcommuni
-
-[Download](https://github.com/communi/libcommuni/archive/v3.5.0.zip)
-Unzip the package with 7zip.
-
-```
-qmake
-make
-```
-
-Regarding potential issues with **Qmake tool** scroll down to the QT section and look under the *Potential Issues* paragraph. 
 
 #### LibEvent
 
@@ -181,7 +164,7 @@ After unpacking rename the directory to libevent-2.0.22.
 
 ```
 tar xvfz libevent-2.0.22-stable.tar.gz
-cd libevent-2.0.22
+cd libevent-2.0.22-stable
 ./configure --prefix=/mingw
 ./configure && make
 make install
@@ -200,17 +183,12 @@ make
 
 Here, again, take care of providing **your own paths to compiler toolchains**. After the compilation has finished copy those libraries to our default `src/torlibs-win` path. You can see the list of all libraries inside the Qt Project file.
 
-![tor-libs-paths](https://img3.picload.org/image/ddillpla/tor_libs_paths.png)
-
-
 
 #### QT Libraries
 
 You have to download two packages from QT: [QtBase](https://download.qt.io/archive/qt/5.3/5.3.2/submodules/qtbase-opensource-src-5.3.2.7z) & [QtTools](https://download.qt.io/archive/qt/5.3/5.3.2/submodules/qttools-opensource-src-5.3.2.7z). **Those libraries must be unpacked with 7zip!**
 
 My local root for is `C:/Qt/5.3.2` for **QtBase** and `C:/Qt/qt-tools-opensource-src-5.3.2` for **QtTools**.
-
-![qt-root](https://img2.picload.org/image/ddilorgr/qt_root.png)
 
 Open a Windows command prompt (not MSYS!) and type the following commands one by one.
 
@@ -229,10 +207,24 @@ set PATH=%PATH%;C:\Qt\5.3.2\bin
 
 cd C:\Qt\qttools-opensource-src-5.3.2
 
-qmake qttools.pro
+C:\Qt\5.3.2\bin\qmake qttools.pro
 
 mingw32-make
 ```
+
+#### Libcommuni
+
+[Download](https://github.com/communi/libcommuni/archive/v3.5.0.zip)
+Unzip the package with 7zip.
+
+Use MYSYS for the following commands:
+```
+cd C:/deps/libcommuni-3.5.0
+C:/Qt/5.3.2/bin/qmake
+make
+```
+
+Regarding potential issues with **Qmake tool** scroll down to the QT section and look under the *Potential Issues* paragraph. 
 
 #### Potential Issues
 
@@ -252,11 +244,9 @@ Another problem is the correct writing of paths inside the generated Makefiles (
 
 But before you can generate a proper Makefile you'll have to adjust your local paths inside the ARMR.pro (the QT project file) as well. Open this file in your editor and go to the line 23. You'll see several paths that look like this:
 
-![qt-pro-original](https://img3.picload.org/image/ddilolcl/qt_pro_original.png)
 
 You'll have to set the paths to your locally compiled libraries. Here's how my local [ARMR.pro](https://github.com/brakmic/armr/blob/qt-local/ARMR-qt.pro) looks like:
 
-![qt-pro-local](https://img1.picload.org/image/ddilocol/qt-local.png) 
 
 #### Compiling LevelDb
 
@@ -271,11 +261,18 @@ TARGET_OS=OS_WINDOWS_CROSSCOMPILE make libleveldb.a libmemenv.a
 
 Now, it's time to type in a MSYS window the following commands:
 
+Using Git, clone the ARMR code. I put it in the directory C:/wallets.
+
+Mkdir c:/wallets
+cd c:/wallets
+git clone --recursive https://github.com/ARMROfficial/armr.git
+
+Compile the wallet
 ```
-qmake
+C:/Qt/5.3.2/bin/qmake
 make
 ```
 
-If the compilation succeeds you'll get the executables inside the *src* directory.
+If the compilation succeeds you'll get the executables inside the *release* directory.
 
 Have fun with [ARMR](https://armr.network/)! :heart:
