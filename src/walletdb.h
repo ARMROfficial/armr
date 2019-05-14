@@ -77,6 +77,33 @@ public:
     )
 };
 
+class COwnedAnonOutput
+{
+// stored in walletdb, key is keyimage
+// TODO: store nValue?
+public:
+    COwnedAnonOutput() {}
+
+    COwnedAnonOutput(COutPoint outpoint_, bool fSpent_)
+    {
+        outpoint = outpoint_;
+        fSpent   = fSpent_;
+    }
+
+    ec_point vchImage;
+    int64_t nValue;
+
+    COutPoint outpoint;
+    bool fSpent;
+
+    IMPLEMENT_SERIALIZE
+    (
+        READWRITE(outpoint);
+        READWRITE(fSpent);
+    )
+
+};
+
 
 /** Access to the wallet database (wallet.dat) */
 class CWalletDB : public CDB
