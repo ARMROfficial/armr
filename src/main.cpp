@@ -2643,6 +2643,8 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
 // ARMR: attempt to generate suitable proof-of-stake
 bool CBlock::SignBlock(CWallet& wallet, int64_t nFees)
 {
+    if(fDebug)
+        LogPrintf("Attempting to Sign Block\n");
     // if we are trying to sign
     //    something except proof-of-stake block template
     if (!vtx[0].vout[0].IsEmpty())

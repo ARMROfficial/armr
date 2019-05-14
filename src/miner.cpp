@@ -112,6 +112,8 @@ public:
 // CreateNewBlock: create new block (without proof-of-work/proof-of-stake)
 CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
 {
+    if(fDebug)
+        LogPrintf("Creating new staking block\n");
     // Create new block
     auto_ptr<CBlock> pblock(new CBlock());
     if (!pblock.get())
@@ -130,6 +132,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
         txNew.vout[0].scriptPubKey.SetDestination(reservekey.GetReservedKey().GetID());
     } else
     {
+        if(fDebug)
+            LogPrintf("Block represents a stake generated block\n");
         // Height first in coinbase required for block.version=2
         txNew.vin[0].scriptSig = (CScript() << pindexPrev->nHeight+1) + COINBASE_FLAGS;
         assert(txNew.vin[0].scriptSig.size() <= 100);
@@ -181,6 +185,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
         vecPriority.reserve(mempool.mapTx.size());
         for (map<uint256, CTransaction>::iterator mi = mempool.mapTx.begin(); mi != mempool.mapTx.end(); ++mi)
         {
+            if(fDebug)
+                LogPrintf("----- Iteration through transactions.  Iteration Nbr: %.1f\n", mi);
             CTransaction& tx = (*mi).second;
             if (tx.IsCoinBase() || tx.IsCoinStake() || !tx.IsFinal())
                 continue;
@@ -191,11 +197,17 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
             bool fMissingInputs = false;
             BOOST_FOREACH(const CTxIn& txin, tx.vin)
             {
-                if (tx.nVersion == ANON_TXN_VERSION
-                    && txin.IsAnonInput()) // anon inputs are verified later in CheckAnonInputs()
+                if(fDebug)
+                    LogPrintf("Collecting Transactions for block\n");
+                if (tx.nVersion == ANON_TXN_VERSION && txin.IsAnonInput()) // anon inputs are verified later in CheckAnonInputs()
+                {
                     LogPrintf("Is a anonymous transaction\n");
 					//&&&&& Add in continue once more of the code is merged
 					continue;
+                } else {
+                    LogPrintf("Not an anonymous transaction");
+                    break;
+                };
 
                 // Read prev transaction
                 CTransaction txPrev;
@@ -294,7 +306,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
                 continue;
 
             // Transaction fee
-            int64_t nMinFee = tx.GetMinFee(nBlockSize, GMF_BLOCK);
+            int64_t nMinFee = tx.GetMinFee(nBlockSize, GMF_BLOCK); // will get GMF_ANON if tx.nVersion == ANON_TXN_VERSION
 
             // Skip free transactions if we're past the minimum block size:
             if (fSortedByFee && (dFeePerKb < nMinTxFee) && (nBlockSize + nTxSize >= nBlockMinSize))
@@ -318,13 +330,9 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
             if (!tx.FetchInputs(txdb, mapTestPoolTmp, false, true, mapInputs, fInvalid))
                 continue;
 
-            //int64_t nTxFees = tx.GetValueIn(mapInputs)-tx.GetValueOut();
-
-            // -- Avoid calling CheckAnonInputs twice, use nFee from vecPriority
-            if (nFee == 0) // tx came from COrphan
+            int64_t nTxFees = tx.GetValueIn(mapInputs)-tx.GetValueOut();
+            if (nTxFees == 0) // tx came from COrphan
             {
-                int64_t nTxFees = tx.GetValueIn(mapInputs)-tx.GetValueOut();
-
                 if (tx.nVersion == ANON_TXN_VERSION)
                 {
                     int64_t nSumAnon;
@@ -338,13 +346,11 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
 
                     nTxFees += nSumAnon;
                 };
-                nFee = nTxFees;
             };
 
             // TODO: must this be done twice!?
             // Need to look at COrphan
-
-            if (nFee < nMinFee)
+            if (nTxFees < nMinFee)
                 continue;
 
             nTxSigOps += tx.GetP2SHSigOpCount(mapInputs);
@@ -544,8 +550,9 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
     if (!CheckProofOfStake(pblock->vtx[1], pblock->nBits, proofHash, hashTarget))
         return error("CheckStake() : proof-of-stake checking failed");
 
-    // debug print
-    printf("CheckStake() : new proof-of-stake block found  \n  hash: %s \nproofhash: %s  \ntarget: %s\n", hashBlock.GetHex().c_str(), proofHash.GetHex().c_str(), hashTarget.GetHex().c_str());
+    //// debug print
+    LogPrintf("CheckStake() : new %s block found  \n  hash: %s \nproofhash: %s  \ntarget: %s\n",
+              pblock->IsProofOfAnonStake() ? "proof-of-anon-stake" : "proof-of-stake", hashBlock.GetHex().c_str(), proofHash.GetHex().c_str(), hashTarget.GetHex().c_str());
     pblock->print();
     printf("out %s\n", FormatMoney(pblock->vtx[1].GetValueOut()).c_str());
 
@@ -575,6 +582,7 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
 
 void StakeMiner(CWallet *pwallet)
 {
+    printf("Starting StakeMiner \n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
     // Make this thread recognisable as the mining thread
@@ -584,6 +592,7 @@ void StakeMiner(CWallet *pwallet)
 
     while (true)
     {
+        LogPrintf("Looping through stake miner\n");
         if (fShutdown)
             return;
 
