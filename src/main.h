@@ -964,7 +964,7 @@ public:
 
     bool IsProofOfWork() const
     {
-        return !IsProofOfStake();
+        return !IsProofOfStake() && !IsProofOfAnonStake();
     }
 
     std::pair<COutPoint, unsigned int> GetProofOfStake() const
