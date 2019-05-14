@@ -128,15 +128,14 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
     {
         CReserveKey reservekey(pwallet);
         txNew.vout[0].scriptPubKey.SetDestination(reservekey.GetReservedKey().GetID());
-    }
-    else
+    } else
     {
         // Height first in coinbase required for block.version=2
         txNew.vin[0].scriptSig = (CScript() << pindexPrev->nHeight+1) + COINBASE_FLAGS;
         assert(txNew.vin[0].scriptSig.size() <= 100);
 
         txNew.vout[0].SetEmpty();
-    }
+    };
 
     // Add our coinbase tx as first transaction
     pblock->vtx.push_back(txNew);
@@ -192,6 +191,12 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
             bool fMissingInputs = false;
             BOOST_FOREACH(const CTxIn& txin, tx.vin)
             {
+                if (tx.nVersion == ANON_TXN_VERSION
+                    && txin.IsAnonInput()) // anon inputs are verified later in CheckAnonInputs()
+                    LogPrintf("Is a anonymous transaction\n");
+					//&&&&& Add in continue once more of the code is merged
+					continue;
+
                 // Read prev transaction
                 CTransaction txPrev;
                 CTxIndex txindex;
@@ -241,7 +246,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
             // This is a more accurate fee-per-kilobyte than is used by the client code, because the
             // client code rounds up the size to the nearest 1K. That's good, because it gives an
             // incentive to create smaller transactions.
-            double dFeePerKb =  double(nTotalIn-tx.GetValueOut()) / (double(nTxSize)/1000.0);
+            int64_t nFee = nTotalIn-tx.GetValueOut();
+            double dFeePerKb =  double(nFee) / (double(nTxSize)/1000.0);
 
             if (porphan)
             {
@@ -296,13 +302,13 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
 
             // Prioritize by fee once past the priority size or we run out of high-priority
             // transactions:
-            if (!fSortedByFee &&
-                ((nBlockSize + nTxSize >= nBlockPrioritySize) || (dPriority < COIN * 360 / 250)))
+            if (!fSortedByFee
+                && ((nBlockSize + nTxSize >= nBlockPrioritySize) || (dPriority < COIN * 144 / 250)))
             {
                 fSortedByFee = true;
                 comparer = TxPriorityCompare(fSortedByFee);
                 std::make_heap(vecPriority.begin(), vecPriority.end(), comparer);
-            }
+            };
 
             // Connecting shouldn't fail due to dependency on other memory pool transactions
             // because we're already processing them in order of dependency
@@ -351,11 +357,11 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
                         {
                             vecPriority.push_back(TxPriority(porphan->dPriority, porphan->dFeePerKb, porphan->ptx));
                             std::push_heap(vecPriority.begin(), vecPriority.end(), comparer);
-                        }
-                    }
-                }
-            }
-        }
+                        };
+                    };
+                };
+            };
+        };
 
         nLastBlockTx = nBlockTx;
         nLastBlockSize = nBlockSize;
@@ -428,12 +434,12 @@ void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash
     tmp;
     memset(&tmp, 0, sizeof(tmp));
 
-    tmp.block.nVersion			= pblock->nVersion;
-    tmp.block.hashPrevBlock		= pblock->hashPrevBlock;
-    tmp.block.hashMerkleRoot	= pblock->hashMerkleRoot;
-    tmp.block.nTime				= pblock->nTime;
-    tmp.block.nBits				= pblock->nBits;
-    tmp.block.nNonce			= pblock->nNonce;
+    tmp.block.nVersion       = pblock->nVersion;
+    tmp.block.hashPrevBlock  = pblock->hashPrevBlock;
+    tmp.block.hashMerkleRoot = pblock->hashMerkleRoot;
+    tmp.block.nTime          = pblock->nTime;
+    tmp.block.nBits          = pblock->nBits;
+    tmp.block.nNonce         = pblock->nNonce;
 
     FormatHashBlocks(&tmp.block, sizeof(tmp.block));
     FormatHashBlocks(&tmp.hash1, sizeof(tmp.hash1));
@@ -442,8 +448,8 @@ void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash
     for (unsigned int i = 0; i < sizeof(tmp)/4; i++)
         ((unsigned int*)&tmp)[i] = ByteReverse(((unsigned int*)&tmp)[i]);
 
-	// Precalc the first half of the first hash, which stays constant
-	SHA256Transform(pmidstate, &tmp.block, pSHA256InitState);
+    // Precalc the first half of the first hash, which stays constant
+    SHA256Transform(pmidstate, &tmp.block, pSHA256InitState);
 
     memcpy(pdata, &tmp.block, 128);
     memcpy(phash1, &tmp.hash1, 64);
@@ -506,7 +512,7 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
     uint256 proofHash = 0, hashTarget = 0;
     uint256 hashBlock = pblock->GetHash();
 
-    if(!pblock->IsProofOfStake())
+    if (!pblock->IsProofOfStake())
         return error("CheckStake() : %s is not a proof-of-stake block", hashBlock.GetHex().c_str());
 
     // verify hash target and signature of coinstake tx
@@ -568,6 +574,8 @@ void StakeMiner(CWallet *pwallet)
         {
             nLastCoinStakeSearchInterval = 0;
             fTryToSync = true;
+            if (fDebugPoS)
+                LogPrintf("StakeMiner() IsInitialBlockDownload\n");
             MilliSleep(1000);
             if (fShutdown)
                 return;
@@ -578,6 +586,8 @@ void StakeMiner(CWallet *pwallet)
             fTryToSync = false;
             if (vNodes.size() < 3 || nBestHeight < GetNumBlocksOfPeers())
             {
+                if (fDebugPoS)
+                    LogPrintf("StakeMiner() TryToSync\n");
                 MilliSleep(60000);
                 continue;
             }
@@ -598,8 +608,8 @@ void StakeMiner(CWallet *pwallet)
             CheckStake(pblock.get(), *pwallet);
             SetThreadPriority(THREAD_PRIORITY_LOWEST);
             MilliSleep(500);
-        }
+        };
         else
             MilliSleep(nMinerSleep);
-    }
+    };
 }
