@@ -1552,6 +1552,15 @@ bool CTransaction::FetchInputs(CTxDB& txdb, const map<uint256, CTxIndex>& mapTes
 
     return true;
 }
+bool CTransaction::CheckAnonInputAB(CTxDB &txdb, const CTxIn &txin, int i, int nRingSize, const std::vector<uint8_t> &vchImage, int64_t &nCoinValue) const
+{
+	return true;
+};
+
+bool CTransaction::CheckAnonInputs(CTxDB& txdb, int64_t& nSumValue, bool& fInvalid, bool fCheckExists)
+{
+	return true;	
+};
 
 const CTxOut& CTransaction::GetOutputFor(const CTxIn& input, const MapPrevTx& inputs) const
 {
