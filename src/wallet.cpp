@@ -3464,7 +3464,7 @@ bool CWallet::ListAvailableAnonOutputs(std::list<COwnedAnonOutput>& lAvailableAn
 bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, int64_t nFees, CTransaction& txNew, CKey& key)
 {
     // Ring size for staking is MIN_RING_SIZE
-    int nRingSize = MIN_RING_SIZE;
+    int nRingSize = 10 //@@@ We need to figure out if this is the correct thing MIN_RING_SIZE;
 
     CBlockIndex* pindexPrev = pindexBest;
     CBigNum bnTargetPerCoinDay;
