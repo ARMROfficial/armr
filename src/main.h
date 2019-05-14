@@ -42,6 +42,13 @@ static const int64_t MAX_PROOF_OF_STAKE_STABLE = 0.03 * COIN;
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const int INIT_BLOCK = 1;
 
+//Variables for use with Stealth/Anonymous Staking
+static const uint32_t MIN_ANON_OUT_SIZE = 1 + 1 + 1 + 33 + 1 + 33; // OP_RETURN ANON_TOKEN lenPk pkTo lenR R [lenEnarr enarr]
+static const uint32_t MIN_ANON_IN_SIZE = 2 + (33 + 32 + 32); // 2byte marker (cpubkey + sigc + sigr)
+static const uint32_t MAX_ANON_NARRATION_SIZE = 48;
+static const int MIN_ANON_SPEND_DEPTH = 10;
+static const int ANON_TXN_VERSION = 1000;
+
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
