@@ -100,8 +100,7 @@ public:
             if (a.get<1>() == b.get<1>())
                 return a.get<0>() < b.get<0>();
             return a.get<1>() < b.get<1>();
-        }
-        else
+        }else
         {
             if (a.get<0>() == b.get<0>())
                 return a.get<1>() < b.get<1>();
@@ -334,9 +333,9 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
 
             if (fDebug && GetBoolArg("-printpriority"))
             {
-                printf("priority %.1f feeperkb %.1f txid %s\n",
-                       dPriority, dFeePerKb, tx.GetHash().ToString().c_str());
-            }
+                LogPrintf("priority %.1f feeperkb %.1f txid %s\n",
+                    dPriority, dFeePerKb, tx.GetHash().ToString().c_str());
+            };
 
             // Add transactions that depend on this one to the priority queue
             uint256 hash = tx.GetHash();
@@ -361,7 +360,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
         nLastBlockSize = nBlockSize;
 
         if (fDebug && GetBoolArg("-printpriority"))
-            printf("CreateNewBlock(): total size %" PRIu64 "\n", nBlockSize);
+            LogPrintf("CreateNewBlock(): total size %u\n", nBlockSize);
 
         if (!fProofOfStake)
 			pblock->vtx[0].vout[0].nValue = GetProofOfWorkReward(pindexPrev->nHeight + 1, nFees, pindexPrev);
@@ -377,6 +376,8 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
             pblock->UpdateTime(pindexPrev);
         pblock->nNonce = 0;
 	}
+    if (fDebug)
+        LogPrintf("CreateNewBlock() : created block at height: %d, txs: %d, size: %d bytes in %d µs.\n", nBestHeight, pblock->vtx.size(), nLastBlockSize, GetTimeMicros() - nStart);
 
     return pblock.release();
 }
@@ -390,7 +391,8 @@ void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& 
     {
         nExtraNonce = 0;
         hashPrevBlock = pblock->hashPrevBlock;
-    }
+    };
+
     ++nExtraNonce;
 
     unsigned int nHeight = pindexPrev->nHeight+1; // Height first in coinbase required for block.version=2
@@ -470,9 +472,9 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
 	}
 
     // debug print
-    printf("CheckWork() : new proof-of-work block found  \n  hash: %s  \ntarget: %s\n", hashBlock.GetHex().c_str(), hashTarget.GetHex().c_str());
+    LogPrintf("CheckWork() : new proof-of-work block found  \n  hash: %s  \ntarget: %s\n", hashBlock.GetHex().c_str(), hashTarget.GetHex().c_str());
     pblock->print();
-    printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
+    LogPrintf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
 
     // Found a solution
     {
@@ -528,8 +530,12 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
         }
 
         // Process this block the same as if we had received it from another node
-        if (!ProcessBlock(NULL, pblock))
+        if (ProcessBlock(NULL, pblock))
+            // Successful stake
+        }
+        else {
             return error("CheckStake() : ProcessBlock, block not accepted");
+        }
     }
 
     return true;
