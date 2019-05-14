@@ -574,7 +574,7 @@ void StakeMiner(CWallet *pwallet)
         {
             nLastCoinStakeSearchInterval = 0;
             fTryToSync = true;
-            if (fDebugPoS)
+            if (fDebug)
                 LogPrintf("StakeMiner() IsInitialBlockDownload\n");
             MilliSleep(1000);
             if (fShutdown)
@@ -586,7 +586,7 @@ void StakeMiner(CWallet *pwallet)
             fTryToSync = false;
             if (vNodes.size() < 3 || nBestHeight < GetNumBlocksOfPeers())
             {
-                if (fDebugPoS)
+                if (fDebug)
                     LogPrintf("StakeMiner() TryToSync\n");
                 MilliSleep(60000);
                 continue;
