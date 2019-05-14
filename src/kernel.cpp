@@ -371,22 +371,46 @@ unsigned int GetStakeModifierChecksum(const CBlockIndex* pindex)
 {
     assert (pindex->pprev || pindex->GetBlockHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
     // Hash previous checksum with flags, hashProofOfStake and nStakeModifier
+bool CheckAnonStakeKernelHash(CStakeModifier* pStakeMod, const unsigned int& nBits, const int64_t& anonValue, const ec_point &anonKeyImage, const unsigned int& nTimeTx, uint256& hashProofOfStake, uint256& targetProofOfStake, const bool fPrintProofOfStake)
+{
+    // Base target
+    CBigNum bnTarget;
+    bnTarget.SetCompact(nBits);
+
+    // Weighted target
+    CBigNum bnWeight = CBigNum(anonValue);
+    bnTarget *= bnWeight;
+
+    targetProofOfStake = bnTarget.getuint256();
+
     CDataStream ss(SER_GETHASH, 0);
-    if (pindex->pprev)
-        ss << pindex->pprev->nStakeModifierChecksum;
-    ss << pindex->nFlags << pindex->hashProofOfStake << pindex->nStakeModifier;
-    uint256 hashChecksum = Hash(ss.begin(), ss.end());
-    hashChecksum >>= (256 - 32);
-    return hashChecksum.Get64();
+    ss << pStakeMod->bnModifierV2;
+    ss << anonKeyImage << nTimeTx;
+
+    hashProofOfStake = Hash(ss.begin(), ss.end());
+
+    // Now check if proof-of-stake hash meets target protocol
+    bool foundHash = CBigNum(hashProofOfStake) < bnTarget;
+
+    if (fPrintProofOfStake || (foundHash && fDebug))
+    {
+        LogPrintf("CheckAnonStakeKernelHash() : PoSv3 check=%b with modifier=%s at height=%d timestamp=%s, anonKeyImage=%s nTimeTx=%u, hashProof=%s target=%s\n",
+                  foundHash,
+                  pStakeMod->bnModifierV2.ToString(),
+                  pStakeMod->nHeight,
+                  DateTimeStrFormat(pStakeMod->nTime),
+                  HexStr(anonKeyImage), nTimeTx,
+                  hashProofOfStake.ToString(),
+                  bnTarget.ToString());
+    }
+    return foundHash;
 }
 
-// Check stake modifier hard checkpoints
-bool CheckStakeModifierCheckpoints(int nHeight, unsigned int nStakeModifierChecksum)
-{
-     //printf(">> Height = %d, nStakeModifierChecksum = %x\n", nHeight, nStakeModifierChecksum);
-    MapModifierCheckpoints& checkpoints = (fTestNet ? mapStakeModifierCheckpointsTestNet : mapStakeModifierCheckpoints);
 
-    if (checkpoints.count(nHeight))
-        return nStakeModifierChecksum == checkpoints[nHeight];
-    return true;
+bool CheckAnonKernel(const CBlockIndex* pindexPrev, const unsigned int& nBits, const int64_t& anonValue, const ec_point& anonKeyImage, const unsigned int& nTime)
+{
+    uint256 hashProofOfStake, targetProofOfStake;
+
+    CStakeModifier stakeMod(pindexPrev->nStakeModifier, pindexPrev->bnStakeModifierV2, pindexPrev->nHeight, pindexPrev->nTime);
+    return CheckAnonStakeKernelHash(&stakeMod, nBits, anonValue, anonKeyImage, nTime, hashProofOfStake, targetProofOfStake, fDebugPoS);
 }
