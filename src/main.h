@@ -553,7 +553,7 @@ public:
 
     bool IsAnonCoinStake() const
     {
-        // ppcoin: the coin stake transaction is marked with the first output empty
+        // ARMR: the coin stake transaction is marked with the first output empty
         return nVersion == ANON_TXN_VERSION && IsCoinStake();
     }
 
