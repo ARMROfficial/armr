@@ -205,6 +205,9 @@ enum opcodetype
     OP_PUBKEY = 0xfe,
 
     OP_INVALIDOPCODE = 0xff,
+
+    //Stealth Staking
+    OP_ANON_MARKER = 0xb9, // OP_NOP10
 };
 
 const char* GetOpName(opcodetype opcode);
