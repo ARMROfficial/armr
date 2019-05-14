@@ -297,6 +297,14 @@ public:
         return (nSequence == std::numeric_limits<unsigned int>::max());
     }
 
+    //Returns true if transaction si anonymous/stealth
+    bool IsAnonInput() const
+    {
+        return (scriptSig.size() >= MIN_ANON_IN_SIZE
+            && scriptSig[0] == OP_RETURN
+            && scriptSig[1] == OP_ANON_MARKER);
+    }
+
     friend bool operator==(const CTxIn& a, const CTxIn& b)
     {
         return (a.prevout   == b.prevout &&
