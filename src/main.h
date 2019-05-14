@@ -943,10 +943,15 @@ public:
         return nEntropyBit;
     }
 
-    // ARMR: two types of block: proof-of-work or proof-of-stake
+    //returns true if the block is a proof of stake generated block
     bool IsProofOfStake() const
     {
         return (vtx.size() > 1 && vtx[1].IsCoinStake());
+	}
+    //Returns true if the block is a proof of stake generated block
+	bool IsProofOfAnonStake() const
+    {
+        return (vtx.size() > 1 && vtx[1].IsAnonCoinStake());
     }
 
     bool IsProofOfWork() const
