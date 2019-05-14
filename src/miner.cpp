@@ -74,10 +74,10 @@ public:
 
     void print() const
     {
-        printf("COrphan(hash=%s, dPriority=%.1f, dFeePerKb=%.1f)\n",
-               ptx->GetHash().ToString().substr(0,10).c_str(), dPriority, dFeePerKb);
+        LogPrintf("COrphan(hash=%s, dPriority=%.1f, dFeePerKb=%.1f)\n",
+            ptx->GetHash().ToString().substr(0,10).c_str(), dPriority, dFeePerKb);
         BOOST_FOREACH(uint256 hash, setDependsOn)
-            printf("   setDependsOn %s\n", hash.ToString().substr(0,10).c_str());
+            LogPrintf("   setDependsOn %s\n", hash.ToString().substr(0,10).c_str());
     }
 };
 
@@ -100,7 +100,7 @@ public:
             if (a.get<1>() == b.get<1>())
                 return a.get<0>() < b.get<0>();
             return a.get<1>() < b.get<1>();
-        }else
+        } else
         {
             if (a.get<0>() == b.get<0>())
                 return a.get<1>() < b.get<1>();
@@ -230,7 +230,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
 
                 int nConf = txindex.GetDepthInMainChain();
                 dPriority += (double)nValueIn * nConf;
-            }
+            };
             if (fMissingInputs)
                 continue;
 
@@ -247,10 +247,11 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
             {
                 porphan->dPriority = dPriority;
                 porphan->dFeePerKb = dFeePerKb;
-            }
-            else
+            } else
+            {
                 vecPriority.push_back(TxPriority(dPriority, dFeePerKb, &(*mi).second));
-        }
+            };
+        };
 
         // Collect transactions into block
         map<uint256, CTxIndex> mapTestPool;
@@ -377,7 +378,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
         pblock->nNonce = 0;
 	}
     if (fDebug)
-        LogPrintf("CreateNewBlock() : created block at height: %d, txs: %d, size: %d bytes in %d µs.\n", nBestHeight, pblock->vtx.size(), nLastBlockSize, GetTimeMicros() - nStart);
+        LogPrintf("CreateNewBlock() : created block at height: %d, txs: %d, size: %d bytes \n", nBestHeight, pblock->vtx.size(), nLastBlockSize);
 
     return pblock.release();
 }
@@ -530,7 +531,7 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
         }
 
         // Process this block the same as if we had received it from another node
-        if (ProcessBlock(NULL, pblock))
+        if (ProcessBlock(NULL, pblock)) {
             // Successful stake
         }
         else {
