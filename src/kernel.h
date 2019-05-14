@@ -36,4 +36,12 @@ bool CheckStakeModifierCheckpoints(int nHeight, unsigned int nStakeModifierCheck
 // Get time weight using supplied timestamps
 int64_t GetWeight(int64_t nIntervalBeginning, int64_t nIntervalEnd);
 
+// Check whether stake kernel meets hash target
+// Sets hashProofOfStake on success return
+bool CheckAnonStakeKernelHash(CStakeModifier* pStakeMod, const unsigned int& nBits, const int64_t& anonValue, const ec_point &anonKeyImage,  const unsigned int& nTimeTx, uint256& hashProofOfStake, uint256& targetProofOfStake, const bool fPrintProofOfStake);
+
+// Wrapper around CheckAnonStakeKernelHash()
+// Convenient for searching a anon kernel
+bool CheckAnonKernel(const CBlockIndex* pindexPrev, const unsigned int& nBits, const int64_t& anonValue, const ec_point& anonKeyImage, const unsigned int& nTime);
+
 #endif // PPCOIN_KERNEL_H
