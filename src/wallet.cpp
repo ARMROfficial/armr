@@ -3413,3 +3413,231 @@ void CWallet::ScanBlockchainForHash(bool bDisplay)
 //    return 1;
 }
 */
+bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, int64_t nFees, CTransaction& txNew, CKey& key)
+{
+    // Ring size for staking is MIN_RING_SIZE
+    int nRingSize = MIN_RING_SIZE;
+
+    CBlockIndex* pindexPrev = pindexBest;
+    CBigNum bnTargetPerCoinDay;
+    bnTargetPerCoinDay.SetCompact(nBits);
+
+    txNew.vin.clear();
+    txNew.vout.clear();
+
+    // Mark coin stake transaction
+    CScript scriptEmpty;
+    scriptEmpty.clear();
+    txNew.vout.push_back(CTxOut(0, scriptEmpty));
+
+    // Choose coins to use
+    int64_t nBalance = GetSpectreBalance();
+    if (nBalance <= nReserveBalance)
+        return false;
+
+    // -------------------------------------------
+    // Select coins with suitable depth
+    std::list<COwnedAnonOutput> lAvailableCoins;
+    int64_t nAmountCheck;
+    std::string sError;
+    if (!ListAvailableAnonOutputs(lAvailableCoins, nAmountCheck, nRingSize, MaturityFilter::FOR_STAKING, sError, nBalance - nReserveBalance))
+        return error(("CreateAnonCoinStake : " + sError).c_str());
+    if (lAvailableCoins.empty())
+        return false;
+
+    bool fKernelFound = false;
+    for (const auto & oao : lAvailableCoins)
+    {
+        boost::this_thread::interruption_point();
+
+        static int nMaxStakeSearchInterval = 60;
+        for (unsigned int n=0; n<min(nSearchInterval,(int64_t)nMaxStakeSearchInterval) && !fKernelFound && pindexPrev == pindexBest; n++)
+        {
+            boost::this_thread::interruption_point();
+            // Search backward in time from the given txNew timestamp
+            // Search nSearchInterval seconds back up to nMaxStakeSearchInterval
+            if (CheckAnonKernel(pindexPrev, nBits, oao.nValue, oao.vchImage, txNew.nTime - n))
+            {
+                // Found a kernel
+                if (fDebugPoS)
+                    LogPrintf("CreateAnonCoinStake : kernel found for keyImage %s\n", HexStr(oao.vchImage));
+
+                LOCK(cs_main);
+
+                txNew.nVersion = ANON_TXN_VERSION;
+                txNew.nTime -= n;
+
+                int64_t nCredit = 0;
+                std::vector<const COwnedAnonOutput*> vPickedCoins;
+                vPickedCoins.push_back(&oao);
+
+                // -- Check if stake should be split for balancing unspent ATXOs
+                std::vector<int64_t> vOutAmounts;
+                // find the anon denomination with the least number of unspent outputs
+                CAnonOutputCount* lowestAOC = nullptr;
+                for (auto it = mapAnonOutputStats.rbegin(); it != mapAnonOutputStats.rend(); it++)
+                {
+                    if (it->first < nMinTxFee * 10)
+                        break;
+                    if (it->first >= oao.nValue)
+                        continue;
+                    if (it->second.numOfUnspends() > UNSPENT_ANON_BALANCE_MIN)
+                        continue;
+                    if (lowestAOC == nullptr || lowestAOC->numOfUnspends() > it->second.numOfUnspends())
+                        lowestAOC = &it->second;
+                }
+                if (lowestAOC)
+                {
+                    vOutAmounts.push_back(lowestAOC->nValue);
+                    nCredit += oao.nValue - lowestAOC->nValue;
+                    LogPrintf("CreateAnonCoinStake : Split anon stake of value %d to create 1 additional ATXO of value %d which has only %d unspents\n",
+                              oao.nValue, lowestAOC->nValue, lowestAOC->numOfUnspends());
+                }
+                else
+                    nCredit += oao.nValue;
+
+                // -- Add more anon inputs for consolidation
+                int64_t nMaxCombineOutput = nMaxAnonStakeOutput / 10;
+                int64_t lastCombineValue = -1;
+                std::vector<const COwnedAnonOutput*> vConsolidateCoins;
+                int nMaxConsolidation = 0, nNumOfConsolidated = 0;
+                for (const auto & oaoc : lAvailableCoins)
+                {
+                    if (oaoc.nValue > nMaxCombineOutput)
+                        break;
+                    // skip the input used for staking (TODO could be optimized by considering in combining inputs)
+                    if (&oaoc == &oao)
+                        continue;
+                    if (lastCombineValue != oaoc.nValue)
+                    {
+                        vConsolidateCoins.clear();
+                        lastCombineValue = oaoc.nValue;
+                        // calculate how many outputs can be consolidated considering the amount of mature unspents
+                        nMaxConsolidation = mapAnonOutputStats[oaoc.nValue].numOfMatureUnspends() - UNSPENT_ANON_BALANCE_MAX;
+                        nNumOfConsolidated = 0;
+                    }
+                    vConsolidateCoins.push_back(&oaoc);
+                    nNumOfConsolidated++;
+                    if (nNumOfConsolidated <= nMaxConsolidation && vConsolidateCoins.size() == 10)
+                    {
+                        vPickedCoins.insert(vPickedCoins.end(), vConsolidateCoins.begin(), vConsolidateCoins.end());
+                        vConsolidateCoins.clear();
+                        nCredit += oaoc.nValue * 10;
+                        LogPrintf("CreateAnonCoinStake : Consolidate 10 additional ATXOs of value %d which has %d mature unspents\n",
+                                  oaoc.nValue, mapAnonOutputStats[oaoc.nValue].numOfMatureUnspends());
+                    }
+                    // Consolidate maximal 50 inputs
+                    if (vPickedCoins.size() == 51)
+                        break;
+                }
+
+                // -- Calculate staking reward
+                int64_t nReward = Params().GetProofOfAnonStakeReward(pindexPrev, nFees);
+                if (nReward <= 0)
+                    return error("CreateAnonCoinStake : GetProofOfStakeReward() reward <= 0");
+
+                // -- Check if staking reward gets donated to developers, according to the configured probability and DCB rules
+                int sample = stakingDonationDistribution(stakingDonationRng);
+                LogPrintf("sample: %d, donation: %d\n", sample, nStakingDonation);
+                bool donateReward = false;
+                if (sample < nStakingDonation || (pindexPrev->nHeight+1) % 6 == 0) {
+                    LogPrintf("Donating this (potential) stake to the developers\n");
+                    donateReward = true;
+                }
+                else {
+                    LogPrintf("Not donating this (potential) stake to the developers\n");
+                    nCredit += nReward;
+                }
+
+                // -- Get stealth address for creating new anon outputs.
+                CStealthAddress sxAddress;
+                if (!GetAnonStakeAddress(oao, sxAddress))
+                    return error("CreateAnonCoinStake : GetAnonStakeAddress() change failed");
+
+                // -- create anon output
+                CScript scriptNarration; // needed to match output id of narr
+                std::vector<std::pair<CScript, int64_t> > vecSend;
+                std::vector<ec_secret> vecSecShared;
+                std::string sNarr;
+                if (nCredit)
+                    splitAmount(nCredit, vOutAmounts, nMaxAnonStakeOutput);
+                if (!CreateAnonOutputs(&sxAddress, vOutAmounts, sNarr, vecSend, scriptNarration, nullptr, &vecSecShared))
+                    return error("CreateAnonCoinStake : CreateAnonOutputs() failed");
+
+                // Sort anon ouputs together with corresponding ec_secret ascending by anon value
+                std::vector<std::pair<CTxOut, ec_secret>> vTxOutSecret;
+                vTxOutSecret.reserve(vecSend.size());
+                for (uint32_t i = 0; i < vecSend.size(); ++i)
+                    vTxOutSecret.push_back(std::make_pair(CTxOut(vecSend.at(i).second, vecSend.at(i).first), vecSecShared.at(i)));
+                std::sort(vTxOutSecret.begin(), vTxOutSecret.end(), [] (const auto &a, const auto &b) {
+                    return (a.first < b.first);
+                });
+                // Add sorted anon outputs to transaction
+                for (auto [txOut, secret] : vTxOutSecret)
+                    txNew.vout.push_back(txOut);
+
+                // -- Set one-time private key of vout[1] for signing the block
+                ec_secret sSpend;
+                ec_secret sSpendR;
+                memcpy(&sSpend.e[0], &sxAddress.spend_secret[0], EC_SECRET_SIZE);
+                if (StealthSharedToSecretSpend(vTxOutSecret.at(0).second, sSpend, sSpendR) != 0)
+                    return error("CreateAnonCoinStake : failed to get private key of anon output");
+                key.Set(&sSpendR.e[0], true);
+
+                // -- create donation output
+                if (donateReward)
+                {
+                    CBitcoinAddress address(Params().GetDevContributionAddress());
+                    // push a new output donating to the developers
+                    CScript script;
+                    script.SetDestination(address.Get());
+                    txNew.vout.push_back(CTxOut(nReward, script));
+                    LogPrintf("donation complete\n");
+                }
+
+                // -- create anon inputs
+                txNew.vin.resize(vPickedCoins.size());
+                uint256 preimage = 0; // not needed for RING_SIG_2
+                uint32_t iVin = 0;
+                // Initialize mixins set
+                CMixins mixins;
+                if (!InitMixins(mixins, vPickedCoins, true))
+                     return error("CreateAnonCoinStake() : InitMixins() failed");
+
+                for (const auto * pickedCoin : vPickedCoins)
+                {
+                    int oaoRingIndex;
+                    if (!AddAnonInput(mixins, txNew.vin[iVin], *pickedCoin, RING_SIG_2, nRingSize, oaoRingIndex, true, false, sError))
+                        return error(("CreateAnonCoinStake() : " + sError).c_str());
+
+                    if (!GenerateRingSignature(txNew.vin[iVin], RING_SIG_2, nRingSize, oaoRingIndex, preimage, sError))
+                        return error(("CreateAnonCoinStake() : " + sError).c_str());
+
+                    iVin++;
+                }
+
+                // -- check if new coins already exist (in case random is broken ?)
+                if (!AreOutputsUnique(txNew))
+                    return error("CreateAnonCoinStake() : anon outputs are not unique - is random working?!");
+
+                if (fDebugPoS)
+                    LogPrintf("CreateAnonCoinStake() : added kernel for keyImage %s\n", HexStr(oao.vchImage));
+
+                fKernelFound = true;
+                break;
+            }
+        }
+
+        if (fKernelFound)
+            break; // if kernel is found stop searching
+    }
+
+    if (!fKernelFound)
+        return false;
+    unsigned int nBytes = ::GetSerializeSize(txNew, SER_NETWORK, PROTOCOL_VERSION);
+    if (nBytes >= MAX_BLOCK_SIZE_GEN/5)
+        return error("CreateAnonCoinStake() : exceeded coinstake size limit");
+
+    // Successfully generated coinstake
+    return true;
+}
