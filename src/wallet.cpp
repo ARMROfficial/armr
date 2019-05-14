@@ -3368,7 +3368,55 @@ void CWallet::ScanBlockchainForHash(bool bDisplay)
 	printf(">> blockchain hash at %d: %s\n", LAST_REGISTERED_BLOCK_HEIGHT, hash0.c_str());
 	printf(">> blockchainStatus = %d\n", blockchainStatus);
 }
+bool CWallet::ListAvailableAnonOutputs(std::list<COwnedAnonOutput>& lAvailableAnonOutputs, int64_t& nAmountCheck, int nRingSize, MaturityFilter nFilter, std::string& sError, int64_t nMaxAmount) const
+{
+    LOCK2(cs_main, cs_wallet);
 
+    nAmountCheck = 0;
+    if (ListUnspentAnonOutputs(lAvailableAnonOutputs, nFilter) != 0)
+    {
+        sError = "ListUnspentAnonOutputs() failed";
+        return false;
+    };
+
+    // -- remove coins that don't have enough same value anonoutputs in the system for the ring size
+    // -- remove coins which spending would lead to ALL SPENT
+    int nCoinsPerValue = 0;
+    int64_t nLastCoinValue = -1;
+    int nMaxSpendable = -1;
+    int nAvailableMixins = 0;
+    for (std::list<COwnedAnonOutput>::iterator it = lAvailableAnonOutputs.begin(); it != lAvailableAnonOutputs.end();)
+    {
+        if (nLastCoinValue != it->nValue)
+        {
+            nCoinsPerValue = 0;
+            nLastCoinValue = it->nValue;
+            CAnonOutputCount anonOutputCount = mapAnonOutputStats[it->nValue];
+            nAvailableMixins = nFilter == MaturityFilter::FOR_STAKING ? anonOutputCount.nMixinsStaking : anonOutputCount.nMixins;
+            if (it->nValue <= nMaxAnonOutput)
+                nMaxSpendable = (anonOutputCount.nMature - anonOutputCount.nSpends) -
+                        (nFilter == MaturityFilter::FOR_STAKING ? 1 : UNSPENT_ANON_SELECT_MIN);
+            else
+                nMaxSpendable = -1;
+            if (fDebugRingSig && nFilter == MaturityFilter::FOR_SPENDING) // called to often when staking
+                LogPrintf("ListAvailableAnonOutputs anonValue %d, nAvailableMixins %d, nMaxSpendable %d\n", nLastCoinValue, nAvailableMixins, nMaxSpendable);
+        }
+
+        if (nAvailableMixins < nRingSize ||
+                (nMaxSpendable != -1 && nCoinsPerValue >= nMaxSpendable) ||
+                nAmountCheck + it->nValue > nMaxAmount)
+            // -- not enough coins of same value, unspends or over max amount, drop coin
+            it = lAvailableAnonOutputs.erase(it);
+        else
+        {
+            nAmountCheck += it->nValue;
+            nCoinsPerValue++;
+            ++it;
+        }
+    }
+
+    return true;
+}
 /**void LoadStealthAddresses(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 1)
