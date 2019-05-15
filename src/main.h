@@ -47,6 +47,9 @@ static const int INIT_BLOCK = 1;
 static const uint32_t MIN_ANON_OUT_SIZE = 1 + 1 + 1 + 33 + 1 + 33; // OP_RETURN ANON_TOKEN lenPk pkTo lenR R [lenEnarr enarr]
 static const uint32_t MIN_ANON_IN_SIZE = 2 + (33 + 32 + 32); // 2byte marker (cpubkey + sigc + sigr)
 static const uint32_t MAX_ANON_NARRATION_SIZE = 48;
+static const int UNSPENT_ANON_BALANCE_MIN = 100;
+static const int UNSPENT_ANON_BALANCE_MAX = 200;
+static const int UNSPENT_ANON_SELECT_MIN = 20;
 static const int MIN_ANON_SPEND_DEPTH = 10;
 static const int ANON_TXN_VERSION = 1000;
 
