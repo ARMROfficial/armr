@@ -6,6 +6,7 @@
 #include "txdb.h"
 #include "wallet.h"
 #include "walletdb.h"
+#include "core.h"
 #include "crypter.h"
 #include "ui_interface.h"
 #include "base58.h"
@@ -14,6 +15,7 @@
 #include "smessage.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/lexical_cast.hpp>
+
 
 using namespace std;
 extern unsigned int nStakeMaxAge;
@@ -3464,7 +3466,7 @@ bool CWallet::ListAvailableAnonOutputs(std::list<COwnedAnonOutput>& lAvailableAn
 bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, int64_t nFees, CTransaction& txNew, CKey& key)
 {
     // Ring size for staking is MIN_RING_SIZE
-    int nRingSize = 10 //@@@ We need to figure out if this is the correct thing MIN_RING_SIZE;
+    int nRingSize = 10; //@@@ We need to figure out if this is the correct thing MIN_RING_SIZE;
 
     CBlockIndex* pindexPrev = pindexBest;
     CBigNum bnTargetPerCoinDay;
@@ -3479,7 +3481,7 @@ bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, i
     txNew.vout.push_back(CTxOut(0, scriptEmpty));
 
     // Choose coins to use
-    int64_t nBalance = GetSpectreBalance();
+    int64_t nBalance = GetBalance();
     if (nBalance <= nReserveBalance)
         return false;
 
@@ -3488,7 +3490,8 @@ bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, i
     std::list<COwnedAnonOutput> lAvailableCoins;
     int64_t nAmountCheck;
     std::string sError;
-    if (!ListAvailableAnonOutputs(lAvailableCoins, nAmountCheck, nRingSize, MaturityFilter::FOR_STAKING, sError, nBalance - nReserveBalance))
+    //@@@ I hard coded in the maturity value, we need to replace it with something real
+    if (!ListAvailableAnonOutputs(lAvailableCoins, nAmountCheck, nRingSize, 10, sError, nBalance - nReserveBalance))
         return error(("CreateAnonCoinStake : " + sError).c_str());
     if (lAvailableCoins.empty())
         return false;
@@ -3507,7 +3510,7 @@ bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, i
             if (CheckAnonKernel(pindexPrev, nBits, oao.nValue, oao.vchImage, txNew.nTime - n))
             {
                 // Found a kernel
-                if (fDebugPoS)
+                if (fDebug)
                     LogPrintf("CreateAnonCoinStake : kernel found for keyImage %s\n", HexStr(oao.vchImage));
 
                 LOCK(cs_main);
@@ -3584,18 +3587,18 @@ bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, i
                 if (nReward <= 0)
                     return error("CreateAnonCoinStake : GetProofOfStakeReward() reward <= 0");
 
-                // -- Check if staking reward gets donated to developers, according to the configured probability and DCB rules
-                int sample = stakingDonationDistribution(stakingDonationRng);
-                LogPrintf("sample: %d, donation: %d\n", sample, nStakingDonation);
-                bool donateReward = false;
-                if (sample < nStakingDonation || (pindexPrev->nHeight+1) % 6 == 0) {
-                    LogPrintf("Donating this (potential) stake to the developers\n");
-                    donateReward = true;
-                }
-                else {
-                    LogPrintf("Not donating this (potential) stake to the developers\n");
+//                // -- Check if staking reward gets donated to developers, according to the configured probability and DCB rules
+//                int sample = stakingDonationDistribution(stakingDonationRng);
+//                LogPrintf("sample: %d, donation: %d\n", sample, nStakingDonation);
+//                bool donateReward = false;
+//                if (sample < nStakingDonation || (pindexPrev->nHeight+1) % 6 == 0) {
+//                    LogPrintf("Donating this (potential) stake to the developers\n");
+//                    donateReward = true;
+//                }
+//                else {
+//                    LogPrintf("Not donating this (potential) stake to the developers\n");
                     nCredit += nReward;
-                }
+//                }
 
                 // -- Get stealth address for creating new anon outputs.
                 CStealthAddress sxAddress;
@@ -3633,15 +3636,15 @@ bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, i
                 key.Set(&sSpendR.e[0], true);
 
                 // -- create donation output
-                if (donateReward)
-                {
-                    CBitcoinAddress address(Params().GetDevContributionAddress());
-                    // push a new output donating to the developers
-                    CScript script;
-                    script.SetDestination(address.Get());
-                    txNew.vout.push_back(CTxOut(nReward, script));
-                    LogPrintf("donation complete\n");
-                }
+//                if (donateReward)
+//                {
+//                    CBitcoinAddress address(Params().GetDevContributionAddress());
+//                    // push a new output donating to the developers
+//                    CScript script;
+//                    script.SetDestination(address.Get());
+//                    txNew.vout.push_back(CTxOut(nReward, script));
+//                    LogPrintf("donation complete\n");
+//                }
 
                 // -- create anon inputs
                 txNew.vin.resize(vPickedCoins.size());
@@ -3668,7 +3671,7 @@ bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, i
                 if (!AreOutputsUnique(txNew))
                     return error("CreateAnonCoinStake() : anon outputs are not unique - is random working?!");
 
-                if (fDebugPoS)
+                if (fDebug)
                     LogPrintf("CreateAnonCoinStake() : added kernel for keyImage %s\n", HexStr(oao.vchImage));
 
                 fKernelFound = true;
