@@ -3370,16 +3370,17 @@ void CWallet::ScanBlockchainForHash(bool bDisplay)
 	printf(">> blockchain hash at %d: %s\n", LAST_REGISTERED_BLOCK_HEIGHT, hash0.c_str());
 	printf(">> blockchainStatus = %d\n", blockchainStatus);
 }
-bool CWallet::ListAvailableAnonOutputs(std::list<COwnedAnonOutput>& lAvailableAnonOutputs, int64_t& nAmountCheck, int nRingSize, MaturityFilter nFilter, std::string& sError, int64_t nMaxAmount) const
+bool CWallet::ListAvailableAnonOutputs(std::list<COwnedAnonOutput>& lAvailableAnonOutputs, int64_t& nAmountCheck, int nRingSize, std::string& sError, int64_t nMaxAmount) const
 {
     LOCK2(cs_main, cs_wallet);
 
     nAmountCheck = 0;
-    if (ListUnspentAnonOutputs(lAvailableAnonOutputs, nFilter) != 0)
-    {
-        sError = "ListUnspentAnonOutputs() failed";
-        return false;
-    };
+    //@@@Probably need to include this
+    //if (ListUnspentAnonOutputs(lAvailableAnonOutputs, nStakeMinAge) != 0)
+    //{
+    //    sError = "ListUnspentAnonOutputs() failed";
+    //    return false;
+    //};
 
     // -- remove coins that don't have enough same value anonoutputs in the system for the ring size
     // -- remove coins which spending would lead to ALL SPENT
@@ -3394,14 +3395,19 @@ bool CWallet::ListAvailableAnonOutputs(std::list<COwnedAnonOutput>& lAvailableAn
             nCoinsPerValue = 0;
             nLastCoinValue = it->nValue;
             CAnonOutputCount anonOutputCount = mapAnonOutputStats[it->nValue];
-            nAvailableMixins = nFilter == MaturityFilter::FOR_STAKING ? anonOutputCount.nMixinsStaking : anonOutputCount.nMixins;
-            if (it->nValue <= nMaxAnonOutput)
-                nMaxSpendable = (anonOutputCount.nMature - anonOutputCount.nSpends) -
-                        (nFilter == MaturityFilter::FOR_STAKING ? 1 : UNSPENT_ANON_SELECT_MIN);
-            else
-                nMaxSpendable = -1;
-            if (fDebugRingSig && nFilter == MaturityFilter::FOR_SPENDING) // called to often when staking
-                LogPrintf("ListAvailableAnonOutputs anonValue %d, nAvailableMixins %d, nMaxSpendable %d\n", nLastCoinValue, nAvailableMixins, nMaxSpendable);
+            //@@@ again need to figure out if this is needed
+            //nAvailableMixins = nFilter == nStakeMinAge ? anonOutputCount.nMixinsStaking : anonOutputCount.nMixins;
+
+            //@@@Add back in I am sure
+            //if (it->nValue <= nMaxAnonOutput)
+            //    nMaxSpendable = (anonOutputCount.nMature - anonOutputCount.nSpends) -
+            //            (nFilter == nStakeMinAge  ? 1 : UNSPENT_ANON_SELECT_MIN);
+            //else
+             //   nMaxSpendable = -1;
+
+// @@@ Would probably be nice to have this comment
+//          if (fDebugRingSig && nFilter == nCoinbaseMaturity  // called to often when staking
+//                LogPrintf("ListAvailableAnonOutputs anonValue %d, nAvailableMixins %d, nMaxSpendable %d\n", nLastCoinValue, nAvailableMixins, nMaxSpendable);
         }
 
         if (nAvailableMixins < nRingSize ||
@@ -3491,7 +3497,7 @@ bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, i
     int64_t nAmountCheck;
     std::string sError;
     //@@@ I hard coded in the maturity value, we need to replace it with something real
-    if (!ListAvailableAnonOutputs(lAvailableCoins, nAmountCheck, nRingSize, 10, sError, nBalance - nReserveBalance))
+    if (!ListAvailableAnonOutputs(lAvailableCoins, nAmountCheck, nRingSize, sError, nBalance - nReserveBalance))
         return error(("CreateAnonCoinStake : " + sError).c_str());
     if (lAvailableCoins.empty())
         return false;
