@@ -89,10 +89,14 @@ static const int checkpointPoWHeight[NUM_OF_POW_CHECKPOINT][2] =
 
 extern enum Checkpoints::CPMode CheckpointsMode;
 
-int64_t PastDrift(int64_t nTime)
-{
-    return nTime - 2 * 60 * 60;
-}
+//Anonymous Staking Settings
+int64_t nMaxAnonOutput = 1000 * COIN;
+int64_t nMaxAnonStakeOutput = nMaxAnonOutput;
+
+int64_t PastDrift(int64_t nTime) 
+{ 
+	return nTime - 2 * 60 * 60;
+} 
 
 int64_t FutureDrift(int64_t nTime)
 {
