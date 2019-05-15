@@ -12,6 +12,7 @@
 #include "script.h"
 #include "scrypt.h"
 #include "hashblock.h"
+#include "core.h"
 
 #include <list>
 
@@ -54,6 +55,7 @@ static const int MIN_ANON_SPEND_DEPTH = 10;
 static const int ANON_TXN_VERSION = 1000;
 extern int64_t nMaxAnonOutput;
 extern int64_t nMaxAnonStakeOutput;
+extern std::map<int64_t, CAnonOutputCount> mapAnonOutputStats;
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
