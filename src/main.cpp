@@ -1280,7 +1280,10 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
     {
         nSubsidy = (nRewardCoinYear * nCoinAge / 365)*.01;//1% until airfork is complete
     }
-
+    else if (nPoSHeight < FIRST_REDUCTION_POS_BLOCK_COUNT)
+    {
+        nSubsidy = 15 * nRewardCoinYear * nCoinAge / 365;
+    }
 
 	return nSubsidy;
 }
