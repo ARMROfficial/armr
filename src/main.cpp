@@ -1272,14 +1272,15 @@ static const int YEARLY_POS_BLOCK_COUNT = 525600;
 
 int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
 {
-	int64_t nRewardCoinYear = MAX_PROOF_OF_STAKE_STABLE;
-	int nPoSHeight = GetPosHeight(pindex);
-	int64_t nSubsidy = 0;
+    int64_t nRewardCoinYear = MAX_PROOF_OF_STAKE_STABLE;
+    int nPoSHeight = GetPosHeight(pindex);
+    int64_t nSubsidy = 0;
 
-	if (nPoSHeight < YEARLY_POS_BLOCK_COUNT)
-	{
+    if (nPoSHeight < ARMR_GIFT_POS_BLOCK_COUNT)
+    {
         nSubsidy = (nRewardCoinYear * nCoinAge / 365)*.01;//1% until airfork is complete
-	}
+    }
+
 
 	return nSubsidy;
 }
