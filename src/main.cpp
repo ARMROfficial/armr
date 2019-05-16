@@ -1284,6 +1284,10 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
     {
         nSubsidy = 15 * nRewardCoinYear * nCoinAge / 365;
     }
+    else if (nPoSHeight < CHRISTMAS_GIFT_POS_BLOCK_COUNT)
+    {
+        nSubsidy = 5 * nRewardCoinYear * nCoinAge / 365;
+    }
 
 	return nSubsidy;
 }
