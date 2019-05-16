@@ -1296,6 +1296,10 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
     {
         nSubsidy = 5 * nRewardCoinYear * nCoinAge / 365;
     }
+    else
+    {
+        nSubsidy = 3 * nRewardCoinYear * nCoinAge / 365;
+    }
 	return nSubsidy;
 }
 
