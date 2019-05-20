@@ -256,6 +256,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/bignum.h \
     src/checkpoints.h \
     src/compat.h \
+    src/core.h \
     src/coincontrol.h \
     src/smessage.h \
     src/sync.h \
