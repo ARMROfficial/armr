@@ -56,6 +56,7 @@ BITCOIN_CORE_H = \
   checkqueue.h \
   coincontrol.h \
   compat.h \
+  core.h \
   crypter.h \
   lz4/lz4.h \
   db.h \
