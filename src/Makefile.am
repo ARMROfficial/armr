@@ -130,6 +130,7 @@ libbitcoin_server_a_SOURCES = \
   alert.cpp \
   bloom.cpp \
   checkpoints.cpp \
+  core.cpp \
   init.cpp \
   db.cpp \
   txdb-leveldb.cpp \
