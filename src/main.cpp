@@ -1276,7 +1276,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
     int nHeight = pindex->nHeight;
     int64_t nSubsidy = 0;
 
-    if (nPoSHeight < ARMR_GIFT_POS_BLOCK_COUNT)
+    if (nHeight < ARMR_GIFT_POS_BLOCK_COUNT)
     {
         nSubsidy = (nRewardCoinYear * nCoinAge / 365)*.01;//1% until airfork is complete
         LogPrintf("calculating 1% reward");
