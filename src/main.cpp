@@ -1273,7 +1273,6 @@ static const int YEARLY_POS_BLOCK_COUNT = 300;
 int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
 {
     int64_t nRewardCoinYear = MAX_PROOF_OF_STAKE_STABLE;
-    int nPoSHeight = GetPosHeight(pindex);
     int64_t nSubsidy = 0;
 
     if (nPoSHeight < ARMR_GIFT_POS_BLOCK_COUNT)
