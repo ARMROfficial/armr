@@ -38,7 +38,7 @@ static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
 static const int64_t MIN_TX_FEE_NEW = 10000;
 static const int64_t MIN_RELAY_TX_FEE_NEW = MIN_TX_FEE_NEW;
 static const int64_t MAX_MONEY = 40000000 * COIN;
-static const int64_t MAX_PROOF_OF_STAKE_STABLE = 0.03 * COIN;
+static const int64_t MAX_PROOF_OF_STAKE_STABLE = 0.01 * COIN;
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 static const int INIT_BLOCK = 1;
 
@@ -892,7 +892,7 @@ public:
         nTime = 0;
         nBits = 0;
         nNonce = 0;
-		vtx.clear();
+        vtx.clear();
         vchBlockSig.clear();
         vMerkleTree.clear();
         nDoS = 0;
@@ -903,10 +903,10 @@ public:
         return (nBits == 0);
     }
 
-	uint256 GetHash() const
-	{
-		return Hash9(BEGIN(nVersion), END(nNonce));
-	}
+    uint256 GetHash() const
+    {
+        return Hash9(BEGIN(nVersion), END(nNonce));
+    }
 
     int64_t GetBlockTime() const
     {
@@ -1057,13 +1057,13 @@ public:
 
     void print() const
     {
-		printf("CBlock(hash=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%" PRIszu ", vchBlockSig=%s)\n",
-			GetHash().ToString().c_str(),
+        printf("CBlock(hash=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%" PRIszu ", vchBlockSig=%s)\n",
+            GetHash().ToString().c_str(),
             nVersion,
             hashPrevBlock.ToString().c_str(),
             hashMerkleRoot.ToString().c_str(),
-			nTime, nBits, nNonce, 
-			vtx.size(),
+            nTime, nBits, nNonce,
+            vtx.size(),
             HexStr(vchBlockSig.begin(), vchBlockSig.end()).c_str());
         for (unsigned int i = 0; i < vtx.size(); i++)
         {
@@ -1119,7 +1119,7 @@ public:
     int64_t nMoneySupply;
 
     unsigned int nFlags;  // ARMR: block index flags
-    enum  
+    enum
     {
         BLOCK_PROOF_OF_STAKE = (1 << 0), // is proof-of-stake block
         BLOCK_STAKE_ENTROPY  = (1 << 1), // entropy bit for stake modifier
@@ -1164,7 +1164,7 @@ public:
         nTime			= 0;
         nBits			= 0;
         nNonce			= 0;
-	}
+    }
 
     CBlockIndex(unsigned int nFileIn, unsigned int nBlockPosIn, CBlock& block)
     {
@@ -1198,7 +1198,7 @@ public:
         nTime			= block.nTime;
         nBits			= block.nBits;
         nNonce			= block.nNonce;
-	}
+    }
 
     CBlock GetBlockHeader() const
     {
@@ -1210,7 +1210,7 @@ public:
         block.nTime				= nTime;
         block.nBits				= nBits;
         block.nNonce			= nNonce;
-		return block;
+        return block;
     }
 
     uint256 GetBlockHash() const
@@ -1322,7 +1322,7 @@ public:
             pprev, pnext, nFile, nBlockPos, nHeight,
             FormatMoney(nMint).c_str(), FormatMoney(nMoneySupply).c_str(),
             GeneratedStakeModifier() ? "MOD" : "-", GetStakeEntropyBit(), IsProofOfStake()? "PoS" : "PoW",
-            nStakeModifier, nStakeModifierChecksum, 
+            nStakeModifier, nStakeModifierChecksum,
             hashProofOfStake.ToString().c_str(),
             prevoutStake.ToString().c_str(), nStakeTime,
             hashMerkleRoot.ToString().c_str(),
@@ -1393,7 +1393,7 @@ public:
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
-		READWRITE(blockHash);
+        READWRITE(blockHash);
     )
 
     uint256 GetBlockHash() const
