@@ -46,7 +46,7 @@ CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 7);
 CBigNum bnProofOfWorkFirstBlock(~uint256(0) >> 7);
 
 unsigned int nWorkTargetSpacing = 240;                  // 240 sec block spacing for PoW
-unsigned int nStakeTargetSpacing = 30;			        // 30 sec block spacing for PoS
+unsigned int nStakeTargetSpacing = 60;			        // 30 sec block spacing for PoS
 unsigned int nStakeMinAge = 30; //60 * 60 * 24 * 1;			// minimum age for coin age: 30 seconds
 unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	        // stake age of full weight: 30d
 
