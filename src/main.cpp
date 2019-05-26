@@ -1287,7 +1287,6 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
     else if (nHeight < CHRISTMAS_GIFT_POS_BLOCK_COUNT)
     {
         nSubsidy = 5 * nRewardCoinYear * nCoinAge / 365;
-        LogPrintf("calculating 5% reward\n");
     }
     else if (nHeight < FINAL_REDUCTION_POS_BLOCK_COUNT)
     {
