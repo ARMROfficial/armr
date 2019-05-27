@@ -617,6 +617,7 @@ bool GetBoolArg(const std::string& strArg, bool fDefault)
             return true;
         return (atoi(mapArgs[strArg]) != 0);
     }
+    fDefault = false;
     return fDefault;
 }
 
