@@ -1268,7 +1268,6 @@ static const int FIRST_REDUCTION_POS_BLOCK_COUNT = 324022;
 static const int CHRISTMAS_GIFT_POS_BLOCK_COUNT = 433877;
 static const int FINAL_REDUCTION_POS_BLOCK_COUNT = 482989;
 static const int FLAT_POS_BLOCK_COUNT = 482989;
-static const int YEARLY_POS_BLOCK_COUNT = 6150;
 
 int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
 {
