@@ -46,8 +46,8 @@ CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 7);
 CBigNum bnProofOfWorkFirstBlock(~uint256(0) >> 7);
 
 unsigned int nWorkTargetSpacing = 240;                  // 240 sec block spacing for PoW
-unsigned int nStakeTargetSpacing = 30;			        // 30 sec block spacing for PoS
-unsigned int nStakeMinAge = 30; //60 * 60 * 24 * 1;			// minimum age for coin age: 30 seconds
+unsigned int nStakeTargetSpacing = 60;			        // 30 sec block spacing for PoS
+unsigned int nStakeMinAge = 60 * 60 * 24 * 1;			// minimum age for coin age: 1 day
 unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	        // stake age of full weight: 30d
 
 unsigned int nModifierInterval = 8 * 60;				// time to elapse before new modifier is computed
@@ -1267,7 +1267,9 @@ static const int ARMR_GIFT_POS_BLOCK_COUNT = 184814;
 static const int FIRST_REDUCTION_POS_BLOCK_COUNT = 324022;
 static const int CHRISTMAS_GIFT_POS_BLOCK_COUNT = 433877;
 static const int FINAL_REDUCTION_POS_BLOCK_COUNT = 482989;
-static const int FLAT_POS_BLOCK_COUNT = 482989;
+
+static const int FLAT_POS_BLOCK_COUNT = 559241;
+
 
 int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
 {
@@ -1278,32 +1280,26 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
     if (nHeight < ARMR_GIFT_POS_BLOCK_COUNT)
     {
         nSubsidy = (nRewardCoinYear * nCoinAge / 365)*.01;//1% until airfork is complete
-        LogPrintf("calculating 1% reward\n");
     }
     else if (nHeight < FIRST_REDUCTION_POS_BLOCK_COUNT)
     {
         nSubsidy = 15 * nRewardCoinYear * nCoinAge / 365;
-        LogPrintf("calculating 15% reward\n");
     }
     else if (nHeight < CHRISTMAS_GIFT_POS_BLOCK_COUNT)
     {
         nSubsidy = 5 * nRewardCoinYear * nCoinAge / 365;
-        LogPrintf("calculating 5% reward\n");
     }
     else if (nHeight < FINAL_REDUCTION_POS_BLOCK_COUNT)
     {
         nSubsidy = 10 * nRewardCoinYear * nCoinAge / 365;
-        LogPrintf("calculating 10% reward\n");
     }
     else if (nHeight < FLAT_POS_BLOCK_COUNT)
     {
         nSubsidy = 5 * nRewardCoinYear * nCoinAge / 365;
-        LogPrintf("calculating 5% reward\n");
     }
     else
     {
         nSubsidy = 3 * nRewardCoinYear * nCoinAge / 365;
-        LogPrintf("calculating 3% reward\n");
     }
     return nSubsidy;
 }
