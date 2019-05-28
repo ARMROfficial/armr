@@ -1267,8 +1267,7 @@ static const int ARMR_GIFT_POS_BLOCK_COUNT = !fTestNet ? 184814 : 8250;
 static const int FIRST_REDUCTION_POS_BLOCK_COUNT = !fTestNet ? 324022 : 8280;
 static const int CHRISTMAS_GIFT_POS_BLOCK_COUNT = !fTestNet ? 433877 : 8310;
 static const int FINAL_REDUCTION_POS_BLOCK_COUNT = !fTestNet ? 482989 : 8340;
-
-static const int FLAT_POS_BLOCK_COUNT = 559241;
+static const int FLAT_POS_BLOCK_COUNT = !fTestNet ? 559241 : 8370;
 
 
 int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
