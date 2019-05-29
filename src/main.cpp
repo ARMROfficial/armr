@@ -1271,8 +1271,8 @@ static const int FLAT_POS_BLOCK_COUNT = !fTestNet ? 559241 : 8140;
 
 int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
 {
-    int64_t nRewardCoinYear = MAX_PROOF_OF_STAKE_STABLE;
     int nHeight = pindex->nHeight;
+    int64_t nRewardCoinYear = nHeight < ARMR_GIFT_POS_BLOCK_COUNT ? MAX_PROOF_OF_STAKE_STABLE : PROOF_OF_STAKE_STABLE;
     int64_t nSubsidy = 0;
 
     if (nHeight < ARMR_GIFT_POS_BLOCK_COUNT)
