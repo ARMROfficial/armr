@@ -1303,7 +1303,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
     else
     {
         nSubsidy = nRewardCoinYear * 3 * nCoinAge / 365;
-        fTestNet ? LogPrintf("Calculating 3% reward\n") : LogPrintf("\n") ;
+        LogPrintf("Calculating 3% reward\n");
     }
     return nSubsidy;
 }
