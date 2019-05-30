@@ -1264,7 +1264,7 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees, const CBlockIndex* pind
 
 static const int ARMR_GIFT_POS_BLOCK_COUNT = 8150;
 static const int FIRST_REDUCTION_POS_BLOCK_COUNT = 8160;
-static const int CHRISTMAS_GIFT_POS_BLOCK_COUNT = !fTestNet ? 433877 : 8120;
+static const int CHRISTMAS_GIFT_POS_BLOCK_COUNT = 8170;
 static const int FINAL_REDUCTION_POS_BLOCK_COUNT = !fTestNet ? 482989 : 8130;
 static const int FLAT_POS_BLOCK_COUNT = !fTestNet ? 559241 : 8140;
 
