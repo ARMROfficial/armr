@@ -1298,7 +1298,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, const CBlockIndex* pindex)
     else if (nHeight < FLAT_POS_BLOCK_COUNT)
     {
         nSubsidy = nRewardCoinYear * 5 * nCoinAge / 365;
-        fTestNet ? LogPrintf("Calculating 5% reward\n") : LogPrintf("\n") ;
+        LogPrintf("Calculating 5% reward\n");
     }
     else
     {
