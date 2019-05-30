@@ -1306,7 +1306,6 @@ static const char *strMainNetOnionSeed[][1] = {
 };
 
 static const char *strTestNetOnionSeed[][1] = {
-        {"2o4dx4sr6ihjtfar.onion"},
         {"2pkzdw63xgfwhamm.onion"},
         {"j7bmhpny2roes5b4.onion"},
         {"jvflgp2hs2q35dyp.onion"},
