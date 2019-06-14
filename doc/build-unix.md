@@ -30,7 +30,7 @@ apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-to
 
 Then get armr source:
 
-`git clone --recursive https://github.com/armr/armr.git`
+`git clone --recursive https://github.com/ARMROfficial/armr.git`
 
 #### Autotools
 
