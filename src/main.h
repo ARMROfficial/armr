@@ -258,6 +258,12 @@ public:
         nValue = nCoinValue;
     }
 
+    void decSpends(int64_t nCoinValue)
+    {
+        nSpends--;
+        nValue = nCoinValue;
+    }
+
 
 };
 
