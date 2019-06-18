@@ -287,7 +287,18 @@ public:
     }
 
 
-
+    int64_t nValue;
+    int nExists;
+    int nUnconfirmed;
+    int nSpends;
+    int nOwned; // todo
+    int nLastHeight;
+    int nCompromised;
+    int nCompromisedHeight;
+    int nMature;
+    int nMixins;
+    int nMixinsStaking;
+    int nStakes;
 };
 
 /** Position on disk for a particular transaction. */
