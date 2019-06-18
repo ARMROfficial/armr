@@ -399,6 +399,10 @@ bool CheckAnonProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsi
     if (!tx.vin[0].IsAnonInput())
         return error("CheckAnonProofOfStake() : vin[0] is no anon input for coinstake %s", tx.GetHash().ToString());
 
+    if (!tx.vout[1].IsAnonOutput())
+        return error("CheckAnonProofOfStake() : vout[1] is no anon output for coinstake %s", tx.GetHash().ToString());
+
+
 }
 
 bool CheckAnonStakeKernelHash(CStakeModifier* pStakeMod, const unsigned int& nBits, const int64_t& anonValue, const ec_point &anonKeyImage, const unsigned int& nTimeTx, uint256& hashProofOfStake, uint256& targetProofOfStake, const bool fPrintProofOfStake)
