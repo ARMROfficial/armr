@@ -68,7 +68,6 @@ static const int MIN_ANON_SPEND_DEPTH = 10;
 static const int ANON_TXN_VERSION = 1000;
 extern int64_t nMaxAnonOutput;
 extern int64_t nMaxAnonStakeOutput;
-extern std::map<int64_t, CAnonOutputCount> mapAnonOutputStats;
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -314,24 +313,7 @@ public:
     int nStakes;
 };
 
-class CMixins
-{
-// for mixin selection
-public:
-    CMixins() : CMixins(initUrng()) {}
-    void AddAnonOutput(CPubKey& pkAo, CAnonOutput& anonOutput, int blockHeight);
-    bool Pick(int64_t nValue, uint8_t nMixins, std::vector<CPubKey>& vPickedAnons);
-private:
-    CMixins(std::mt19937 urng) : urng(urng) {}
-    static std::mt19937 initUrng()
-    {
-        std::random_device rd;
-        return std::mt19937(rd());
-    }
-    std::vector<std::pair<int, uint256>> vUsedTx; // vector with used transaction hashes as pair of containerId and tx hash
-    std::map<int64_t, CTxMixinsContainers> mapMixins; // value to CTxMixinsSet
-    std::mt19937 urng;
-};
+extern std::map<int64_t, CAnonOutputCount> mapAnonOutputStats;
 
 struct CTxMixins
 {
@@ -367,6 +349,25 @@ public:
     {
         return containerId == RECENT ? recent : old;
     }
+};
+
+class CMixins
+{
+// for mixin selection
+public:
+    CMixins() : CMixins(initUrng()) {}
+    void AddAnonOutput(CPubKey& pkAo, CAnonOutput& anonOutput, int blockHeight);
+    bool Pick(int64_t nValue, uint8_t nMixins, std::vector<CPubKey>& vPickedAnons);
+private:
+    CMixins(std::mt19937 urng) : urng(urng) {}
+    static std::mt19937 initUrng()
+    {
+        std::random_device rd;
+        return std::mt19937(rd());
+    }
+    std::vector<std::pair<int, uint256>> vUsedTx; // vector with used transaction hashes as pair of containerId and tx hash
+    std::map<int64_t, CTxMixinsContainers> mapMixins; // value to CTxMixinsSet
+    std::mt19937 urng;
 };
 
 /** Position on disk for a particular transaction. */
