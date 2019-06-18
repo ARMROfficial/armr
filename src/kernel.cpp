@@ -393,6 +393,9 @@ bool CheckStakeModifierCheckpoints(int nHeight, unsigned int nStakeModifierCheck
 
 bool CheckAnonProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsigned int nBits, uint256& hashProofOfStake, uint256& targetProofOfStake)
 {
+    if (!tx.IsAnonCoinStake())
+        return error("CheckAnonProofOfStake() : called on non-anon-coinstake %s", tx.GetHash().ToString());
+
 
 }
 
