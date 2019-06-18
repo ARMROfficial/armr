@@ -334,6 +334,9 @@ enum TxMixinsContainerId { OLD, RECENT };
 
 class CTxMixinsContainers
 {
+private:
+    txMixins_container old;
+    txMixins_container recent;
 
 };
 
