@@ -345,6 +345,8 @@ public:
 };
 
 using namespace boost::multi_index;
+// tags
+struct TXHASH{};
 
 
 /** Position on disk for a particular transaction. */
