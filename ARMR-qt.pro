@@ -380,7 +380,6 @@ SOURCES += src/qt/bitcoin.cpp \
     src/qt/plugins/mrichtexteditor/mrichtextedit.cpp \
     src/qt/intro.cpp \
     src/alert.cpp \
-    src/core.cpp \
     src/version.cpp \
     src/sync.cpp \
     src/util.cpp \
