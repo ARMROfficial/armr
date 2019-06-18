@@ -338,6 +338,12 @@ public:
 
 extern std::map<int64_t, CAnonOutputCount> mapAnonOutputStats;
 
+class CStakeModifier
+{
+// for CheckKernel
+
+};
+
 struct CTxMixins
 {
     CTxMixins(uint256 txHash_)
