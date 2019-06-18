@@ -332,6 +332,11 @@ struct CTxMixins
 
 enum TxMixinsContainerId { OLD, RECENT };
 
+class CTxMixinsContainers
+{
+
+};
+
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
 {
