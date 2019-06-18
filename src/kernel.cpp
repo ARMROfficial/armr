@@ -380,8 +380,8 @@ unsigned int GetStakeModifierChecksum(const CBlockIndex* pindex)
         return hashChecksum.Get64();
     }
 
-// Check stake modifier hard checkpoints
-bool CheckStakeModifierCheckpoints(int nHeight, unsigned int nStakeModifierChecksum)
+
+bool CheckAnonKernel(const CBlockIndex* pindexPrev, const unsigned int& nBits, const int64_t& anonValue, const ec_point& anonKeyImage, const unsigned int& nTime)
 {
     //printf(">> Height = %d, nStakeModifierChecksum = %x\n", nHeight, nStakeModifierChecksum);
    MapModifierCheckpoints& checkpoints = (fTestNet ? mapStakeModifierCheckpointsTestNet : mapStakeModifierCheckpoints);

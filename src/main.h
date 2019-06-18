@@ -12,6 +12,7 @@
 #include "script.h"
 #include "scrypt.h"
 #include "hashblock.h"
+#include "core.h"
 
 #include <list>
 
