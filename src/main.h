@@ -303,6 +303,10 @@ public:
 class CMixins
 {
 // for mixin selection
+public:
+    CMixins() : CMixins(initUrng()) {}
+    void AddAnonOutput(CPubKey& pkAo, CAnonOutput& anonOutput, int blockHeight);
+    bool Pick(int64_t nValue, uint8_t nMixins, std::vector<CPubKey>& vPickedAnons);
 
 };
 
