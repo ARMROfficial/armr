@@ -281,6 +281,12 @@ public:
         return nExists - nSpends;
     }
 
+    int numOfMatureUnspends()
+    {
+        return nMature - nSpends;
+    }
+
+
 
 };
 
