@@ -23,6 +23,7 @@
 #include "serialize.h"
 #include <random>
 
+#include <boost/random/mersenne_twister.hpp>
 
 class CWallet;
 class CBlock;
