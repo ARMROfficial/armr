@@ -204,6 +204,22 @@ public:
         nCompromisedHeight = 0;
     }
 
+    CAnonOutputCount(int64_t nValue_, int nExists_, int nUnconfirmed_, int nSpends_, int nOwned_, int nLastHeight_, int nCompromised_, int nMature_, int nMixins_, int nMixinsStaking_, int nStakes_, int nCompromisedHeight_)
+    {
+        nValue = nValue_;
+        nExists = nExists_;
+        nSpends = nSpends_;
+        nUnconfirmed = nUnconfirmed_;
+        nOwned = nOwned_;
+        nLastHeight = nLastHeight_;
+        nCompromised = nCompromised_;
+        nMature = nMature_;
+        nMixins = nMixins_;
+        nMixinsStaking = nMixinsStaking_;
+        nStakes = nStakes_;
+        nCompromisedHeight = nCompromisedHeight_;
+    }
+
 
 };
 
