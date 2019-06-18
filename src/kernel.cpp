@@ -383,7 +383,12 @@ unsigned int GetStakeModifierChecksum(const CBlockIndex* pindex)
 // Check stake modifier hard checkpoints
 bool CheckStakeModifierCheckpoints(int nHeight, unsigned int nStakeModifierChecksum)
 {
+    //printf(">> Height = %d, nStakeModifierChecksum = %x\n", nHeight, nStakeModifierChecksum);
+   MapModifierCheckpoints& checkpoints = (fTestNet ? mapStakeModifierCheckpointsTestNet : mapStakeModifierCheckpoints);
 
+   if (checkpoints.count(nHeight))
+       return nStakeModifierChecksum == checkpoints[nHeight];
+   return true;
 }
 
 bool CheckAnonStakeKernelHash(CStakeModifier* pStakeMod, const unsigned int& nBits, const int64_t& anonValue, const ec_point &anonKeyImage, const unsigned int& nTimeTx, uint256& hashProofOfStake, uint256& targetProofOfStake, const bool fPrintProofOfStake)
