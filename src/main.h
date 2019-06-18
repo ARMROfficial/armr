@@ -330,6 +330,8 @@ struct CTxMixins
     mutable std::vector<std::pair<unsigned int, CPubKey>> vOutPubKeys;
 };
 
+enum TxMixinsContainerId { OLD, RECENT };
+
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
 {
