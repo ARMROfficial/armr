@@ -300,6 +300,12 @@ public:
     int nStakes;
 };
 
+class CMixins
+{
+// for mixin selection
+
+};
+
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
 {
