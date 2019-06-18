@@ -153,6 +153,13 @@ bool GetWalletFile(CWallet* pwallet, std::string &strWalletFileOut);
 // get node statistics (currently not implemented)
 bool GetNodeStateStats(NodeId nodeid, CNodeStateStats &stats);
 
+
+class CAnonOutput
+{
+// stored in txdb, key is pubkey
+
+};
+
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
 {
