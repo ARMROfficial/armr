@@ -402,6 +402,13 @@ bool CheckAnonProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsi
     if (!tx.vout[1].IsAnonOutput())
         return error("CheckAnonProofOfStake() : vout[1] is no anon output for coinstake %s", tx.GetHash().ToString());
 
+    CTxDB txdb("r");
+
+    // Kernel (input 0) must match the stake hash target per coin age (nBits)
+    const CTxIn& txin = tx.vin[0];
+    ec_point vchImage;
+    txin.ExtractKeyImage(vchImage);
+
 
 }
 
