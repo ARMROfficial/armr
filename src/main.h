@@ -270,6 +270,12 @@ public:
         nValue = nCoinValue;
     }
 
+    void decExists(int64_t nCoinValue)
+    {
+        nExists--;
+        nValue = nCoinValue;
+    }
+
 
 };
 
