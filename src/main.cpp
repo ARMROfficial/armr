@@ -111,6 +111,11 @@ void addAnonOutput(CPubKey& pkAo, CAnonOutput& anonOutput, txMixins_container& t
     }
 }
 
+void CMixins::AddAnonOutput(CPubKey& pkAo, CAnonOutput& anonOutput, int blockHeight)
+{
+
+}
+
 int64_t PastDrift(int64_t nTime) 
 { 
 	return nTime - 2 * 60 * 60;
