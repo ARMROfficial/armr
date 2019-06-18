@@ -326,7 +326,8 @@ struct CTxMixins
         txHash = txHash_;
     }
 
-
+    uint256 txHash;
+    mutable std::vector<std::pair<unsigned int, CPubKey>> vOutPubKeys;
 };
 
 /** Position on disk for a particular transaction. */
