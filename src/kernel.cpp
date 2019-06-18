@@ -409,6 +409,16 @@ bool CheckAnonProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsi
     ec_point vchImage;
     txin.ExtractKeyImage(vchImage);
 
+    {
+        LOCK(cs_main);
+        CKeyImageSpent spentKeyImage;
+        bool fInMemPool;
+        if (GetKeyImage(&txdb, vchImage, spentKeyImage, fInMemPool) && // keyImage already spent
+                !(spentKeyImage.txnHash == tx.GetHash() && spentKeyImage.inputNo == 0) && // this can happen for transactions created by the local node
+                TxnHashInSystem(&txdb, spentKeyImage.txnHash)) // keyimage is in db, but invalid as does not point to a known transaction, could be an old mempool keyimag
+            return tx.DoS(100, error("CheckAnonProofOfStake() : INFO: Coinstake tx %s has already spent keyImage %s", tx.GetHash().ToString().c_str(), HexStr(vchImage).c_str()));
+    }
+
 
 }
 
