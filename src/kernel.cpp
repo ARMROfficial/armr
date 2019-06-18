@@ -419,7 +419,11 @@ bool CheckAnonProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsi
             return tx.DoS(100, error("CheckAnonProofOfStake() : INFO: Coinstake tx %s has already spent keyImage %s", tx.GetHash().ToString().c_str(), HexStr(vchImage).c_str()));
     }
 
+    CStakeModifier stakeMod(pindexPrev->nStakeModifier, pindexPrev->bnStakeModifierV2, pindexPrev->nHeight, pindexPrev->nTime);
+    if (!CheckAnonStakeKernelHash(&stakeMod, nBits, nCoinValue, vchImage, tx.nTime, hashProofOfStake, targetProofOfStake, fDebugPoS))
+        return tx.DoS(1, error("CheckAnonProofOfStake() : INFO: check kernel failed on coinstake %s, hashProof=%s", tx.GetHash().ToString().c_str(), hashProofOfStake.ToString().c_str())); // may occur during initial download or if behind on block chain sync
 
+    return true;
 }
 
 bool CheckAnonStakeKernelHash(CStakeModifier* pStakeMod, const unsigned int& nBits, const int64_t& anonValue, const ec_point &anonKeyImage, const unsigned int& nTimeTx, uint256& hashProofOfStake, uint256& targetProofOfStake, const bool fPrintProofOfStake)
