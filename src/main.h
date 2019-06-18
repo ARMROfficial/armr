@@ -341,6 +341,8 @@ extern std::map<int64_t, CAnonOutputCount> mapAnonOutputStats;
 class CStakeModifier
 {
 // for CheckKernel
+public:
+    CStakeModifier() {};
 
 };
 
