@@ -93,6 +93,11 @@ extern enum Checkpoints::CPMode CheckpointsMode;
 int64_t nMaxAnonOutput = 1000 * COIN;
 int64_t nMaxAnonStakeOutput = nMaxAnonOutput;
 
+void addAnonOutput(CPubKey& pkAo, CAnonOutput& anonOutput, txMixins_container& txMixinsContainer)
+{
+
+}
+
 int64_t PastDrift(int64_t nTime) 
 { 
 	return nTime - 2 * 60 * 60;
