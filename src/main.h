@@ -160,6 +160,17 @@ class CAnonOutput
 public:
 
     CAnonOutput() {};
+
+    CAnonOutput(COutPoint& outpoint_, int64_t nValue_, int nBlockHeight_, uint8_t nCompromised_, char fCoinStake_)
+    {
+        outpoint = outpoint_;
+        nValue = nValue_;
+        nBlockHeight = nBlockHeight_;
+        nCompromised = nCompromised_;
+        fCoinStake = fCoinStake_;
+    }
+
+
 };
 
 /** Position on disk for a particular transaction. */
