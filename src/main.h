@@ -309,6 +309,11 @@ public:
     bool Pick(int64_t nValue, uint8_t nMixins, std::vector<CPubKey>& vPickedAnons);
 private:
     CMixins(std::mt19937 urng) : urng(urng) {}
+    static std::mt19937 initUrng()
+    {
+        std::random_device rd;
+        return std::mt19937(rd());
+    }
 
 };
 
