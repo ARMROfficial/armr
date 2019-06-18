@@ -185,6 +185,11 @@ public:
     )
 };
 
+class CAnonOutputCount
+{ // CountAllAnonOutputs
+
+};
+
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
 {
