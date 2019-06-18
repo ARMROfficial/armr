@@ -264,6 +264,12 @@ public:
         nValue = nCoinValue;
     }
 
+    void incExists(int64_t nCoinValue)
+    {
+        nExists++;
+        nValue = nCoinValue;
+    }
+
 
 };
 
