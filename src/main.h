@@ -337,7 +337,11 @@ class CTxMixinsContainers
 private:
     txMixins_container old;
     txMixins_container recent;
-
+public:
+    txMixins_container& get(int containerId)
+    {
+        return containerId == RECENT ? recent : old;
+    }
 };
 
 /** Position on disk for a particular transaction. */
