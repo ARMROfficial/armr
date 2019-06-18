@@ -396,6 +396,8 @@ bool CheckAnonProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsi
     if (!tx.IsAnonCoinStake())
         return error("CheckAnonProofOfStake() : called on non-anon-coinstake %s", tx.GetHash().ToString());
 
+    if (!tx.vin[0].IsAnonInput())
+        return error("CheckAnonProofOfStake() : vin[0] is no anon input for coinstake %s", tx.GetHash().ToString());
 
 }
 
