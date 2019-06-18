@@ -245,6 +245,13 @@ public:
             nLastHeight = nBlockHeight;
     }
 
+    void updateDepth(int nBlockHeight, int64_t nCoinValue)
+    {
+        nValue = nCoinValue;
+        if (nBlockHeight > nLastHeight)
+            nLastHeight = nBlockHeight;
+    }
+
 
 };
 
