@@ -157,7 +157,9 @@ bool GetNodeStateStats(NodeId nodeid, CNodeStateStats &stats);
 class CAnonOutput
 {
 // stored in txdb, key is pubkey
+public:
 
+    CAnonOutput() {};
 };
 
 /** Position on disk for a particular transaction. */
