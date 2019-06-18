@@ -113,7 +113,14 @@ void addAnonOutput(CPubKey& pkAo, CAnonOutput& anonOutput, txMixins_container& t
 
 void CMixins::AddAnonOutput(CPubKey& pkAo, CAnonOutput& anonOutput, int blockHeight)
 {
+    CTxMixinsContainers& txMixinsContainers = mapMixins[anonOutput.nValue];
 
+    if (blockHeight - anonOutput.nBlockHeight < 2700) // blocks of last 3 days
+        // add anon to recent mixins container
+        addAnonOutput(pkAo, anonOutput, txMixinsContainers.get(RECENT));
+    else
+        // add anon to old mixins container
+        addAnonOutput(pkAo, anonOutput, txMixinsContainers.get(OLD));
 }
 
 int64_t PastDrift(int64_t nTime) 
