@@ -236,6 +236,15 @@ public:
         nCompromisedHeight = nCompromisedHeight_;
     }
 
+    void addCoin(int nBlockHeight, int64_t nCoinValue, bool fStake)
+    {
+        nExists++;
+        nValue = nCoinValue;
+        nStakes += fStake;
+        if (nBlockHeight > nLastHeight)
+            nLastHeight = nBlockHeight;
+    }
+
 
 };
 
