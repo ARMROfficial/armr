@@ -391,6 +391,11 @@ bool CheckStakeModifierCheckpoints(int nHeight, unsigned int nStakeModifierCheck
    return true;
 }
 
+bool CheckAnonProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsigned int nBits, uint256& hashProofOfStake, uint256& targetProofOfStake)
+{
+
+}
+
 bool CheckAnonStakeKernelHash(CStakeModifier* pStakeMod, const unsigned int& nBits, const int64_t& anonValue, const ec_point &anonKeyImage, const unsigned int& nTimeTx, uint256& hashProofOfStake, uint256& targetProofOfStake, const bool fPrintProofOfStake)
 {
     // Base target
@@ -413,16 +418,16 @@ bool CheckAnonStakeKernelHash(CStakeModifier* pStakeMod, const unsigned int& nBi
     bool foundHash = CBigNum(hashProofOfStake) < bnTarget;
 
     if (fPrintProofOfStake || (foundHash && fDebug))
-    {
-        LogPrintf("CheckAnonStakeKernelHash() : PoSv3 check=%b with modifier=%s at height=%d timestamp=%s, anonKeyImage=%s nTimeTx=%u, hashProof=%s target=%s\n",
-                  foundHash,
-                  pStakeMod->bnModifierV2.ToString(),
-                  pStakeMod->nHeight,
-                  DateTimeStrFormat(pStakeMod->nTime),
-                  HexStr(anonKeyImage), nTimeTx,
-                  hashProofOfStake.ToString(),
-                  bnTarget.ToString());
-    }
+//    {
+//        LogPrintf("CheckAnonStakeKernelHash() : PoSv3 check=%b with modifier=%s at height=%d timestamp=%s, anonKeyImage=%s nTimeTx=%u, hashProof=%s target=%s\n",
+//                  foundHash,
+//                  pStakeMod->bnModifierV2.ToString(),
+//                  pStakeMod->nHeight,
+//                  DateTimeStrFormat(pStakeMod->nTime),
+//                  HexStr(anonKeyImage), nTimeTx,
+//                  hashProofOfStake.ToString(),
+//                  bnTarget.ToString());
+//    }
     return foundHash;
 }
 
