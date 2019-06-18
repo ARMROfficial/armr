@@ -344,6 +344,9 @@ public:
     }
 };
 
+using namespace boost::multi_index;
+
+
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
 {
