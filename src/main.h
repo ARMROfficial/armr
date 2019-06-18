@@ -314,7 +314,9 @@ private:
         std::random_device rd;
         return std::mt19937(rd());
     }
-
+    std::vector<std::pair<int, uint256>> vUsedTx; // vector with used transaction hashes as pair of containerId and tx hash
+    std::map<int64_t, CTxMixinsContainers> mapMixins; // value to CTxMixinsSet
+    std::mt19937 urng;
 };
 
 /** Position on disk for a particular transaction. */
