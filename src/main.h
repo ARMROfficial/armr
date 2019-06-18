@@ -321,6 +321,11 @@ private:
 
 struct CTxMixins
 {
+    CTxMixins(uint256 txHash_)
+    {
+        txHash = txHash_;
+    }
+
 
 };
 
