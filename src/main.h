@@ -276,6 +276,11 @@ public:
         nValue = nCoinValue;
     }
 
+    int numOfUnspends()
+    {
+        return nExists - nSpends;
+    }
+
 
 };
 
