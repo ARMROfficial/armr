@@ -16,6 +16,8 @@
 #include <list>
 
 #include <stdlib.h>
+#include <stdio.h>
+
 
 class CWallet;
 class CBlock;
