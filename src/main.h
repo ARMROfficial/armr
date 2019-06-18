@@ -21,6 +21,8 @@
 #include <inttypes.h>
 #include "util.h"
 #include "serialize.h"
+#include <random>
+
 
 class CWallet;
 class CBlock;
