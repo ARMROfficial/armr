@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <vector>
 #include <inttypes.h>
+#include "util.h"
 
 
 class CWallet;
