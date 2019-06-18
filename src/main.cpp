@@ -4114,3 +4114,13 @@ bool GetNodeStateStats(NodeId nodeid, CNodeStateStats &stats)
     // TODO: incomplete
     return false;
 }
+
+COutPoint CAnonOutput::getOutpoint() const
+{
+    return outpoint;
+}
+
+void CAnonOutput::setOutpoint(const COutPoint &value)
+{
+    outpoint = value;
+}
