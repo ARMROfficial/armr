@@ -347,7 +347,13 @@ public:
 using namespace boost::multi_index;
 // tags
 struct TXHASH{};
-
+typedef boost::multi_index_container<
+    CTxMixins,
+    indexed_by<
+        random_access<>,
+        ordered_unique<tag<TXHASH>, member<CTxMixins,uint256,&CTxMixins::txHash> >
+    >
+> txMixins_container;
 
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
