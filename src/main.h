@@ -187,6 +187,23 @@ public:
 
 class CAnonOutputCount
 { // CountAllAnonOutputs
+public:
+
+    CAnonOutputCount()
+    {
+        nValue = 0;
+        nExists = 0;
+        nSpends = 0;
+        nOwned = 0;
+        nLastHeight = 0;
+        nCompromised = 0;
+        nStakes = 0;
+        nMature = 0;
+        nMixins = 0;
+        nMixinsStaking = 0;
+        nCompromisedHeight = 0;
+    }
+
 
 };
 
