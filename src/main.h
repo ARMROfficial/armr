@@ -170,6 +170,11 @@ public:
         fCoinStake = fCoinStake_;
     }
 
+    COutPoint outpoint;
+    int64_t nValue;         // rather store 2 bytes, digit + power 10 ?
+    int nBlockHeight;
+    uint8_t nCompromised;   // TODO: mark if output can be identified (spent with ringsig 1)
+    char fCoinStake;
 
 };
 
