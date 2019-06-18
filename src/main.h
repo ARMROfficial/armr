@@ -20,7 +20,7 @@
 #include <vector>
 #include <inttypes.h>
 #include "util.h"
-
+#include "serialize.h"
 
 class CWallet;
 class CBlock;
