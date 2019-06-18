@@ -24,6 +24,7 @@
 #include <random>
 
 #include <boost/random/mersenne_twister.hpp>
+#include <boost/multi_index_container.hpp>
 
 class CWallet;
 class CBlock;
