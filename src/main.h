@@ -347,7 +347,10 @@ public:
         : nModifier(modifier), bnModifierV2(modifierv2), nHeight(height), nTime(time)
     {};
 
-
+    uint64_t nModifier;
+    uint256 bnModifierV2;
+    int nHeight;
+    int64_t nTime;
 };
 
 struct CTxMixins
