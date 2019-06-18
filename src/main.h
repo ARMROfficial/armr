@@ -319,6 +319,11 @@ private:
     std::mt19937 urng;
 };
 
+struct CTxMixins
+{
+
+};
+
 /** Position on disk for a particular transaction. */
 class CDiskTxPos
 {
