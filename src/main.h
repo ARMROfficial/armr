@@ -175,7 +175,14 @@ public:
     int nBlockHeight;
     uint8_t nCompromised;   // TODO: mark if output can be identified (spent with ringsig 1)
     char fCoinStake;
-
+    IMPLEMENT_SERIALIZE
+    (
+        READWRITE(outpoint);
+        READWRITE(nValue);
+        READWRITE(nBlockHeight);
+        READWRITE(nCompromised);
+        READWRITE(fCoinStake);
+    )
 };
 
 /** Position on disk for a particular transaction. */
