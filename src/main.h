@@ -319,6 +319,38 @@ public:
     }
 };
 
+class CAnonOutput
+{
+// stored in txdb, key is pubkey
+public:
+
+    CAnonOutput() {};
+
+    CAnonOutput(COutPoint& outpoint_, int64_t nValue_, int nBlockHeight_, uint8_t nCompromised_, char fCoinStake_)
+    {
+        outpoint = outpoint_;
+        nValue = nValue_;
+        nBlockHeight = nBlockHeight_;
+        nCompromised = nCompromised_;
+        fCoinStake = fCoinStake_;
+    }
+
+    COutPoint outpoint;
+    int64_t nValue;         // rather store 2 bytes, digit + power 10 ?
+    int nBlockHeight;
+    uint8_t nCompromised;   // TODO: mark if output can be identified (spent with ringsig 1)
+    char fCoinStake;
+    IMPLEMENT_SERIALIZE
+    (
+        READWRITE(outpoint);
+        READWRITE(nValue);
+        READWRITE(nBlockHeight);
+        READWRITE(nCompromised);
+        READWRITE(fCoinStake);
+    )
+};
+
+
 class CMixins
 {
 // for mixin selection
@@ -620,38 +652,6 @@ public:
     {
         printf("%s\n", ToString().c_str());
     }
-};
-
-
-class CAnonOutput
-{
-// stored in txdb, key is pubkey
-public:
-
-    CAnonOutput() {};
-
-    CAnonOutput(COutPoint& outpoint_, int64_t nValue_, int nBlockHeight_, uint8_t nCompromised_, char fCoinStake_)
-    {
-        outpoint = outpoint_;
-        nValue = nValue_;
-        nBlockHeight = nBlockHeight_;
-        nCompromised = nCompromised_;
-        fCoinStake = fCoinStake_;
-    }
-
-    COutPoint outpoint;
-    int64_t nValue;         // rather store 2 bytes, digit + power 10 ?
-    int nBlockHeight;
-    uint8_t nCompromised;   // TODO: mark if output can be identified (spent with ringsig 1)
-    char fCoinStake;
-    IMPLEMENT_SERIALIZE
-    (
-        READWRITE(outpoint);
-        READWRITE(nValue);
-        READWRITE(nBlockHeight);
-        READWRITE(nCompromised);
-        READWRITE(fCoinStake);
-    )
 };
 
 
