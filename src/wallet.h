@@ -26,6 +26,8 @@
 
 static const std::string sAnonPrefix = "ao ";
 static const std::string sStealthPrefix = "sa ";
+static const std::regex reAnonMapping("ao\\s(\\w{16})\\.{3}");
+
 
 
 extern bool fWalletUnlockStakingOnly;
