@@ -3707,5 +3707,15 @@ bool CWallet::GetAnonChangeAddress(CStealthAddress &sxAddress)
 
     // NOTE: tries default ext account only, for now
     ExtKeyAccountMap::iterator mi = mapExtAccounts.find(idDefaultAccount);
+    if (mi != mapExtAccounts.end())
+    {
+        CExtKeyAccount *ea = mi->second;
+
+        AccStealthKeyMap::iterator it = ea->mapStealthKeys.begin();
+
+        if (it != ea->mapStealthKeys.end())
+            return (0 == it->second.SetSxAddr(sxAddress));
+    };
+
 
 };
