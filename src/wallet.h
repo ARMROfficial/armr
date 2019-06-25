@@ -41,7 +41,7 @@ static bool IsAnonOrStealthMappingLabel(const std::string& address)
 
 static bool IsStealthAddressMappingLabel(const std::string& address, const bool& quickStealthTest = true)
 {
-
+    return IsAnonOrStealthMappingLabel(address) || (quickStealthTest ? address.length() == 102 : IsStealthAddress(address));
 }
 
 extern bool fWalletUnlockStakingOnly;
