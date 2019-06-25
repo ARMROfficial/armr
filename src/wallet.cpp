@@ -3698,3 +3698,9 @@ bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, i
     // Successfully generated coinstake
     return true;
 }
+
+
+bool CWallet::GetAnonChangeAddress(CStealthAddress &sxAddress)
+{
+
+};
