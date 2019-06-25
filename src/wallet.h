@@ -25,6 +25,8 @@
 #include <boost/algorithm/string.hpp>
 
 static const std::string sAnonPrefix = "ao ";
+static const std::string sStealthPrefix = "sa ";
+
 
 extern bool fWalletUnlockStakingOnly;
 extern bool fConfChange;
