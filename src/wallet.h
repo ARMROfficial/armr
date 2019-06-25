@@ -227,6 +227,8 @@ public:
     bool CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int64_t nSearchInterval, int64_t nFees, CTransaction& txNew, CKey& key);
 	bool CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, int64_t nFees, CTransaction& txNew, CKey& key);
 
+    bool GetAnonChangeAddress(CStealthAddress& sxAddress);
+
     std::string SendMoney(CScript scriptPubKey, int64_t nValue, std::string& sNarr, CWalletTx& wtxNew, bool fAskFee=false);
     std::string SendMoneyToDestination(const CTxDestination& address, int64 nValue, std::string& sNarr, CWalletTx& wtxNew, bool fAskFee=false);
 
