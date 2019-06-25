@@ -39,6 +39,11 @@ static bool IsAnonOrStealthMappingLabel(const std::string& address)
     return regex_match(address, reAnonOrStealthMapping);
 }
 
+static bool IsStealthAddressMappingLabel(const std::string& address, const bool& quickStealthTest = true)
+{
+
+}
+
 extern bool fWalletUnlockStakingOnly;
 extern bool fConfChange;
 extern int blockchainStatus;
