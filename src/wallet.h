@@ -29,6 +29,10 @@ static const std::string sStealthPrefix = "sa ";
 static const std::regex reAnonMapping("ao\\s(\\w{16})\\.{3}");
 static const std::regex reAnonOrStealthMapping("(ao|sa)\\s(\\w{16})\\.{3}");
 
+static bool IsAnonMappingLabel(const std::string& address)
+{
+
+}
 
 extern bool fWalletUnlockStakingOnly;
 extern bool fConfChange;
