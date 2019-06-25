@@ -3717,5 +3717,14 @@ bool CWallet::GetAnonChangeAddress(CStealthAddress &sxAddress)
             return (0 == it->second.SetSxAddr(sxAddress));
     };
 
+    std::set<CStealthAddress>::iterator it;
+    for (it = stealthAddresses.begin(); it != stealthAddresses.end(); ++it)
+    {
+        if (it->scan_secret.size() < 1)
+            continue; // stealth address is not owned
+
+        sxAddress = *it;
+        return true;
+    };
 
 };
