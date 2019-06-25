@@ -3702,5 +3702,10 @@ bool CWallet::CreateAnonCoinStake(unsigned int nBits, int64_t nSearchInterval, i
 
 bool CWallet::GetAnonChangeAddress(CStealthAddress &sxAddress)
 {
+    // return owned stealth address to send anon change to.
+    // TODO: make an option
+
+    // NOTE: tries default ext account only, for now
+    ExtKeyAccountMap::iterator mi = mapExtAccounts.find(idDefaultAccount);
 
 };
