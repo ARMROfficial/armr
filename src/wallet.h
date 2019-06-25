@@ -24,6 +24,8 @@
 
 #include <boost/algorithm/string.hpp>
 
+static const std::string sAnonPrefix = "ao ";
+
 extern bool fWalletUnlockStakingOnly;
 extern bool fConfChange;
 extern int blockchainStatus;
