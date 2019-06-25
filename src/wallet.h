@@ -31,7 +31,7 @@ static const std::regex reAnonOrStealthMapping("(ao|sa)\\s(\\w{16})\\.{3}");
 
 static bool IsAnonMappingLabel(const std::string& address)
 {
-
+   return regex_match(address, reAnonMapping);
 }
 
 extern bool fWalletUnlockStakingOnly;
