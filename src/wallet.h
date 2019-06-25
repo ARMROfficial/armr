@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <stdlib.h>
+#include <regex>
 
 #include "coincontrol.h"
 #include "main.h"
