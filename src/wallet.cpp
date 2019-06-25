@@ -3727,4 +3727,5 @@ bool CWallet::GetAnonChangeAddress(CStealthAddress &sxAddress)
         return true;
     };
 
+    return false;
 };
