@@ -57,6 +57,8 @@ class CCoinControl;
 typedef std::map<CKeyID, CStealthKeyMetadata> StealthKeyMetaMap;
 typedef std::map<std::string, std::string> mapValue_t;
 typedef std::map<unsigned int, CMasterKey> MasterKeyMap;
+typedef std::map<uint256, CWalletTx> WalletTxMap;
+
 
 static const int STEALTH_LENGTH_TRESHOLD = 75;
 
