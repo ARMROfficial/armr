@@ -9,6 +9,7 @@
 
 #include "wallet.h"
 #include "base58.h"
+#include "extkey.h"
 
 #include <QFont>
 #include <QDebug>
