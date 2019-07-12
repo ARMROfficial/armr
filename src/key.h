@@ -166,6 +166,55 @@ public:
     static bool CheckSignatureElement(const unsigned char *vch, int len, bool half);
 };
 
+struct CExtPubKey {
+    unsigned char nDepth;
+    unsigned char vchFingerprint[4];
+    unsigned int nChild;
+    unsigned char vchChainCode[32];
+    CPubKey pubkey;
+
+    friend bool operator==(const CExtPubKey &a, const CExtPubKey &b) {
+        return a.nDepth == b.nDepth && memcmp(&a.vchFingerprint[0], &b.vchFingerprint[0], 4) == 0 && a.nChild == b.nChild &&
+               memcmp(&a.vchChainCode[0], &b.vchChainCode[0], 32) == 0 && a.pubkey == b.pubkey;
+    }
+
+    bool IsValid() const { return pubkey.IsValid(); }
+
+    CKeyID GetID() const {
+        return pubkey.GetID();
+    }
+
+    void Encode(unsigned char code[74]) const;
+    void Decode(const unsigned char code[74]);
+    bool Derive(CExtPubKey &out, unsigned int nChild) const;
+
+
+    unsigned int GetSerializeSize(int nType, int nVersion) const
+    {
+        return 41 + pubkey.GetSerializeSize(nType, nVersion);
+    }
+
+    template<typename Stream> void Serialize(Stream &s, int nType, int nVersion) const
+    {
+        s.write((char*)&nDepth, 1);
+        s.write((char*)vchFingerprint, 4);
+        s.write((char*)&nChild, 4);
+        s.write((char*)vchChainCode, 32);
+
+        pubkey.Serialize(s, nType, nVersion);
+    }
+
+    template<typename Stream> void Unserialize(Stream &s, int nType, int nVersion)
+    {
+        s.read((char*)&nDepth, 1);
+        s.read((char*)vchFingerprint, 4);
+        s.read((char*)&nChild, 4);
+        s.read((char*)vchChainCode, 32);
+
+        pubkey.Unserialize(s, nType, nVersion);
+    }
+};
+
 struct CExtKey {
     unsigned char nDepth;
     unsigned char vchFingerprint[4];
