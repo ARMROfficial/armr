@@ -11,6 +11,7 @@
 #include <vector>
 
 #include <stdint.h>
+#include "extkey.h"
 
 #include <boost/foreach.hpp>
 #include <boost/variant.hpp>
