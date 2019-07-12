@@ -169,6 +169,25 @@ public:
 class CExtKeyPair
 {
 
+    unsigned int GetSerializeSize(int nType, int nVersion) const
+    {
+        return 42 + (key.IsValid() ? 32 : 0) + pubkey.GetSerializeSize(nType, nVersion);
+    }
+
+    template<typename Stream> void Serialize(Stream &s, int nType, int nVersion) const
+    {
+        s.write((char*)&nDepth, 1);
+        s.write((char*)vchFingerprint, 4);
+        s.write((char*)&nChild, 4);
+        s.write((char*)vchChainCode, 32);
+
+        char fValid = key.IsValid();
+        s.write((char*)&fValid, 1);
+        if (fValid)
+            s.write((char*)key.begin(), 32);
+
+        pubkey.Serialize(s, nType, nVersion);
+    }
 
     template<typename Stream> void Unserialize(Stream &s, int nType, int nVersion)
     {
