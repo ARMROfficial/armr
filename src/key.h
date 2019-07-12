@@ -168,7 +168,25 @@ public:
 
 class CExtKeyPair
 {
+public:
+    //unsigned char nFlags; ? crypted
+    unsigned char nDepth;
+    unsigned char vchFingerprint[4];
+    unsigned int nChild;
+    unsigned char vchChainCode[32];
+    CKey key;
+    CPubKey pubkey;
 
+    CExtKeyPair() {};
+    CExtKeyPair(CExtKey &vk)
+    {
+        nDepth = vk.nDepth;
+        memcpy(vchFingerprint, vk.vchFingerprint, sizeof(vchFingerprint));
+        nChild = vk.nChild;
+        memcpy(vchChainCode, vk.vchChainCode, sizeof(vchChainCode));
+        key = vk.key;
+        pubkey = key.GetPubKey();
+    };
 
 
     CExtKey GetExtKey() const
