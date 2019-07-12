@@ -169,6 +169,12 @@ public:
 class CExtKeyPair
 {
 
+
+    friend bool operator==(const CExtKeyPair &a, const CExtKeyPair &b)
+    {
+        return a.nDepth == b.nDepth && memcmp(&a.vchFingerprint[0], &b.vchFingerprint[0], 4) == 0 && a.nChild == b.nChild &&
+               memcmp(&a.vchChainCode[0], &b.vchChainCode[0], 32) == 0 && a.key == b.key && a.pubkey == b.pubkey ;
+    }
     bool IsValidV() const { return key.IsValid(); }
     bool IsValidP() const { return pubkey.IsValid(); }
 
