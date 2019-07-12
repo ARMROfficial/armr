@@ -13,6 +13,7 @@
 #include "coincontrol.h"
 #include "main.h"
 #include "key.h"
+#include "extkey.h"
 #include "keystore.h"
 #include "crypter.h"
 #include "stealth.h"
