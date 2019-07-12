@@ -35,6 +35,7 @@ Notes:
 #include <stdexcept>
 #include <sstream>
 #include <errno.h>
+#include "eckey.h"
 
 #include <openssl/crypto.h>
 #include <openssl/ec.h>
