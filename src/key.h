@@ -169,6 +169,24 @@ public:
 class CExtKeyPair
 {
 
+    bool IsValidV() const { return key.IsValid(); }
+    bool IsValidP() const { return pubkey.IsValid(); }
+
+    void EncodeV(unsigned char code[74]) const;
+    void DecodeV(const unsigned char code[74]);
+
+    void EncodeP(unsigned char code[74]) const;
+    void DecodeP(const unsigned char code[74]);
+
+    bool Derive(CExtKey &out, unsigned int nChild) const;
+    bool Derive(CExtPubKey &out, unsigned int nChild) const;
+    bool Derive(CKey &out, unsigned int nChild) const;
+    bool Derive(CPubKey &out, unsigned int nChild) const;
+
+    CExtPubKey GetExtPubKey() const;
+    CExtKeyPair Neutered() const;
+    void SetMaster(const unsigned char *seed, unsigned int nSeedLen);
+    int SetKeyCode(const unsigned char *pkey, const unsigned char *pcode);
     unsigned int GetSerializeSize(int nType, int nVersion) const
     {
         return 42 + (key.IsValid() ? 32 : 0) + pubkey.GetSerializeSize(nType, nVersion);
