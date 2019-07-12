@@ -166,6 +166,62 @@ public:
     static bool CheckSignatureElement(const unsigned char *vch, int len, bool half);
 };
 
+struct CExtKey {
+    unsigned char nDepth;
+    unsigned char vchFingerprint[4];
+    unsigned int nChild;
+    unsigned char vchChainCode[32];
+    CKey key;
+
+    friend bool operator==(const CExtKey &a, const CExtKey &b) {
+        return a.nDepth == b.nDepth && memcmp(&a.vchFingerprint[0], &b.vchFingerprint[0], 4) == 0 && a.nChild == b.nChild &&
+               memcmp(&a.vchChainCode[0], &b.vchChainCode[0], 32) == 0 && a.key == b.key;
+    }
+
+    bool IsValid() const { return key.IsValid(); }
+
+    void Encode(unsigned char code[74]) const;
+    void Decode(const unsigned char code[74]);
+    bool Derive(CExtKey &out, unsigned int nChild) const;
+    CExtPubKey Neutered() const;
+    void SetMaster(const unsigned char *seed, unsigned int nSeedLen);
+    int SetKeyCode(const unsigned char *pkey, const unsigned char *pcode);
+
+    unsigned int GetSerializeSize(int nType, int nVersion) const
+    {
+        return 42 + (key.IsValid() ? 32 : 0);
+    }
+
+    template<typename Stream> void Serialize(Stream &s, int nType, int nVersion) const
+    {
+        s.write((char*)&nDepth, 1);
+        s.write((char*)vchFingerprint, 4);
+        s.write((char*)&nChild, 4);
+        s.write((char*)vchChainCode, 32);
+
+        char fValid = key.IsValid();
+        s.write((char*)&fValid, 1);
+        if (fValid)
+            s.write((char*)key.begin(), 32);
+    }
+
+    template<typename Stream> void Unserialize(Stream &s, int nType, int nVersion)
+    {
+        s.read((char*)&nDepth, 1);
+        s.read((char*)vchFingerprint, 4);
+        s.read((char*)&nChild, 4);
+        s.read((char*)vchChainCode, 32);
+
+        char tmp[33];
+        s.read((char*)tmp, 1); // key.IsValid()
+        if (tmp[0])
+        {
+            s.read((char*)tmp+1, 32);
+            key.Set((uint8_t*)tmp+1, 1);
+        };
+    }
+};
+
 class CExtKeyPair
 {
 public:
