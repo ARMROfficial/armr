@@ -9,6 +9,7 @@
 #include <openssl/obj_mac.h>
 
 #include "key.h"
+#include "eckey.h"
 
 // Generate a private key from just the secret parameter
 int EC_KEY_regenerate_key(EC_KEY *eckey, BIGNUM *priv_key)
