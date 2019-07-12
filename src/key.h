@@ -166,6 +166,12 @@ public:
     static bool CheckSignatureElement(const unsigned char *vch, int len, bool half);
 };
 
+class CExtKeyPair
+{
+
+
+
+};
 /** Check that required EC support is available at runtime */
 bool ECC_InitSanityCheck(void);
 

@@ -41,7 +41,7 @@ enum eBlockFlags
 
 enum
 {
-    NODE_NETWORK = (1 << 0),
+    //NODE_NETWORK = (1 << 0),
     THIN_SUPPORT = (1 << 1),
     THIN_STAKE   = (1 << 2),  // deprecated
     THIN_STEALTH = (1 << 3),
@@ -50,10 +50,10 @@ enum
 
 const int64_t GENESIS_BLOCK_TIME = 1479594600;
 
-static const int64_t COIN = 100000000;
-static const int64_t CENT = 1000000;
+//static const int64_t COIN = 100000000;
+//static const int64_t CENT = 1000000;
 
-static const int64_t COIN_YEAR_REWARD = 5 * CENT; // 5% per year
+//static const int64_t COIN_YEAR_REWARD = 5 * CENT; // 5% per year
 
 static const int64_t MBLK_RECEIVE_TIMEOUT = 60; // seconds
 
