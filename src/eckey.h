@@ -2,6 +2,7 @@
 // Copyright (c) 2009-2013 The Bitcoin developers
 // Copyright (c) 2014-2015 The ShadowCoin developers
 // Copyright (c) 2016-2019 The Spectrecoin developers
+// Copyright (c) 2017-2019 The ARMR Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
