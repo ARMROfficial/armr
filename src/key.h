@@ -170,8 +170,24 @@ class CExtKeyPair
 {
 
 
+    template<typename Stream> void Unserialize(Stream &s, int nType, int nVersion)
+    {
+        s.read((char*)&nDepth, 1);
+        s.read((char*)vchFingerprint, 4);
+        s.read((char*)&nChild, 4);
+        s.read((char*)vchChainCode, 32);
 
+        char tmp[33];
+        s.read((char*)tmp, 1); // key.IsValid()
+        if (tmp[0])
+        {
+            s.read((char*)tmp+1, 32);
+            key.Set((uint8_t*)tmp+1, 1);
+        };
+        pubkey.Unserialize(s, nType, nVersion);
+    }
 };
+
 /** Check that required EC support is available at runtime */
 bool ECC_InitSanityCheck(void);
 
