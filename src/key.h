@@ -170,6 +170,28 @@ class CExtKeyPair
 {
 
 
+
+    CExtKey GetExtKey() const
+    {
+        CExtKey vk;
+        vk.nDepth = nDepth;
+        memcpy(vk.vchFingerprint, vchFingerprint, sizeof(vchFingerprint));
+        vk.nChild = nChild;
+        memcpy(vk.vchChainCode, vchChainCode, sizeof(vchChainCode));
+        vk.key = key;
+        return vk;
+    };
+
+    CKeyID GetID() const {
+        return pubkey.GetID();
+    }
+
+
+    bool operator <(const CExtKeyPair& y) const
+    {
+        return pubkey < y.pubkey;
+    };
+
     friend bool operator==(const CExtKeyPair &a, const CExtKeyPair &b)
     {
         return a.nDepth == b.nDepth && memcmp(&a.vchFingerprint[0], &b.vchFingerprint[0], 4) == 0 && a.nChild == b.nChild &&
