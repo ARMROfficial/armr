@@ -57,9 +57,9 @@ const int64_t GENESIS_BLOCK_TIME = 1479594600;
 
 static const int64_t MBLK_RECEIVE_TIMEOUT = 60; // seconds
 
-static const int UNSPENT_ANON_BALANCE_MIN = 100;
-static const int UNSPENT_ANON_BALANCE_MAX = 200;
-static const int UNSPENT_ANON_SELECT_MIN = 20;
+//static const int UNSPENT_ANON_BALANCE_MIN = 100;
+//static const int UNSPENT_ANON_BALANCE_MAX = 200;
+//static const int UNSPENT_ANON_SELECT_MIN = 20;
 
 extern int nNodeMode;
 extern int nNodeState;
