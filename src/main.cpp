@@ -719,7 +719,7 @@ int64 CTransaction::GetMinFee(unsigned int nBlockSize, enum GetMinFee_mode mode,
 }
 
 
-bool CTxMemPool::accept(CTxDB& txdb, CTransaction &tx, bool fCheckInputs,
+bool CTxMemPool::accept(CTxDB& txdb, CTransaction &tx,
                         bool* pfMissingInputs)
 {
     if (pfMissingInputs)
