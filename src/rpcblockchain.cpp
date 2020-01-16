@@ -361,7 +361,7 @@ Value gettxout(const Array& params, bool fHelp)
 
     CTransaction tx;
     uint256 hashBlock = 0;
-    if (!GetTransaction(hash, tx, hashBlock))
+    if (!GetTransaction(hash, tx, hashBlock, mem))
       return Value::null;
 
     if (n<0 || (unsigned int)n>=tx.vout.size() || tx.vout[n].IsNull())
@@ -416,6 +416,7 @@ Value gettxout(const Array& params, bool fHelp)
 
     ret.push_back(Pair("value", ValueFromAmount(tx.vout[n].nValue)));
     Object o;
+
     spj(tx.vout[n].scriptPubKey, o, true);
     ret.push_back(Pair("scriptPubKey", o));
     ret.push_back(Pair("coinbase", tx.IsCoinBase()));
