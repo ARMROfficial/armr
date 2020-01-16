@@ -332,7 +332,7 @@ Value gettxout(const Array& params, bool fHelp)
             "  \"bestblock\" : \"hash\",    (string) the block hash\n"
             "  \"confirmations\" : n,       (numeric) The number of confirmations\n"
             "  \"value\" : x.xxx,           (numeric) The transaction value in btc\n"
-          //  "  \"scriptPubKey\" : {         (json object)\n"
+            "  \"scriptPubKey\" : {         (json object)\n"
             "     \"asm\" : \"code\",       (string) \n"
             "     \"hex\" : \"hex\",        (string) \n"
             "     \"reqSigs\" : n,          (numeric) Number of required signatures\n"
@@ -364,7 +364,7 @@ Value gettxout(const Array& params, bool fHelp)
     if (!GetTransaction(hash, tx, hashBlock))
       return Value::null;
 
-    if (n<0 || (unsigned int)n>=tx.vout.size() || tx.vout[n].IsNull())
+    if (n<0 || (unsigned int)n>=tx.vout.size() || tx.vout.IsNull())
       return Value::null;
 
     ret.push_back(Pair("bestblock", pindexBest->GetBlockHash().GetHex()));
@@ -415,9 +415,9 @@ Value gettxout(const Array& params, bool fHelp)
     }
 
     ret.push_back(Pair("value", ValueFromAmount(tx.vout[n].nValue)));
-  //  Object o;
-  //  spj(tx.vout[n].scriptPubKey, o, true);
-  //  ret.push_back(Pair("scriptPubKey", o));
+    Object o;
+    spj(tx.vout.scriptPubKey, o, true);
+    ret.push_back(Pair("scriptPubKey", o));
     ret.push_back(Pair("coinbase", tx.IsCoinBase()));
     ret.push_back(Pair("coinstake", tx.IsCoinStake()));
 
