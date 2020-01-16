@@ -1119,6 +1119,16 @@ public:
     int64_t nMint;
     int64_t nMoneySupply;
 
+    // (memory only) Total amount of work (expected number of hashes) in the chain up to and including this block
+    uint256 nChainWork;
+
+    // Number of transactions in this block.
+    // Note: in a potential headers-first mode, this number cannot be relied upon
+    unsigned int nTx;
+
+    // (memory only) Number of transactions in the chain up to and including this block
+    unsigned int nChainTx;
+
     unsigned int nFlags;  // ARMR: block index flags
     enum
     {
@@ -1151,6 +1161,9 @@ public:
         nBlockPos = 0;
         nHeight = 0;
         bnChainTrust = 0;
+        nChainWork = 0;
+        nTx = 0;
+        nChainTx = 0;
         nMint = 0;
         nMoneySupply = 0;
         nFlags = 0;
@@ -1176,6 +1189,9 @@ public:
         nBlockPos = nBlockPosIn;
         nHeight = 0;
         bnChainTrust = 0;
+        nChainWork = 0;
+        nTx = 0;
+        nChainTx = 0;
         nMint = 0;
         nMoneySupply = 0;
         nFlags = 0;
@@ -1223,6 +1239,15 @@ public:
     {
         return (int64_t)nTime;
     }
+
+    CBigNum GetBlockWork() const
+        {
+            CBigNum bnTarget;
+            bnTarget.SetCompact(nBits);
+            if (bnTarget <= 0)
+                return 0;
+            return (CBigNum(1)<<256) / (bnTarget+1);
+        }
 
     CBigNum GetBlockTrust() const;
 
