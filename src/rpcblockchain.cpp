@@ -415,9 +415,9 @@ Value gettxout(const Array& params, bool fHelp)
     }
 
     ret.push_back(Pair("value", ValueFromAmount(tx.vout[n].nValue)));
-    Object o;
-    spj(tx.vout[n].scriptPubKey, o, true);
-    ret.push_back(Pair("scriptPubKey", o));
+  //  Object o;
+  //  spj(tx.vout[n].scriptPubKey, o, true);
+  //  ret.push_back(Pair("scriptPubKey", o));
     ret.push_back(Pair("coinbase", tx.IsCoinBase()));
     ret.push_back(Pair("coinstake", tx.IsCoinStake()));
 
