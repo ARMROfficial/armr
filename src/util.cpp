@@ -1131,12 +1131,72 @@ boost::filesystem::path GetConfigFile()
     return pathConfigFile;
 }
 
+//
+// Write .conf by CircuitBreaker88
+//
+
+static std::string GenerateRandomString(unsigned int len) {
+    if (len == 0){
+        len = 24;
+    }
+    srand(time(NULL) + len); //seed srand before using
+    std::vector<unsigned char> vchRandString;
+    static const unsigned char alphanum[] =
+            "0123456789"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            "abcdefghijklmnopqrstuvwxyz";
+
+    for (unsigned int i = 0; i < len; ++i) {
+        vchRandString.push_back(alphanum[rand() % (sizeof(alphanum) - 1)]);
+    }
+    std::string strPassword(vchRandString.begin(), vchRandString.end());
+    return strPassword;
+}
+
+static unsigned int RandomIntegerRange(unsigned int nMin, unsigned int nMax)
+{
+    srand(time(NULL) + nMax); //seed srand before using
+    return nMin + rand() % (nMax - nMin) + 1;
+}
+
+void WriteConfigFile(FILE* configFile)
+{
+    std::string sRPCpassword = "rpcpassword=" + GenerateRandomString(RandomIntegerRange(18, 24)) + "\n";
+    std::string sUserID = "rpcuser=" + GenerateRandomString(RandomIntegerRange(7, 11)) + "\n";
+    fputs (sUserID.c_str(), configFile);
+    fputs (sRPCpassword.c_str(), configFile);
+    fputs ("rpcport=\n", configFile);
+    fputs ("port=\n", configFile);
+    fputs ("daemon=1\n", configFile);
+    fputs ("listen=1\n", configFile);
+    fputs ("server=1\n", configFile);
+    fputs ("staking=1\n", configFile);
+    fputs ("addnode=\n", configFile);
+    fputs ("addnode=\n", configFile);
+    fputs ("addnode=\n", configFile);
+    fputs ("addnode=\n", configFile);
+    fputs ("addnode=\n", configFile);
+    fclose(configFile);
+    ReadConfigFile(mapArgs, mapMultiArgs);
+}
+
 void ReadConfigFile(map<string, string>& mapSettingsRet,
                     map<string, vector<string> >& mapMultiSettingsRet)
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
-    if (!streamConfig.good())
-        return; // No bitcoin.conf file is OK
+    if (!streamConfig.good()){
+           // Create empty .conf if it does not exist
+           FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
+           if (configFile != NULL) {
+               WriteConfigFile(configFile);
+               fclose(configFile);
+               printf("WriteConfigFile() Innova.conf Setup Successfully!");
+               ReadConfigFile(mapSettingsRet, mapMultiSettingsRet);
+           } else {
+               printf("WriteConfigFile() innova.conf file could not be created");
+               return; // Nothing to read, so just return
+           }
+       }
 
     set<string> setOptions;
     setOptions.insert("*");
