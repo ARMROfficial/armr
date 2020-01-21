@@ -284,6 +284,7 @@ static const CRPCCommand vRPCCommands[] =
         {"blockchain",        "getbestblockhash",       &getbestblockhash,       true,   false},
         {"blockchain",        "getblockcount",          &getblockcount,          true,   false},
         {"blockchain",        "getblock",               &getblock,               false,  false},
+        {"blockchain",        "getblockchaininfo",      &getblockchaininfo,       true,  false},
         {"blockchain",        "getblockhash",           &getblockhash,           false,  false},
         {"blockchain",        "getblockbynumber",       &getblockbynumber,       false,  false},
         {"blockchain",        "getcheckpoint",          &getcheckpoint,          true,   false},
@@ -298,7 +299,8 @@ static const CRPCCommand vRPCCommands[] =
         {"blockchain",        "getworkex",              &getworkex,              true,   false},
         {"blockchain",        "settxfee",               &settxfee,               false,  false},
         {"blockchain",        "submitblock",            &submitblock,            false,  false},
-        {"blockchain",        "reservebalance",         &reservebalance,         false,  true },      
+        {"blockchain",        "reservebalance",         &reservebalance,         false,  true },
+        {"blockchain",        "gettxout",               &gettxout,                true,  false},
 
         /* Wallet */
         {"wallet",            "addmultisigaddress",     &addmultisigaddress,     false,  false},
@@ -336,8 +338,8 @@ static const CRPCCommand vRPCCommands[] =
         {"wallet",            "resendtx",               &resendtx,               false,  true },
         {"wallet",            "walletlock",             &walletlock,             true,   false},
         {"wallet",            "walletpassphrasechange", &walletpassphrasechange, false,  false},
-        {"wallet",            "walletpassphrase",       &walletpassphrase,       true,   false},      
-        
+        {"wallet",            "walletpassphrase",       &walletpassphrase,       true,   false},
+
         /* Utility functions */
         {"util",              "makekeypair",            &makekeypair,            false,  true },
         {"util",              "signmessage",            &signmessage,            false,  false},
@@ -352,7 +354,7 @@ static const CRPCCommand vRPCCommands[] =
         {"rawtransactions",   "getrawtransaction",      &getrawtransaction,      false,  false},
         {"rawtransactions",   "listunspent",            &listunspent,            false,  false},
         {"rawtransactions",   "sendrawtransaction",     &sendrawtransaction,     false,  false},
-        {"rawtransactions",   "signrawtransaction",     &signrawtransaction,     false,  false},    
+        {"rawtransactions",   "signrawtransaction",     &signrawtransaction,     false,  false},
 
         /* Stealth Addresses */
         {"stealth",           "getnewstealthaddress",   &getnewstealthaddress,   false,  false},
@@ -362,7 +364,7 @@ static const CRPCCommand vRPCCommands[] =
         {"stealth",           "sendtostealthaddress",   &sendtostealthaddress,   false,  false},
         {"stealth",           "scanforalltxns",         &scanforalltxns,         false,  false},
         {"stealth",           "scanforstealthtxns",     &scanforstealthtxns,     false,  false},
-        
+
         /* Messages */
         {"messages",          "smsgenable",             &smsgenable,             false,  false},
         {"messages",          "smsgdisable",            &smsgdisable,            false,  false},
@@ -1318,6 +1320,8 @@ Array RPCConvertValues(const std::string &strMethod, const std::vector<std::stri
     if (strMethod == "scanforalltxns"         && n > 0) ConvertTo<boost::int64_t>(params[0]);
     if (strMethod == "scanforstealthtxns"     && n > 0) ConvertTo<boost::int64_t>(params[0]);
     if (strMethod == "keypoolrefill"          && n > 0) ConvertTo<boost::int64_t>(params[0]);
+    if (strMethod == "gettxout"               && n == 2) ConvertTo<boost::int64_t>(params[1]);
+    if (strMethod == "gettxout"               && n == 3) { ConvertTo<boost::int64_t>(params[1]); ConvertTo<bool>(params[2]); }
 
     return params;
 }

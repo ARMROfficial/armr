@@ -12,6 +12,7 @@ using namespace std;
 
 extern void TxToJSON(const CTransaction& tx, const uint256 hashBlock, json_spirit::Object& entry);
 extern enum Checkpoints::CPMode CheckpointsMode;
+extern void spj(const CScript& scriptPubKey, Object& out, bool fIncludeHex);
 
 double GetDifficulty(const CBlockIndex* blockindex)
 {
@@ -99,7 +100,7 @@ Value getnetworkhashps(const Array& params, bool fHelp)
         throw runtime_error(
                             "getnetworkhashps\n"
                             "Returns a exponential moving estimate of the current network hashrate (Mhash/s)");
-    
+
     return GetPoWMHashPS();
 }
 
@@ -121,6 +122,7 @@ Object blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool fPri
     result.push_back(Pair("difficulty", GetDifficulty(blockindex)));
     result.push_back(Pair("blocktrust", leftTrim(blockindex->GetBlockTrust().GetHex(), '0')));
     result.push_back(Pair("chaintrust", leftTrim(blockindex->bnChainTrust.GetHex(), '0')));
+    result.push_back(Pair("chainwork", leftTrim(blockindex->nChainWork.GetHex(), '0')));
     if (blockindex->pprev)
         result.push_back(Pair("previousblockhash", blockindex->pprev->GetBlockHash().GetHex()));
     if (blockindex->pnext)
@@ -233,7 +235,7 @@ Value getblockhash(const Array& params, bool fHelp)
         throw runtime_error("Block number out of range.");
 
     CBlockIndex* pblockindex = FindBlockByHeight(nHeight);
-    
+
     return pblockindex->phashBlock->GetHex();
 }
 
@@ -313,4 +315,153 @@ Value getcheckpoint(const Array& params, bool fHelp)
         result.push_back(Pair("checkpointmaster", true));
 
     return result;
+}
+
+Value gettxout(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() < 2 || params.size() > 3)
+        throw runtime_error(
+            "gettxout \"txid\" n ( includemempool )\n"
+            "\nReturns details about an unspent transaction output.\n"
+            "\nArguments:\n"
+            "1. \"txid\"       (string, required) The transaction id\n"
+            "2. n              (numeric, required) vout value\n"
+            "3. includemempool  (boolean, optional) Whether to included the mem pool\n"
+            "\nResult:\n"
+            "{\n"
+            "  \"bestblock\" : \"hash\",    (string) the block hash\n"
+            "  \"confirmations\" : n,       (numeric) The number of confirmations\n"
+            "  \"value\" : x.xxx,           (numeric) The transaction value in btc\n"
+            "  \"scriptPubKey\" : {         (json object)\n"
+            "     \"asm\" : \"code\",       (string) \n"
+            "     \"hex\" : \"hex\",        (string) \n"
+            "     \"reqSigs\" : n,          (numeric) Number of required signatures\n"
+            "     \"type\" : \"pubkeyhash\", (string) The type, eg pubkeyhash\n"
+            "     \"addresses\" : [          (array of string) array of bitcoin addresses\n"
+            "        \"bitcoinaddress\"     (string) bitcoin address\n"
+            "        ,...\n"
+            "     ]\n"
+            "  },\n"
+            "  \"version\" : n,            (numeric) The version\n"
+            "  \"coinbase\" : true|false   (boolean) Coinbase or not\n"
+            "  \"coinstake\" : true|false  (boolean) Coinstake or not\n"
+            "}\n"
+        );
+
+    LOCK(cs_main);
+
+    Object ret;
+
+    uint256 hash;
+    hash.SetHex(params[0].get_str());
+    int n = params[1].get_int();
+    bool mem = true;
+    if (params.size() == 3)
+        mem = params[2].get_bool();
+
+    CTransaction tx;
+    uint256 hashBlock = 0;
+    if (!GetTransaction(hash, tx, hashBlock, mem))
+      return Value::null;
+
+    if (n<0 || (unsigned int)n>=tx.vout.size() || tx.vout[n].IsNull())
+      return Value::null;
+
+    ret.push_back(Pair("bestblock", pindexBest->GetBlockHash().GetHex()));
+    if (hashBlock == 0)
+      ret.push_back(Pair("confirmations", 0));
+    else
+    {
+      map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(hashBlock);
+      if (mi != mapBlockIndex.end() && (*mi).second)
+      {
+        CBlockIndex* pindex = (*mi).second;
+        if (pindex->IsInMainChain())
+        {
+          bool isSpent=false;
+          CBlockIndex* p = pindex;
+          p=p->pnext;
+          for (; p; p = p->pnext)
+          {
+            CBlock block;
+            CBlockIndex* pblockindex = mapBlockIndex[p->GetBlockHash()];
+            block.ReadFromDisk(pblockindex, true);
+            BOOST_FOREACH(const CTransaction& tx, block.vtx)
+            {
+              BOOST_FOREACH(const CTxIn& txin, tx.vin)
+              {
+                if( hash == txin.prevout.hash &&
+                   (int64_t)txin.prevout.n )
+                {
+                  printf("spent at block %s\n", block.GetHash().GetHex().c_str());
+                  isSpent=true; break;
+                }
+              }
+
+              if(isSpent) break;
+            }
+
+            if(isSpent) break;
+          }
+
+          if(isSpent)
+            return Value::null;
+
+          ret.push_back(Pair("confirmations", pindexBest->nHeight - pindex->nHeight + 1));
+        }
+        else
+          return Value::null;
+      }
+    }
+
+    ret.push_back(Pair("value", ValueFromAmount(tx.vout[n].nValue)));
+    Object o;
+
+    spj(tx.vout[n].scriptPubKey, o, true);
+    ret.push_back(Pair("scriptPubKey", o));
+    ret.push_back(Pair("coinbase", tx.IsCoinBase()));
+    ret.push_back(Pair("coinstake", tx.IsCoinStake()));
+
+    return ret;
+  }
+
+  Value getblockchaininfo(const Array& params, bool fHelp)
+{
+  if (fHelp || params.size() != 0)
+      throw runtime_error(
+              "getblockchaininfo\n"
+              "Returns an object containing various state info regarding block chain processing.\n"
+              "\nResult:\n"
+              "{\n"
+              "  \"chain\": \"xxxx\",        (string) current chain (main, testnet)\n"
+              "  \"blocks\": xxxxxx,         (numeric) the current number of blocks processed in the server\n"
+              "  \"bestblockhash\": \"...\", (string) the hash of the currently best block\n"
+              "  \"difficulty\": xxxxxx,     (numeric) the current difficulty\n"
+              "  \"initialblockdownload\": xxxx, (bool) estimate of whether this INN node is in Initial Block Download mode.\n"
+              "  \"verificationprogress\": xxxx, (numeric) estimate of verification progress [0..1]\n"
+              "  \"chainwork\": \"xxxx\"     (string) total amount of work in active chain, in hexadecimal\n"
+              "  \"moneysupply\": xxxx, (numeric) the current supply of INN in circulation\n"
+              "}\n"
+      );
+
+  proxyType proxy;
+  GetProxy(NET_IPV4, proxy);
+
+  Object obj, diff;
+  std::string chain = "testnet";
+  if(!fTestNet)
+      chain = "main";
+      obj.push_back(Pair("chain",          chain));
+    obj.push_back(Pair("blocks",         (int)nBestHeight));
+    //obj.push_back(Pair("headers",      pindexBestHeader ? pindexBestHeader->nHeight : -1));
+    obj.push_back(Pair("bestblockhash",  hashBestChain.GetHex()));
+    diff.push_back(Pair("proof-of-work",  GetDifficulty()));
+    diff.push_back(Pair("proof-of-stake", GetDifficulty(GetLastBlockIndex(pindexBest, true))));
+    obj.push_back(Pair("difficulty",     diff));
+    obj.push_back(Pair("initialblockdownload",  IsInitialBlockDownload()));
+    obj.push_back(Pair("verificationprogress", Checkpoints::GuessVerificationProgress(pindexBest)));
+    obj.push_back(Pair("chainwork",      leftTrim(pindexBest->nChainWork.GetHex(), '0')));
+    obj.push_back(Pair("moneysupply",    ValueFromAmount(pindexBest->nMoneySupply)));
+    //obj.push_back(Pair("size_on_disk",   CalculateCurrentUsage()));
+    return obj;
 }

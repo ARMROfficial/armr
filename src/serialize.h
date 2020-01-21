@@ -670,20 +670,20 @@ class CSerActionSerialize { };
 class CSerActionUnserialize { };
 
 template<typename Stream, typename T>
-inline unsigned int SerReadWrite(Stream& s, const T& obj, int nType, int nVersion, CSerActionGetSerializeSize ser_action)
+inline unsigned int SerReadWrite(Stream& s, const T& obj, int nType, int nVersion, CSerActionGetSerializeSize)
 {
     return ::GetSerializeSize(obj, nType, nVersion);
 }
 
 template<typename Stream, typename T>
-inline unsigned int SerReadWrite(Stream& s, const T& obj, int nType, int nVersion, CSerActionSerialize ser_action)
+inline unsigned int SerReadWrite(Stream& s, const T& obj, int nType, int nVersion, CSerActionSerialize)
 {
     ::Serialize(s, obj, nType, nVersion);
     return 0;
 }
 
 template<typename Stream, typename T>
-inline unsigned int SerReadWrite(Stream& s, T& obj, int nType, int nVersion, CSerActionUnserialize ser_action)
+inline unsigned int SerReadWrite(Stream& s, T& obj, int nType, int nVersion, CSerActionUnserialize)
 {
     ::Unserialize(s, obj, nType, nVersion);
     return 0;

@@ -1131,12 +1131,92 @@ boost::filesystem::path GetConfigFile()
     return pathConfigFile;
 }
 
+//
+// Write .conf by CircuitBreaker88
+//
+
+static std::string GenerateRandomString(unsigned int len) {
+    if (len == 0){
+        len = 24;
+    }
+    srand(time(NULL) + len); //seed srand before using
+    std::vector<unsigned char> vchRandString;
+    static const unsigned char alphanum[] =
+            "0123456789"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            "abcdefghijklmnopqrstuvwxyz";
+
+    for (unsigned int i = 0; i < len; ++i) {
+        vchRandString.push_back(alphanum[rand() % (sizeof(alphanum) - 1)]);
+    }
+    std::string strPassword(vchRandString.begin(), vchRandString.end());
+    return strPassword;
+}
+
+static unsigned int RandomIntegerRange(unsigned int nMin, unsigned int nMax)
+{
+    srand(time(NULL) + nMax); //seed srand before using
+    return nMin + rand() % (nMax - nMin) + 1;
+}
+
+void WriteConfigFile(FILE* configFile)
+{
+    std::string sRPCpassword = "rpcpassword=" + GenerateRandomString(RandomIntegerRange(18, 24)) + "\n";
+    std::string sUserID = "rpcuser=" + GenerateRandomString(RandomIntegerRange(7, 11)) + "\n";
+    fputs (sUserID.c_str(), configFile);
+    fputs (sRPCpassword.c_str(), configFile);
+    fputs ("rpcport=17570\n", configFile);
+    fputs ("port=16560\n", configFile);
+    fputs ("daemon=1\n", configFile);
+    fputs ("listen=1\n", configFile);
+    fputs ("server=1\n", configFile);
+    fputs ("addnode=ycyqmr2wlesek57i.onion\n", configFile);
+    fputs ("addnode=rk3a24ojnt5hk32p.onion\n", configFile);
+    fputs ("addnode=t63uijqc7bn5hn54.onion\n", configFile);
+    fputs ("addnode=2shq6oerbt5ibtbk.onion\n", configFile);
+    fputs ("addnode=b4imjfeb7m2n32wj.onion\n", configFile);
+    fputs ("addnode=lim6czfldgqdayew.onion\n", configFile);
+    fputs ("addnode=xogv5tw7rb5apbir.onion\n", configFile);
+    fputs ("addnode=7n7roxkfwddamllc.onion\n", configFile);
+    fputs ("addnode=d7zxbo5k6awi6rri.onion\n", configFile);
+    fputs ("addnode=xpypdxcxhotebdut.onion\n", configFile);
+    fputs ("addnode=mkhquivkktck7xa6.onion\n", configFile);
+    fputs ("addnode=v5oc47t756xlyvk2.onion\n", configFile);
+    fputs ("addnode=kq5ewc5t7hf2kr4w.onion\n", configFile);
+    fputs ("addnode=irlvmgzw6l52wasv.onion\n", configFile);
+    fputs ("addnode=53phz42ogjm4wojb.onion\n", configFile);
+    fputs ("addnode=ztxqnbvhuoobaddh.onion\n", configFile);
+    fputs ("addnode=ti2kev6wcuttymqd.onion\n", configFile);
+    fputs ("addnode=c62qni2tbzd2uweg.onion\n", configFile);
+    fputs ("addnode=ommj7doxtwj7gvod.onion\n", configFile);
+    fputs ("addnode=awutcyrjtndrvrr3.onion\n", configFile);
+    fputs ("addnode=3eysqxvnpl6ywu3y.onion\n", configFile);
+    fputs ("addnode=jvflgp2hs2q35dyp.onion\n", configFile);
+    fputs ("addnode=j7bmhpny2roes5b4.onion\n", configFile);
+    fputs ("addnode=2pkzdw63xgfwhamm.onion\n", configFile);
+    fputs ("addnode=2o4dx4sr6ihjtfar.onion\n", configFile);
+    fputs ("addnode=wx525suyq4ashaje.onion\n", configFile);
+    fclose(configFile);
+    ReadConfigFile(mapArgs, mapMultiArgs);
+}
+
 void ReadConfigFile(map<string, string>& mapSettingsRet,
                     map<string, vector<string> >& mapMultiSettingsRet)
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
-    if (!streamConfig.good())
-        return; // No bitcoin.conf file is OK
+    if (!streamConfig.good()){
+           // Create empty .conf if it does not exist
+           FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
+           if (configFile != NULL) {
+               WriteConfigFile(configFile);
+            // fclose(configFile);
+               printf("WriteConfigFile() ARMR.conf Setup Successfully!");
+               ReadConfigFile(mapSettingsRet, mapMultiSettingsRet);
+           } else {
+               printf("WriteConfigFile() armr.conf file could not be created");
+               return; // Nothing to read, so just return
+           }
+       }
 
     set<string> setOptions;
     setOptions.insert("*");
